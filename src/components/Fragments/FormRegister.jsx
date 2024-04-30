@@ -18,7 +18,7 @@ const FormRegister = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     dispatch(
-      asyncRegisterUser(firstName, lastName, phoneNumber, email, password)
+      asyncRegisterUser(firstName, lastName, phoneNumber, email, password),
     );
   };
 
@@ -37,7 +37,7 @@ const FormRegister = () => {
         type="text"
         name="firstName"
         placeholder="Masukan nama depan"
-        className="rounded border py-2"
+        className="text-md rounded py-3"
         onChange={handleChange}
       />
       <InputForm
@@ -45,7 +45,7 @@ const FormRegister = () => {
         type="text"
         name="lastName"
         placeholder="Masukan nama belakang"
-        className="rounded border py-2"
+        className="text-md rounded py-3"
         onChange={handleChange}
       />
       <InputForm
@@ -53,15 +53,15 @@ const FormRegister = () => {
         type="email"
         name="email"
         placeholder="example@mail.com"
-        className="rounded border py-2"
+        className="text-md rounded py-3"
         onChange={handleChange}
       />
       <InputForm
-        label="Nomor Handpone"
+        label="Nomor Handphone"
         type="number"
         name="phoneNumber"
-        placeholder="********"
-        className="rounded border py-2"
+        placeholder="Masukan No.Handphone"
+        className="text-md rounded py-3"
         onChange={handleChange}
       />
       <InputForm
@@ -69,13 +69,13 @@ const FormRegister = () => {
         type="password"
         name="password"
         placeholder="********"
-        className="rounded border py-2"
+        className="text-md rounded py-3"
         onChange={handleChange}
       />
-      <p className="text-red-500 text-center mb-3">{errorMessage}</p>
+      <p className="mb-3 text-center text-red-500">{errorMessage}</p>
 
-      <Button type="submit" className="py-2" variant="btn-1">
-        {loading ? "Sedang di proses..." : "Register"}
+      <Button type="submit" variant="btn-1" className="py-3 text-lg">
+        {loading ? "Sedang di proses..." : "DAFTAR"}
       </Button>
     </form>
   );

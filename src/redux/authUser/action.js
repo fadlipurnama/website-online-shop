@@ -33,6 +33,24 @@ function asyncSetAuthUser(token) {
   };
 }
 
+function asyncPreloadProcess() {
+  return async (dispatch) => {
+
+    try {
+      // preload process
+      const authUser = await api.getOwnProfile();
+      dispatch(setAuthUserActionCreator(authUser));
+    } catch (error) {
+      // fallback process
+      dispatch(setAuthUserActionCreator(null));
+    } finally {
+      // end preload process
+      dispatch(setIsPreloadActionCreator(false));
+    }
+
+  };
+}
+
 function asyncUnsetAuthUser() {
   return (dispatch) => {
     dispatch(unsetAuthUserActionCreator());

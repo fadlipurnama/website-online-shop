@@ -5,9 +5,9 @@ const CardCategories = ({ imageUrl, children, categories }) => {
   return (
     <div
       onClick={() => navigate(`/${categories}`)}
-      className="w-40 p-3 cursor-pointer bg-white rounded-lg shadow flex flex-col justify-between"
+      className="flex w-40 cursor-pointer flex-col justify-between rounded-lg bg-white p-3 shadow"
     >
-      <img src={imageUrl} alt="" className="bg-black w-full h-28 rounded-lg" />
+      <img src={imageUrl} alt="" className="h-28 w-full rounded-lg bg-black" />
       <h3 className="text-center font-medium">{children}</h3>
     </div>
   );

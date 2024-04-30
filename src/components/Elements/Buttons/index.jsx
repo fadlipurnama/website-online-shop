@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 function Button({
   children,
   variant = "btn-1",
   type = "button",
   onClick = () => {},
-  className
+  className,
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -43,11 +43,12 @@ function Button({
     },
   };
 
-  const { backgroundColor, textColor, borderColor } = variantStyles[getVariant()];
+  const { backgroundColor, textColor, borderColor } =
+    variantStyles[getVariant()];
 
   return (
     <button
-      className={`w-full outline-none text-sm ${className} ${backgroundColor} ${textColor} ${borderColor}`}
+      className={`w-full text-sm outline-none ${className} ${backgroundColor} ${textColor} ${borderColor}`}
       type={type}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

@@ -35,7 +35,7 @@ const FormLogin = () => {
         type="email"
         name="email"
         placeholder="Masukan email"
-        className="rounded border py-2"
+        className="text-md rounded py-3"
         onChange={handleChange}
       />
       <InputForm
@@ -43,13 +43,13 @@ const FormLogin = () => {
         type="password"
         name="password"
         placeholder="********"
-        className="rounded border py-2"
+        className="text-md rounded py-3"
         onChange={handleChange}
       />
-      <p className="text-red-500 text-center mb-3">{errorMessage}</p>
+      <p className="mb-3 text-center text-red-500">{errorMessage}</p>
 
-      <Button type="submit" variant="btn-1" className="py-2">
-        {loading ? "Sedang di proses..." : "Login"}
+      <Button type="submit" variant="btn-1" className="py-3">
+        {loading ? "Sedang di proses..." : "MASUK"}
       </Button>
     </form>
   );

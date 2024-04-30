@@ -25,7 +25,7 @@ const api = (() => {
     password,
   }) {
     const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL}/register`,
+      `${import.meta.env.VITE_APP_API_URL}/auth/register`,
       {
         method: "POST",
         headers: {
@@ -38,7 +38,7 @@ const api = (() => {
           email,
           password,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -52,17 +52,20 @@ const api = (() => {
   }
 
   async function login({ email, password }) {
-    const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       },
-      body: JSON.stringify({ email, password }),
-    });
+    );
 
     if (!response.ok) {
       const errorMessage = await response.text();
-      throw new Error (errorMessage);
+      throw new Error(errorMessage);
     }
 
     const data = await response.json();
@@ -71,13 +74,13 @@ const api = (() => {
 
   async function getOwnProfile() {
     const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL}/getUser`,
+      `${import.meta.env.VITE_APP_API_URL}/auth/getUser`,
       {
         method: "GET",
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
         },
-      }
+      },
     );
 
     if (!response.ok) {
@@ -89,8 +92,29 @@ const api = (() => {
     return user;
   }
 
+  async function getAllProducts() {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/product/getProducts`,
+    );
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== "success") {
+      throw new Error(message);
+    }
+
+    const {
+      data: { threads },
+    } = responseJson;
+
+    return threads;
+  }
+
   return {
     getOwnProfile,
+    getAllProducts,
     putAccessToken,
     register,
     login,

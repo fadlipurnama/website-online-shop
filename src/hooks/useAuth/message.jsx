@@ -27,13 +27,12 @@ export const useAuthErrorMessage = (defaultValue = "") => {
         return false;
       });
     }
-    
+
     if (!errorData && error && error.error) {
       errorData = error.error;
     }
     setErrorMessage(errorData);
   }, [error]);
-
 
   useEffect(() => {
     setErrorMessage("");

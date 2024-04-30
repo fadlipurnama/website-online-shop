@@ -1,7 +1,15 @@
 import Label from "./Label";
 import Input from "./Input";
 
-const InputForm = ({ name, label, type, placeholder, required, className, onChange }) => {
+const InputForm = ({
+  name,
+  label,
+  type,
+  placeholder,
+  required,
+  className,
+  onChange,
+}) => {
   return (
     <div className="mb-6">
       <Label htmlFor={name}>{label}</Label>

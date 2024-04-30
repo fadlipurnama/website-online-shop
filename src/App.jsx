@@ -6,6 +6,7 @@ import RegisterPage from "./pages/register";
 import { useSelector } from "react-redux";
 import useGetDataUser from "./hooks/useAuth/dataUser";
 import AdminPage from "./pages/admin";
+import Navbar from "./components/Layouts/NavbarLayout";
 
 const App = () => {
   const { authUser, loading, error } = useSelector((state) => state.auth);
@@ -27,9 +28,14 @@ const App = () => {
   //   },
   // ]);
 
-  if (loading) {
-    return <>Loading ...</>;
-  }
+  // if (loading) {
+  //   return (
+  //     // <>
+  //     //   <Navbar />
+  //     //   <h1>Loading...</h1>
+  //     // </>
+  //   );
+  // }
 
   return (
     <>

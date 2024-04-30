@@ -22,7 +22,7 @@ function authUserReducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       };
     case ActionType.UNSET_AUTH_USER:
       return initialState;

@@ -48,7 +48,7 @@ const asyncRegisterUser = (
   lastName,
   phoneNumber,
   email,
-  password
+  password,
 ) => {
   return async (dispatch) => {
     dispatch({ type: ActionType.REGISTER_REQUEST });

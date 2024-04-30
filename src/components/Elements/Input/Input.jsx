@@ -11,7 +11,7 @@ const Input = ({
       type={type}
       name={name}
       placeholder={placeholder}
-      className={`text-sm w-full px-3 text-slate-700 placeholder:opacity-60 ${className}`}
+      className={` w-full border px-3 text-slate-700 placeholder:opacity-60 ${className}`}
       required={required}
       onChange={onChange}
     />
