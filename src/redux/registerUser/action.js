@@ -1,14 +1,10 @@
 import api from "../../utils/api";
-import { asyncSetAuthUser } from "../authUser/action";
+// import { asyncSetAuthUser } from "../loginUser/action";
 
 const ActionType = {
   REGISTER_REQUEST: "REGISTER_REQUEST",
   REGISTER_SUCCESS: "REGISTER_SUCCESS",
   REGISTER_FAILURE: "REGISTER_FAILURE",
-
-  LOGIN_REQUEST: "LOGIN_REQUEST",
-  LOGIN_SUCCESS: "LOGIN_SUCCESS",
-  LOGIN_FAILURE: "LOGIN_FAILURE",
 
   RECEIVE_USERS: "RECEIVE_USERS",
 
@@ -24,24 +20,25 @@ const receiveUsersActionCreator = (users) => {
   };
 };
 
-const asyncLoginUser = (email, password) => {
-  return async (dispatch) => {
-    dispatch({ type: ActionType.LOGIN_REQUEST });
-    try {
-      const login = await api.login({
-        email,
-        password,
-      });
-      dispatch(asyncSetAuthUser(login.authToken));
-      dispatch({ type: ActionType.LOGIN_SUCCESS, payload: login });
-    } catch (error) {
-      dispatch({
-        type: ActionType.LOGIN_FAILURE,
-        payload: error.message,
-      });
-    }
-  };
-};
+// const asyncLoginUser = (email, password) => {
+//   return async (dispatch) => {
+//     dispatch({ type: ActionType.LOGIN_REQUEST });
+//     try {
+//       const { authToken } = await api.login({
+//         email,
+//         password,
+//       });
+//       api.putAccessToken(authToken);
+//       dispatch(asyncSetAuthUser(authToken));
+//       dispatch({ type: ActionType.LOGIN_SUCCESS, payload: authToken });
+//     } catch (error) {
+//       dispatch({
+//         type: ActionType.LOGIN_FAILURE,
+//         payload: error.message,
+//       });
+//     }
+//   };
+// };
 
 const asyncRegisterUser = (
   firstName,
@@ -70,14 +67,14 @@ const asyncRegisterUser = (
   };
 };
 
-const clearState = () => ({
+const clearStateRegister = () => ({
   type: ActionType.CLEAR_STATE,
 });
 
 export {
   ActionType,
-  clearState,
-  asyncLoginUser,
+  clearStateRegister,
+  // asyncLoginUser,
   asyncRegisterUser,
   receiveUsersActionCreator,
 };

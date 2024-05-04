@@ -1,15 +1,15 @@
 import CardCategories from "../components/Fragments/CardCategories";
 import CardProduct from "../components/Fragments/CardProduct";
-import Navbar from "../components/Layouts/NavbarLayout";
+import NavbarLayout from "../components/Layouts/NavbarLayout";
 
 const HomePage = () => {
   return (
     <div>
-      <Navbar />
+      <NavbarLayout />
       <div className="">
-        <div className="m-auto my-10 h-60 max-w-[85%] animate-pulse bg-primaryColor">
+        {/* <div className="m-auto my-10 h-60 max-w-[85%] animate-pulse bg-primaryColor">
           Banner
-        </div>
+        </div> */}
 
         <div className="m-auto mb-10 hidden max-w-[85%] rounded-lg bg-white px-9 py-4 shadow-lg lg:block">
           <h2 className="mb-5 font-semibold">Categories</h2>

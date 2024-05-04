@@ -3,39 +3,32 @@ import ErrorPage from "./pages/404";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
-import { useSelector } from "react-redux";
-import useGetDataUser from "./hooks/useAuth/dataUser";
-import AdminPage from "./pages/admin";
-import Navbar from "./components/Layouts/NavbarLayout";
+import { useDispatch, useSelector } from "react-redux";
+// import useGetDataUser from "./hooks/useAuth/dataUser";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
+import { asyncSetAuthUser } from "./redux/authUser/action";
 
 const App = () => {
-  const { authUser, loading, error } = useSelector((state) => state.auth);
-  useGetDataUser();
+  const { message } = useSelector((states) => states.auth);
+  const dispatch = useDispatch();
 
-  // const router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     element: <HomePage />,
-  //     errorElement: <ErrorPage />,
-  //   },
-  //   {
-  //     path: "/login",
-  //     element: <LoginPage />,
-  //   },
-  //   {
-  //     path: "/register",
-  //     element: <RegisterPage />,
-  //   },
-  // ]);
+  console.log(message);
 
-  // if (loading) {
-  //   return (
-  //     // <>
-  //     //   <Navbar />
-  //     //   <h1>Loading...</h1>
-  //     // </>
-  //   );
-  // }
+  useEffect(() => {
+    const accessToken = Cookies.get("accessToken");
+    if (accessToken) {
+      dispatch(asyncSetAuthUser());
+    }
+
+    // if (!accessToken) {
+    // }
+    // if (message === "Failed to fetch") {
+    //   Cookies.set("accessToken", "");
+    //   dispatch(asyncUnsetAuthUser());
+    // }
+    console.log(accessToken);
+  }, [dispatch]);
 
   return (
     <>
@@ -44,12 +37,7 @@ const App = () => {
           router={createBrowserRouter([
             {
               path: "/",
-              element:
-                !loading && authUser && authUser.isAdmin ? (
-                  <AdminPage />
-                ) : (
-                  <HomePage />
-                ),
+              element: <HomePage />,
               errorElement: <ErrorPage />,
             },
             {

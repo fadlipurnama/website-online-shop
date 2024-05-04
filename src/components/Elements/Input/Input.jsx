@@ -11,9 +11,10 @@ const Input = ({
       type={type}
       name={name}
       placeholder={placeholder}
-      className={` w-full border px-3 text-slate-700 placeholder:opacity-60 ${className}`}
+      className={`w-full border px-3 text-slate-700 placeholder:opacity-60 ${className} focus:shadow-outline leading-tight focus:outline-none`}
       required={required}
       onChange={onChange}
+      min={0}
     />
   );
 };

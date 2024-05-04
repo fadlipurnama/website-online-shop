@@ -1,20 +1,14 @@
+import Cookies from "js-cookie";
+
 const api = (() => {
-  // async function _fetchWithAuth(url, options = {}) {
-  //   return fetch(url, {
-  //     ...options,
-  //     headers: {
-  //       ...options.headers,
-  //       Authorization: `Bearer ${getAccessToken()}`,
-  //     },
-  //   });
-  // }
-
   function putAccessToken(token) {
-    localStorage.setItem("accessToken", token);
+    Cookies.set("accessToken", token );
   }
-
+  function removeAccessToken() {
+    Cookies.remove("accessToken");
+  }
   function getAccessToken() {
-    return localStorage.getItem("accessToken");
+    return Cookies.get("accessToken");
   }
 
   async function register({
@@ -41,14 +35,14 @@ const api = (() => {
       },
     );
 
-    if (!response.ok) {
-      const errorMessage = await response.text();
-      throw new Error(errorMessage);
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
     }
 
-    const data = response.json();
-
-    return data;
+    return responseJson;
   }
 
   async function login({ email, password }) {
@@ -63,18 +57,19 @@ const api = (() => {
       },
     );
 
-    if (!response.ok) {
-      const errorMessage = await response.text();
-      throw new Error(errorMessage);
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
     }
 
-    const data = await response.json();
-    return data;
+    return responseJson;
   }
 
   async function getOwnProfile() {
     const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL}/auth/getUser`,
+      `${import.meta.env.VITE_APP_API_URL}/auth/getDetailUser`,
       {
         method: "GET",
         headers: {
@@ -83,13 +78,16 @@ const api = (() => {
       },
     );
 
-    if (!response.ok) {
-      const errorMessage = await response.text();
-      throw JSON.parse(errorMessage);
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
     }
 
-    const user = await response.json();
-    return user;
+    const { data } = responseJson;
+    return data;
+    // return responseJson;
   }
 
   async function getAllProducts() {
@@ -113,6 +111,7 @@ const api = (() => {
   }
 
   return {
+    removeAccessToken,
     getOwnProfile,
     getAllProducts,
     putAccessToken,

@@ -1,4 +1,5 @@
 import api from "../../utils/api";
+// import { hideLoading, showLoading } from "react-redux-loading-bar";
 
 const ActionType = {
   SET_AUTH_USER_REQUEST: "SET_AUTH_USER_REQUEST",
@@ -14,17 +15,16 @@ function unsetAuthUserActionCreator() {
   };
 }
 
-function asyncSetAuthUser(token) {
+function asyncSetAuthUser() {
   return async (dispatch) => {
+    // dispatch(showLoading());
     dispatch({ type: ActionType.SET_AUTH_USER_REQUEST });
     try {
-      api.putAccessToken(token);
       const authUser = await api.getOwnProfile();
-      dispatch({
-        type: ActionType.SET_AUTH_USER_SUCCESS,
-        payload: authUser,
-      });
+      dispatch({ type: ActionType.SET_AUTH_USER_SUCCESS, payload: authUser });
+      // dispatch(hideLoading());
     } catch (error) {
+      // dispatch(hideLoading());
       dispatch({
         type: ActionType.SET_AUTH_USER_FAILURE,
         payload: error.message,
@@ -33,28 +33,12 @@ function asyncSetAuthUser(token) {
   };
 }
 
-function asyncPreloadProcess() {
-  return async (dispatch) => {
-
-    try {
-      // preload process
-      const authUser = await api.getOwnProfile();
-      dispatch(setAuthUserActionCreator(authUser));
-    } catch (error) {
-      // fallback process
-      dispatch(setAuthUserActionCreator(null));
-    } finally {
-      // end preload process
-      dispatch(setIsPreloadActionCreator(false));
-    }
-
-  };
-}
-
 function asyncUnsetAuthUser() {
   return (dispatch) => {
+    // dispatch(showLoading());
     dispatch(unsetAuthUserActionCreator());
-    api.putAccessToken("");
+    api.removeAccessToken();
+    // dispatch(hideLoading());
   };
 }
 

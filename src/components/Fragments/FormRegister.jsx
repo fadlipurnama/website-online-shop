@@ -3,16 +3,14 @@ import InputForm from "../Elements/Input";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useAuthErrorMessage } from "../../hooks/useAuth/message";
-import { clearState, asyncRegisterUser } from "../../redux/users/action";
-import { useAuthForm } from "../../hooks/useAuth/form";
+import { asyncRegisterUser } from "../../redux/registerUser/action";
+import { useAuthForm } from "../../hooks/authForm";
 
 const FormRegister = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const errorMessage = useAuthErrorMessage("");
-  const { loading, token } = useSelector((state) => state.users);
-  const [formData, handleChange, resetFormData] = useAuthForm();
+  const { loading, message } = useSelector((state) => state.register);
+  const [formData, handleChange] = useAuthForm();
   const { firstName, lastName, phoneNumber, email, password } = formData;
 
   const handleRegister = async (e) => {
@@ -23,15 +21,13 @@ const FormRegister = () => {
   };
 
   useEffect(() => {
-    if (token) {
-      resetFormData();
-      dispatch(clearState());
+    if (message === "Registrasi berhasil") {
       navigate("/login");
     }
-  }, [token, navigate, dispatch, resetFormData]);
+  }, [navigate, dispatch, message]);
 
   return (
-    <form onSubmit={handleRegister}>
+    <form onSubmit={handleRegister} className="grid grid-cols-2 gap-2">
       <InputForm
         label="Nama Depan"
         type="text"
@@ -61,7 +57,7 @@ const FormRegister = () => {
         type="number"
         name="phoneNumber"
         placeholder="Masukan No.Handphone"
-        className="text-md rounded py-3"
+        className="text-md appearance-none rounded py-3"
         onChange={handleChange}
       />
       <InputForm
@@ -70,11 +66,12 @@ const FormRegister = () => {
         name="password"
         placeholder="********"
         className="text-md rounded py-3"
+        container="col-span-2"
         onChange={handleChange}
       />
-      <p className="mb-3 text-center text-red-500">{errorMessage}</p>
+      <p className="mb-3 text-center text-red-500">{message}</p>
 
-      <Button type="submit" variant="btn-1" className="py-3 text-lg">
+      <Button type="submit" variant="btn-1" className="col-span-2 py-3 text-lg">
         {loading ? "Sedang di proses..." : "DAFTAR"}
       </Button>
     </form>

@@ -1,32 +1,19 @@
-import { useEffect } from "react";
 import Button from "../Elements/Buttons";
 import InputForm from "../Elements/Input";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuthErrorMessage } from "../../hooks/useAuth/message";
-import { asyncLoginUser, clearState } from "../../redux/users/action";
-import { useAuthForm } from "../../hooks/useAuth/form";
+import { asyncLoginUser } from "../../redux/login/action";
+import { useAuthForm } from "../../hooks/authForm";
 
 const FormLogin = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const errorMessage = useAuthErrorMessage();
-  const { token, loading } = useSelector((state) => state.users);
-  const [formData, handleChange, resetFormData] = useAuthForm();
+  const { loading, message } = useSelector((states) => states.login);
+  const [formData, handleChange] = useAuthForm();
   const { email, password } = formData;
 
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(asyncLoginUser(email, password));
   };
-
-  useEffect(() => {
-    if (token) {
-      resetFormData();
-      dispatch(clearState());
-      navigate("/");
-    }
-  }, [token, navigate, dispatch, resetFormData]);
 
   return (
     <form onSubmit={handleLogin}>
@@ -46,7 +33,7 @@ const FormLogin = () => {
         className="text-md rounded py-3"
         onChange={handleChange}
       />
-      <p className="mb-3 text-center text-red-500">{errorMessage}</p>
+      <p className="mb-3 text-center text-red-500">{message}</p>
 
       <Button type="submit" variant="btn-1" className="py-3">
         {loading ? "Sedang di proses..." : "MASUK"}

@@ -28,6 +28,9 @@ a {
   text-decoration: none;
 }
 
-/* #root {
-  background-color: rgb(245, 243, 243);
-} */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+

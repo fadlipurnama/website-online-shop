@@ -9,9 +9,10 @@ const InputForm = ({
   required,
   className,
   onChange,
+  container,
 }) => {
   return (
-    <div className="mb-6">
+    <div className={`mb-6 ${container}`}>
       <Label htmlFor={name}>{label}</Label>
       <Input
         name={name}

@@ -10,27 +10,27 @@ const initialState = {
 
 function authUserReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case ActionType.SET_AUTH_USER_REQUEST:
+    case ActionType.LOGIN_REQUEST:
       return { ...state, loading: true, error: false };
-
-    case ActionType.SET_AUTH_USER_FAILURE:
+    case ActionType.LOGIN_FAILURE:
       return {
         ...state,
-        loading: false,
         error: true,
+        loading: false,
         message: action.payload,
       };
-    case ActionType.SET_AUTH_USER_SUCCESS:
+    case ActionType.LOGIN_SUCCESS:
       return {
         ...state,
-        authUser: action.payload,
-        token: null,
-        loading: false,
         error: false,
-        message: action.payload,
+        loading: false,
+        token: action.payload,
+        message: action.payload.message,
       };
-    case ActionType.UNSET_AUTH_USER:
-      return initialState;
+
+
+    case ActionType.CLEAR_STATE:
+      return initialState
     default:
       return state;
   }
