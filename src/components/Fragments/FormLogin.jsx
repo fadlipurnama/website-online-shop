@@ -16,12 +16,12 @@ const FormLogin = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} className="flex flex-col gap-4">
       <InputForm
         label="Email"
         type="email"
         name="email"
-        placeholder="Masukan email"
+        placeholder="Masukkan email"
         className="text-md rounded py-3"
         onChange={handleChange}
       />
@@ -33,7 +33,7 @@ const FormLogin = () => {
         className="text-md rounded py-3"
         onChange={handleChange}
       />
-      <p className="mb-3 text-center text-red-500">{message}</p>
+      <p className="col-span-2 mb-3 text-center text-red-500">{message}</p>
 
       <Button type="submit" variant="btn-1" className="py-3">
         {loading ? "Sedang di proses..." : "MASUK"}

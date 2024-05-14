@@ -1,22 +1,22 @@
-import Input from "./Input";
 import Label from "./Label";
+import Select from "./.Select";
 
-const InputForm = ({
+const SelectForm = ({
   name,
   label,
-  type,
   placeholder,
   required,
   className,
   onChange,
   container,
+  options,
 }) => {
   return (
     <div className={`${container}`}>
-      {label && <Label htmlFor={name}>{label}</Label>}
-      <Input
+      <Label htmlFor={name}>{label}</Label>
+      <Select
+        options={options}
         name={name}
-        type={type}
         placeholder={placeholder}
         required={required}
         className={className}
@@ -26,4 +26,4 @@ const InputForm = ({
   );
 };
 
-export default InputForm;
+export default SelectForm;

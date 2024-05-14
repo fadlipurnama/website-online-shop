@@ -9,7 +9,7 @@ const AuthLayout = ({ children, title, type }) => {
         <span className="absolute left-6 top-6 cursor-pointer text-2xl font-bold text-primaryColor xl:left-10 xl:top-10">
           Anugrah Hadi Electric
         </span>
-        <span className="absolute bottom-4 left-4 font-light">
+        <span className="absolute bottom-6 left-6 text-xs font-light sm:text-base">
           Copyright © Anugrah Hadi Electric 2024, All Right Reserved
         </span>
         <div className="w-full max-w-xl rounded-lg px-6 py-12">
@@ -33,14 +33,18 @@ const AuthLayout = ({ children, title, type }) => {
           </p>
         </div>
       </div>
-      <div className="relative hidden max-h-full w-full flex-col items-end justify-start bg-gradient-to-r from-primaryColor to-secondaryColor py-32 xl:flex">
+      <div className="relative hidden max-h-full w-full bg-gradient-to-r from-primaryColor to-secondaryColor py-32 xl:flex">
         <img
           src={logo}
           alt="logo-ahe"
-          className="absolute right-2 top-2 h-20"
+          className="absolute right-6 top-6 h-20"
         />
-        <img src={vektor} alt="gambar-vektor" className="h-auto max-h-96" />
-        <div className="absolute bottom-[30%] left-20 flex w-3/5 flex-col gap-3">
+        <img
+          src={vektor}
+          alt="gambar-vektor"
+          className="absolute bottom-[30%] right-0 h-auto max-h-96"
+        />
+        <div className="lg absolute bottom-[30%] left-20 flex w-3/5 flex-col gap-3">
           <p className="text-3xl font-semibold text-white/70">
             Temukan Produk yang anda cari bersama kami
           </p>

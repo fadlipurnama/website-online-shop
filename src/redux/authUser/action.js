@@ -14,6 +14,14 @@ function unsetAuthUserActionCreator() {
     type: ActionType.UNSET_AUTH_USER,
   };
 }
+function setAuthUserActionCreator(authUser) {
+  return {
+    type: ActionType.SET_AUTH_USER_SUCCESS,
+    payload: {
+      authUser,
+    },
+  };
+}
 
 function asyncSetAuthUser() {
   return async (dispatch) => {
@@ -21,7 +29,7 @@ function asyncSetAuthUser() {
     dispatch({ type: ActionType.SET_AUTH_USER_REQUEST });
     try {
       const authUser = await api.getOwnProfile();
-      dispatch({ type: ActionType.SET_AUTH_USER_SUCCESS, payload: authUser });
+      dispatch(setAuthUserActionCreator(authUser));
       // dispatch(hideLoading());
     } catch (error) {
       // dispatch(hideLoading());

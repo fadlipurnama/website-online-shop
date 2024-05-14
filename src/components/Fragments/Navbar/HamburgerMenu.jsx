@@ -7,22 +7,20 @@ import {
   LuPackageCheck,
   //  LuUser2
 } from "react-icons/lu";
-import { IoIosArrowForward, IoIosArrowDown, IoMdLogOut } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import {
   FaCloudDownloadAlt,
   FaWhatsapp,
   FaQuestionCircle,
 } from "react-icons/fa";
-import { asyncUnsetAuthUser } from "../../../redux/authUser/action";
-import { useDispatch } from "react-redux";
 import MenuItem from "../../Elements/MenuItem";
 import AuthButton from "./AuthButton";
 import UserGreetings from "./UserGreetings";
+import ButtonLogout from "../../Elements/ButtonLogout";
 
 const HamburgerMenu = ({ authUser }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [categoriesDropdown, setCategoriesDropdown] = useState(false);
-  const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setOpenMenu(!openMenu);
@@ -33,6 +31,7 @@ const HamburgerMenu = ({ authUser }) => {
     const handleResize = () => {
       if (innerWidth > 1024) {
         setOpenMenu(false);
+        document.body.classList.remove("overflow-hidden");
       }
     };
     handleResize();
@@ -86,33 +85,30 @@ const HamburgerMenu = ({ authUser }) => {
               )}
               <MenuItem
                 text="Cek Resi"
-                icon={<LuPackageCheck className="h-5 w-5" to="" />}
+                icon={<LuPackageCheck className="h-5 w-5" />}
+                to="/cek-resi"
               />
               <MenuItem
                 text="Hubungi Kami"
-                icon={<FaWhatsapp className="h-5 w-5" to="" />}
+                icon={<FaWhatsapp className="h-5 w-5" />}
+                to="/contact-us"
               />
               <MenuItem
                 text="Download Aplikasi"
-                icon={<FaCloudDownloadAlt className="h-5 w-5" to="" />}
+                icon={<FaCloudDownloadAlt className="h-5 w-5" />}
+                to="download-aplikasi"
               />
               <MenuItem
                 text="Tentang Kami"
-                icon={<RiMapPinUserFill className="h-5 w-5" to="" />}
+                icon={<RiMapPinUserFill className="h-5 w-5" />}
+                to="about-us"
               />
               <MenuItem
                 text="FAQ"
-                icon={<FaQuestionCircle className="h-5 w-5" to="" />}
+                icon={<FaQuestionCircle className="h-5 w-5" />}
+                to="faq"
               />
-              {authUser && (
-                <div
-                  onClick={() => dispatch(asyncUnsetAuthUser())}
-                  className="flex cursor-pointer items-center gap-2 text-red-500"
-                >
-                  <IoMdLogOut className="h-5 w-5" />
-                  Logout
-                </div>
-              )}
+              {authUser && <ButtonLogout iconOn={true} />}
             </div>
           </div>
         </>

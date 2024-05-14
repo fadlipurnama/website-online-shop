@@ -27,7 +27,7 @@ const FormRegister = () => {
   }, [navigate, dispatch, message]);
 
   return (
-    <form onSubmit={handleRegister} className="grid grid-cols-2 gap-2">
+    <form onSubmit={handleRegister} className="grid grid-cols-2 gap-4">
       <InputForm
         label="Nama Depan"
         type="text"
@@ -69,7 +69,7 @@ const FormRegister = () => {
         container="col-span-2"
         onChange={handleChange}
       />
-      <p className="mb-3 text-center text-red-500">{message}</p>
+      <p className="mb-3 col-span-2 text-center text-red-500">{message}</p>
 
       <Button type="submit" variant="btn-1" className="col-span-2 py-3 text-lg">
         {loading ? "Sedang di proses..." : "DAFTAR"}

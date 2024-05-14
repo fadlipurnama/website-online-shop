@@ -8,12 +8,17 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { asyncSetAuthUser } from "./redux/authUser/action";
+import AdminPage from "./pages/admin/admin";
+import FormAddProduct from "./components/Fragments/FormAddProduct";
+import FormAddCategory from "./components/Fragments/FormAddCategory";
+import TabelProducts from "./components/Fragments/TabelProducts";
 
 const App = () => {
-  const { message } = useSelector((states) => states.auth);
+  const { message, loading, authUser } = useSelector((states) => states.auth);
   const dispatch = useDispatch();
 
-  console.log(message);
+  // console.log("message: ", message);
+  // console.log(authUser);
 
   useEffect(() => {
     const accessToken = Cookies.get("accessToken");
@@ -27,31 +32,52 @@ const App = () => {
     //   Cookies.set("accessToken", "");
     //   dispatch(asyncUnsetAuthUser());
     // }
-    console.log(accessToken);
+    // console.log(accessToken);
   }, [dispatch]);
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/register",
+      element: <RegisterPage />,
+    },
+    {
+      path: "/admin",
+      element: <AdminPage />,
+      children: [
+        {
+          path: "add-product",
+          element: (
+            <>
+              <FormAddProduct />
+              <TabelProducts />
+            </>
+          ),
+        },
+        {
+          path: "add-category",
+          element: <FormAddCategory />,
+        },
+      ],
+    },
+  ]);
+
+  if (loading) {
+    return null;
+  }
+
   return (
-    <>
-      <main>
-        <RouterProvider
-          router={createBrowserRouter([
-            {
-              path: "/",
-              element: <HomePage />,
-              errorElement: <ErrorPage />,
-            },
-            {
-              path: "/login",
-              element: <LoginPage />,
-            },
-            {
-              path: "/register",
-              element: <RegisterPage />,
-            },
-          ])}
-        />
-      </main>
-    </>
+    <main>
+      <RouterProvider router={router} />
+    </main>
   );
 };
 

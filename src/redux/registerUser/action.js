@@ -11,32 +11,12 @@ const ActionType = {
   CLEAR_STATE: "CLEAR_STATE",
 };
 
-const receiveUsersActionCreator = (users) => {
-  return {
-    type: ActionType.RECEIVE_USERS,
-    payload: {
-      users,
-    },
-  };
-};
-
-// const asyncLoginUser = (email, password) => {
-//   return async (dispatch) => {
-//     dispatch({ type: ActionType.LOGIN_REQUEST });
-//     try {
-//       const { authToken } = await api.login({
-//         email,
-//         password,
-//       });
-//       api.putAccessToken(authToken);
-//       dispatch(asyncSetAuthUser(authToken));
-//       dispatch({ type: ActionType.LOGIN_SUCCESS, payload: authToken });
-//     } catch (error) {
-//       dispatch({
-//         type: ActionType.LOGIN_FAILURE,
-//         payload: error.message,
-//       });
-//     }
+// const receiveUsersActionCreator = (users) => {
+//   return {
+//     type: ActionType.RECEIVE_USERS,
+//     payload: {
+//       users,
+//     },
 //   };
 // };
 
@@ -76,5 +56,5 @@ export {
   clearStateRegister,
   // asyncLoginUser,
   asyncRegisterUser,
-  receiveUsersActionCreator,
+  // receiveUsersActionCreator,
 };

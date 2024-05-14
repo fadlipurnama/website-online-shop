@@ -1,39 +1,36 @@
 import { ActionType } from "./action";
 
 const initialState = {
-  token: null,
-  authUser: null,
+  products: null,
   loading: false,
   error: false,
   message: null,
 };
 
-function authUserReducer(state = initialState, action = {}) {
+function threadsReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case ActionType.SET_AUTH_USER_REQUEST:
+    case ActionType.SET_CATEGORIES_REQUEST:
       return { ...state, loading: true, error: false };
-
-    case ActionType.SET_AUTH_USER_FAILURE:
+    case ActionType.SET_CATEGORIES_FAILURE:
       return {
         ...state,
         loading: false,
         error: true,
         message: action.payload,
       };
-    case ActionType.SET_AUTH_USER_SUCCESS:
+    case ActionType.SET_CATEGORIES_SUCCESS:
       return {
         ...state,
-        authUser: action.payload.authUser,
-        token: null,
+        products: action.payload.products,
         loading: false,
         error: false,
-        message: action.payload,
+        message: null,
       };
-    case ActionType.UNSET_AUTH_USER:
-      return initialState;
+    // case ActionType.ADD_THREAD:
+    //   return [action.payload.products, ...threads];
     default:
       return state;
   }
 }
 
-export default authUserReducer;
+export default threadsReducer;
