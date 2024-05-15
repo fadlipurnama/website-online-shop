@@ -5,8 +5,7 @@ const ActionType = {
   SET_CATEGORIES_REQUEST: "SET_CATEGORIES_REQUEST",
   SET_CATEGORIES_SUCCESS: "SET_CATEGORIES_SUCCESS",
 
-  ADD_PRODUCTS: "ADD_THREAD",
-  TOGGLE_WHISHLIST_PRODUCT: "TOGGLE_WHISHLIST_PRODUCT",
+  ADD_Categories: "ADD_THREAD",
 };
 
 function toggleWhishlistActionCreator({ productId, userId }) {
@@ -19,14 +18,14 @@ function toggleWhishlistActionCreator({ productId, userId }) {
   };
 }
 
-function asyncSetProducts() {
+function asyncSetCategories() {
   return async (dispatch) => {
     dispatch({ type: ActionType.SET_CATEGORIES_REQUEST });
     try {
-      const products = await api.getAllProducts();
+      const categories = await api.getAllCategories();
       dispatch({
         type: ActionType.SET_CATEGORIES_SUCCESS,
-        payload: { products },
+        payload: { categories },
       });
     } catch (error) {
       dispatch({ type: ActionType.SET_CATEGORIES_FAILURE, payload: { error } });
@@ -34,26 +33,9 @@ function asyncSetProducts() {
   };
 }
 
-function asyncToogleWhishlistProduct({ productId, userId }) {
-  return async (dispatch, getState) => {
-    const { authUser } = getState();
-    dispatch(toggleWhishlistActionCreator({ productId, userId: authUser.id }));
-    try {
-      await api.toggleLikeThread({ productId, userId });
-    } catch (error) {
-      alert(error.message);
-      dispatch(
-        toggleWhishlistActionCreator({ productId, userId: authUser.id }),
-      );
-    }
-  };
-}
 
 export {
   ActionType,
-  asyncSetProducts,
-  // AddProductActionCreator,
-  // asyncAddProduct,
+  asyncSetCategories,
   toggleWhishlistActionCreator,
-  asyncToogleWhishlistProduct,
 };

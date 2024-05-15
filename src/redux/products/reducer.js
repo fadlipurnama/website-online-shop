@@ -7,7 +7,7 @@ const initialState = {
   message: null,
 };
 
-function threadsReducer(state = initialState, action = {}) {
+function productsReducer(state = initialState, action = {}) {
   switch (action.type) {
     case ActionType.SET_PRODUCTS_REQUEST:
       return { ...state, loading: true, error: false };
@@ -26,11 +26,14 @@ function threadsReducer(state = initialState, action = {}) {
         error: false,
         message: null,
       };
-    // case ActionType.ADD_THREAD:
-    //   return [action.payload.products, ...threads];
+    case ActionType.ADD_PRODUCTS:
+      return {
+        ...state,
+        products: [...state.products, action.payload.product],
+      };
     default:
       return state;
   }
 }
 
-export default threadsReducer;
+export default productsReducer;

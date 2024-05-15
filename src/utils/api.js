@@ -109,7 +109,7 @@ const api = (() => {
 
   async function getAllCategories() {
     const response = await fetch(
-      `${import.meta.env.VITE_APP_API_URL}/product/getAllCategories`,
+      `${import.meta.env.VITE_APP_API_URL}/category/getAllCategory`,
     );
 
     const responseJson = await response.json();
@@ -124,12 +124,57 @@ const api = (() => {
     return data;
   }
 
+  async function createProduct({
+    name,
+    brand,
+    price,
+    category,
+    imageUrl,
+    rating,
+    promo,
+    isActive,
+    stock,
+    description,
+  }) {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/products/createProduct`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          brand,
+          price,
+          category,
+          imageUrl,
+          rating,
+          promo,
+          isActive,
+          stock,
+          description,
+        }),
+      },
+    );
+
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
+    }
+
+    return responseJson;
+  }
+
   return {
     removeAccessToken,
+    putAccessToken,
     getAllCategories,
     getOwnProfile,
     getAllProducts,
-    putAccessToken,
+    createProduct,
     register,
     login,
   };

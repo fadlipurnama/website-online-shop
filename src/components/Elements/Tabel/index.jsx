@@ -1,7 +1,13 @@
 import { useState } from "react";
-import Pagination from "./pagination";
+import Pagination from "./Pagination";
 
-const Table = ({ data, headers, handleEdit, handleDelete }) => {
+const Table = ({
+  data,
+  headers,
+  handleEdit,
+  handleDelete,
+  handleDetailProduct,
+}) => {
   // State untuk tracking halaman saat ini
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -29,12 +35,19 @@ const Table = ({ data, headers, handleEdit, handleDelete }) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">
-          {currentItems?.map((item, index) => (
-            <tr key={item.id}>
-              {headers.map((header) => (
-                <td key={index} className="whitespace-nowrap px-6 py-4">
+          {currentItems?.map((item, indexItem) => (
+            <tr
+              className="cursor-pointer hover:bg-secondaryColor"
+              onClick={handleDetailProduct}
+              key={`${item._id}-${indexItem}`}
+            >
+              {headers.map((header, indexHeader) => (
+                <td
+                  key={`${header._id}-${indexHeader}`}
+                  className="whitespace-nowrap px-6 py-4"
+                >
                   {header === "No" ? (
-                    <span>{indexOfFirstItem + index + 1}</span>
+                    <span>{indexOfFirstItem + indexItem + 1}</span>
                   ) : header === "Image" ? (
                     <img
                       src={item.imageUrl}
@@ -43,25 +56,32 @@ const Table = ({ data, headers, handleEdit, handleDelete }) => {
                     />
                   ) : header === "Description" ? (
                     <span>{`${item.description.slice(0, 50)}...`}</span>
+                  ) : header === "Action" ? (
+                    <div className="flex gap-2">
+                      <button
+                        className="bg-primaryColor px-5  py-2 text-slate-200 hover:bg-secondaryColor"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEdit(item.id);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="bg-red-600 p-2 text-slate-200 hover:bg-red-900"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(item.id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   ) : (
                     item[header.toLowerCase()]
                   )}
                 </td>
               ))}
-              <td className="whitespace-nowrap px-6 py-4">
-                <button
-                  className="mr-2 text-indigo-600 hover:text-indigo-900"
-                  onClick={() => handleEdit(item._id)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="text-red-600 hover:text-red-900"
-                  onClick={() => handleDelete(item._id)}
-                >
-                  Delete
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>

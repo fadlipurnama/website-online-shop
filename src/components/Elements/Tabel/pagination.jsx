@@ -1,10 +1,6 @@
-const Pagination = ({
-  data,
-  currentPage,
-  itemsPerPage,
-  setCurrentPage,
+import { useEffect } from "react";
 
-}) => {
+const Pagination = ({ data, currentPage, itemsPerPage, setCurrentPage }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const nextPage = () => {
@@ -14,37 +10,50 @@ const Pagination = ({
   const prevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
+
+  useEffect(() => {
+    const totalPages = Math.ceil(data?.length / itemsPerPage);
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+  }, [data, currentPage, itemsPerPage, setCurrentPage]);
   return (
     <div className="mt-4 flex justify-center">
-      <button
-        className="mr-2 rounded-md bg-gray-200 px-4 py-2 text-gray-700"
-        onClick={prevPage}
-        disabled={currentPage === 1}
-      >
-        Prev
-      </button>
-      {Array.from({ length: Math.ceil(data?.length / itemsPerPage) }).map(
-        (_, index) => (
+      {data?.length ? (
+        <>
           <button
-            key={index}
-            className={`mr-2 rounded-md px-4 py-2 ${
-              currentPage === index + 1
-                ? "bg-primaryColor text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-            onClick={() => paginate(index + 1)}
+            className={`mr-2 rounded-md ${currentPage === 1 ? "bg-slate-50 font-light" : "bg-gray-200"} px-4 py-2 text-gray-700`}
+            onClick={prevPage}
+            disabled={currentPage === 1}
           >
-            {index + 1}
+            Prev
           </button>
-        ),
+          {Array.from({ length: Math.ceil(data?.length / itemsPerPage) }).map(
+            (_, index) => (
+              <button
+                key={index}
+                className={`mr-2 rounded-md px-4 py-2 ${
+                  currentPage === index + 1
+                    ? "bg-primaryColor text-white"
+                    : "bg-gray-200 text-gray-700"
+                }`}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ),
+          )}
+          <button
+            className={`ml-2 rounded-md ${currentPage === Math.ceil(data?.length / itemsPerPage) ? "bg-slate-50 font-light" : "bg-gray-200"} px-4 py-2 text-gray-700`}
+            onClick={nextPage}
+            disabled={currentPage === Math.ceil(data?.length / itemsPerPage)}
+          >
+            Next
+          </button>
+        </>
+      ) : (
+        <div>Data tidak ditemukan</div>
       )}
-      <button
-        className="ml-2 rounded-md bg-gray-200 px-4 py-2 text-gray-700"
-        onClick={nextPage}
-        disabled={currentPage === Math.ceil(data?.length / itemsPerPage)}
-      >
-        Next
-      </button>
     </div>
   );
 };

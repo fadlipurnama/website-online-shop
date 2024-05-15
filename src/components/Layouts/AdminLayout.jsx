@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const AdminLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { authUser } = useSelector((states) => states.auth);
-  
+
   // const handleItemClick = (value) => {
   //   setActivePage(value);
   //   // Close sidebar on mobile after item clicked
@@ -33,13 +33,13 @@ const AdminLayout = ({ children }) => {
         <div className="flex flex-col overflow-y-auto py-6 text-lg">
           <MenuItem
             bgHover={true}
-            to={"/admin/add-product"}
-            text={"Add Product"}
+            to={"/admin/tabel-products"}
+            text={"Tabel Product"}
           />
           <MenuItem
             bgHover={true}
-            to={"/admin/add-category"}
-            text={"Add Category"}
+            to={"/admin/tabel-categories"}
+            text={"Tabel Categories"}
           />
           {authUser && <ButtonLogout bgHover={true} />}
         </div>
@@ -64,7 +64,7 @@ const AdminLayout = ({ children }) => {
           <UserGreetings authUser={authUser} />
         </div>
         {/* Main Content */}
-        <div className="flex-grow p-4">{children}</div>
+        <div className="flex-grow overflow-y-auto p-4">{children}</div>
       </div>
     </div>
   );

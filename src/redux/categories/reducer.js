@@ -1,7 +1,7 @@
 import { ActionType } from "./action";
 
 const initialState = {
-  products: null,
+  categories: null,
   loading: false,
   error: false,
   message: null,
@@ -21,13 +21,13 @@ function threadsReducer(state = initialState, action = {}) {
     case ActionType.SET_CATEGORIES_SUCCESS:
       return {
         ...state,
-        products: action.payload.products,
+        categories: action.payload.categories,
         loading: false,
         error: false,
         message: null,
       };
     // case ActionType.ADD_THREAD:
-    //   return [action.payload.products, ...threads];
+    //   return [action.payload.categories, ...threads];
     default:
       return state;
   }

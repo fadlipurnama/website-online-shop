@@ -12,9 +12,9 @@ const HomePage = () => {
     (states) => states.products,
   );
 
-  console.log(products);
-  console.log("message: ", message);
-  console.log("loading: ", loading);
+  // console.log(products);
+  // console.log("message: ", message);
+  // console.log("loading: ", loading);
 
   useEffect(() => {
     dispatch(asyncSetProducts());

@@ -35,7 +35,7 @@ const UserGreetings = ({ authUser, isMobile }) => {
         <span>Selamat datang, {authUser && authUser.firstName}</span>
       </div>
       {openDropdown && (
-        <div className="absolute right-0 top-16 flex w-full max-w-52 flex-col rounded-lg border bg-white lg:right-28">
+        <div className="absolute right-0 top-28 z-50 flex w-full max-w-52 flex-col rounded-lg border bg-white lg:right-28">
           <div
             onClick={() => navigate(`/${authUser._id}`)}
             className="flex cursor-pointer items-center gap-2 p-4 hover:bg-slate-100 hover:font-medium"

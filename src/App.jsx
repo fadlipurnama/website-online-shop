@@ -4,38 +4,39 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import { useDispatch, useSelector } from "react-redux";
-// import useGetDataUser from "./hooks/useAuth/dataUser";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
-import { asyncSetAuthUser } from "./redux/authUser/action";
+import { useEffect, useState } from "react";
+import { asyncSetAuthUser, asyncUnsetAuthUser } from "./redux/authUser/action";
 import AdminPage from "./pages/admin/admin";
-import FormAddProduct from "./components/Fragments/FormAddProduct";
 import FormAddCategory from "./components/Fragments/FormAddCategory";
-import TabelProducts from "./components/Fragments/TabelProducts";
+import TabelProducts from "./components/Layouts/TabelProducts.Layouts.jsx";
 
 const App = () => {
-  const { message, loading, authUser } = useSelector((states) => states.auth);
+  const {
+    message,
+    loading = false,
+    authUser,
+  } = useSelector((states) => states.auth);
   const dispatch = useDispatch();
-
-  // console.log("message: ", message);
-  // console.log(authUser);
+  const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
 
   useEffect(() => {
     const accessToken = Cookies.get("accessToken");
     if (accessToken) {
-      dispatch(asyncSetAuthUser());
+      dispatch(asyncSetAuthUser()).finally(() => setHasCheckedAuth(true));
+    } else {
+      setHasCheckedAuth(true);
     }
-
-    // if (!accessToken) {
-    // }
-    // if (message === "Failed to fetch") {
-    //   Cookies.set("accessToken", "");
-    //   dispatch(asyncUnsetAuthUser());
-    // }
-    // console.log(accessToken);
   }, [dispatch]);
 
-  const router = createBrowserRouter([
+  useEffect(() => {
+    if (hasCheckedAuth && message === "Invalid Token") {
+      Cookies.remove("accessToken");
+      dispatch(asyncUnsetAuthUser());
+    }
+  }, [dispatch, message, hasCheckedAuth]);
+
+  const routes = [
     {
       path: "/",
       element: <HomePage />,
@@ -49,29 +50,29 @@ const App = () => {
       path: "/register",
       element: <RegisterPage />,
     },
-    {
+  ];
+
+  if (authUser?.isAdmin) {
+    routes.push({
       path: "/admin",
       element: <AdminPage />,
       children: [
         {
-          path: "add-product",
-          element: (
-            <>
-              <FormAddProduct />
-              <TabelProducts />
-            </>
-          ),
+          path: "tabel-products",
+          element: <TabelProducts />,
         },
         {
-          path: "add-category",
+          path: "tabel-categories",
           element: <FormAddCategory />,
         },
       ],
-    },
-  ]);
+    });
+  }
 
-  if (loading) {
-    return null;
+  const router = createBrowserRouter(routes);
+
+  if (loading || !hasCheckedAuth) {
+    return null; // Bisa juga menggunakan spinner atau loading indicator di sini
   }
 
   return (

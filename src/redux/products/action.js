@@ -9,15 +9,6 @@ const ActionType = {
   TOGGLE_WHISHLIST_PRODUCT: "TOGGLE_WHISHLIST_PRODUCT",
 };
 
-// function AddProductActionCreator(product) {
-//   return {
-//     type: ActionType.ADD_THREAD,
-//     payload: {
-//       product,
-//     },
-//   };
-// }
-
 function toggleWhishlistActionCreator({ productId, userId }) {
   return {
     type: ActionType.TOGGLE_WHISHLIST_PRODUCT,
@@ -27,17 +18,6 @@ function toggleWhishlistActionCreator({ productId, userId }) {
     },
   };
 }
-
-// function asyncAddProduct({ title, body, category }) {
-//   return async (dispatch) => {
-//     try {
-//       const thread = await api.createThread({ title, body, category });
-//       dispatch(AddProductActionCreator(thread));
-//     } catch (error) {
-//       alert(error.message);
-//     }
-//   };
-// }
 
 function asyncSetProducts() {
   return async (dispatch) => {
@@ -69,11 +49,52 @@ function asyncToogleWhishlistProduct({ productId, userId }) {
   };
 }
 
+function AddProductActionCreator(product) {
+  return {
+    type: ActionType.ADD_PRODUCTS,
+    payload: {
+      product,
+    },
+  };
+}
+
+function asyncAddProduct({
+  name,
+  brand,
+  price,
+  category,
+  imageUrl,
+  rating,
+  promo,
+  isActive,
+  stock,
+  description,
+}) {
+  return async (dispatch) => {
+    try {
+      const newProduct = await api.createProduct({
+        name,
+        brand,
+        price,
+        category,
+        imageUrl,
+        rating,
+        promo,
+        isActive,
+        stock,
+        description,
+      });
+      dispatch(AddProductActionCreator(newProduct));
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+}
 export {
   ActionType,
   asyncSetProducts,
-  // AddProductActionCreator,
-  // asyncAddProduct,
+  AddProductActionCreator,
+  asyncAddProduct,
   toggleWhishlistActionCreator,
   asyncToogleWhishlistProduct,
 };

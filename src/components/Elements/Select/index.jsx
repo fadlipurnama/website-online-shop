@@ -1,5 +1,5 @@
 import Label from "./Label";
-import Select from "./.Select";
+import Select from "./SelectElement";
 
 const SelectForm = ({
   name,
