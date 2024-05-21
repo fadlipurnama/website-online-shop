@@ -4,11 +4,12 @@ import CardProduct from "../components/Fragments/CardProduct";
 import NavbarLayout from "../components/Layouts/NavbarLayout";
 import { useEffect } from "react";
 import { asyncSetProducts } from "../redux/products/action";
+import Footer from "../components/Layouts/FooterLayout";
 
 const HomePage = () => {
   const dispatch = useDispatch();
 
-  const { products, message, loading } = useSelector(
+  const { products, loading } = useSelector(
     (states) => states.products,
   );
 
@@ -22,22 +23,18 @@ const HomePage = () => {
   return (
     <div>
       <NavbarLayout />
-      <div className="">
-        <div className="m-auto my-10 h-60 max-w-[85%] animate-pulse bg-primaryColor">
-          Banner
-        </div>
-
-        <div className="m-auto mb-10 hidden max-w-[85%] rounded-lg bg-white px-9 py-4 shadow-lg lg:block">
-          <h2 className="mb-5 font-semibold">Categories</h2>
-          <div className="mx-auto flex max-w-min items-center gap-6">
-            <CardCategories imageUrl="asdasdasd">MCB</CardCategories>
-            <CardCategories imageUrl="asdasdasd">Conector</CardCategories>
-            <CardCategories imageUrl="asdasdasd">Kabel</CardCategories>
-            <CardCategories imageUrl="asdasdasd">Barang</CardCategories>
-          </div>
+      <div className="m-auto my-10 h-60 max-w-[85%] animate-pulse bg-primaryColor">
+        Banner
+      </div>
+      <div className="m-auto mb-10 hidden max-w-[85%] rounded-lg bg-white px-9 py-4 shadow-lg lg:block">
+        <h2 className="mb-5 font-semibold">Categories</h2>
+        <div className="mx-auto flex max-w-min items-center gap-6">
+          <CardCategories imageUrl="asdasdasd">MCB</CardCategories>
+          <CardCategories imageUrl="asdasdasd">Conector</CardCategories>
+          <CardCategories imageUrl="asdasdasd">Kabel</CardCategories>
+          <CardCategories imageUrl="asdasdasd">Barang</CardCategories>
         </div>
       </div>
-
       <div className="m-auto mb-10 max-w-[85%] rounded-lg bg-white p-2 shadow-lg lg:px-9 lg:py-4">
         <div className="flex items-center justify-between">
           <h2 className="text-md mb-5 font-semibold md:text-2xl">
@@ -60,7 +57,6 @@ const HomePage = () => {
               ))}
         </div>
       </div>
-
       <div className="m-auto mb-10 max-w-[85%] rounded-lg bg-white p-2 shadow-lg lg:px-9 lg:py-4">
         <h2 className="text-md mb-5 font-semibold md:text-2xl">Product</h2>
         <div className="flex max-w-max flex-wrap items-center justify-center gap-2 lg:gap-6">
@@ -87,6 +83,7 @@ const HomePage = () => {
             ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

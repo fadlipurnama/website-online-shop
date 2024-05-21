@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { asyncSetAuthUser, asyncUnsetAuthUser } from "./redux/authUser/action";
-import AdminPage from "./pages/admin/admin";
+import AdminPage from "./pages/admin.jsx";
 import FormAddCategory from "./components/Fragments/FormAddCategory";
-import TabelProducts from "./components/Layouts/TabelProducts.Layouts.jsx";
+import TabelProducts from "./components/Fragments/Admin/TabelProducts.jsx";
+import DetailProductAdmin from "./components/Fragments/Admin/DetailProduct.jsx";
 
 const App = () => {
   const {
@@ -30,8 +31,7 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (hasCheckedAuth && message === "Invalid Token") {
-      Cookies.remove("accessToken");
+    if (hasCheckedAuth && message === "Invalid token.") {
       dispatch(asyncUnsetAuthUser());
     }
   }, [dispatch, message, hasCheckedAuth]);
@@ -40,7 +40,7 @@ const App = () => {
     {
       path: "/",
       element: <HomePage />,
-      errorElement: <ErrorPage />,
+      errorElement: <ErrorPage authUser={authUser} />,
     },
     {
       path: "/login",
@@ -62,6 +62,10 @@ const App = () => {
           element: <TabelProducts />,
         },
         {
+          path: "tabel-products/:productId",
+          element: <DetailProductAdmin />,
+        },
+        {
           path: "tabel-categories",
           element: <FormAddCategory />,
         },
@@ -75,11 +79,7 @@ const App = () => {
     return null; // Bisa juga menggunakan spinner atau loading indicator di sini
   }
 
-  return (
-    <main>
-      <RouterProvider router={router} />
-    </main>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

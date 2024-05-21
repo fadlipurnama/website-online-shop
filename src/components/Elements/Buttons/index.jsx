@@ -5,6 +5,7 @@ function Button({
   variant = "btn-1",
   type = "button",
   onClick = () => {},
+  disabled = false,
   className,
 }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -50,6 +51,7 @@ function Button({
     <button
       className={`w-full text-sm outline-none ${className} ${backgroundColor} ${textColor} ${borderColor}`}
       type={type}
+      disabled={disabled}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}

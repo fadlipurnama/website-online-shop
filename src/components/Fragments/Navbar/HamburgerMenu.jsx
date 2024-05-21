@@ -5,6 +5,7 @@ import { FiMenu } from "react-icons/fi";
 import { RiMapPinUserFill } from "react-icons/ri";
 import {
   LuPackageCheck,
+  LuUser2,
   //  LuUser2
 } from "react-icons/lu";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
@@ -15,7 +16,6 @@ import {
 } from "react-icons/fa";
 import MenuItem from "../../Elements/MenuItem";
 import AuthButton from "./AuthButton";
-import UserGreetings from "./UserGreetings";
 import ButtonLogout from "../../Elements/ButtonLogout";
 
 const HamburgerMenu = ({ authUser }) => {
@@ -56,9 +56,17 @@ const HamburgerMenu = ({ authUser }) => {
           ></div>
 
           {/* Dropdown Menu */}
-          <div className="fixed right-0 top-0 z-20 flex h-full w-full max-w-sm flex-col gap-5 bg-white px-5 py-8 lg:hidden">
+          <div className="fixed overflow-y-auto right-0 top-0 z-20 flex h-full w-full max-w-sm flex-col gap-5 bg-white px-5 py-8 lg:hidden">
             {authUser ? (
-              <UserGreetings authUser={authUser} isMobile={true} />
+              <div className="flex-col flex w-full cursor-pointer items-center gap-2 rounded-sm border-b-2 px-4 py-2 font-medium text-gray-600 lg:w-auto">
+                <LuUser2 className="h-32 w-32 rounded-full border-4 border-slate-600 text-slate-600 lg:h-10 lg:w-10 lg:border-2" />
+                <span className="items-center flex flex-col">
+                  <span className="font-light">Selamat datang,</span>
+                  <span>
+                    {authUser && `${authUser.firstName} ${authUser.lastName}`}
+                  </span>
+                </span>
+              </div>
             ) : (
               <AuthButton className="mx-auto flex w-11/12 gap-2" />
             )}

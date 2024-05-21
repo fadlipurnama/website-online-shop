@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+
 const CardProduct = ({ children, id }) => {
   const navigate = useNavigate();
   return (

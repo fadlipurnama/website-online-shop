@@ -7,6 +7,9 @@ export default {
       padding: "16px",
     },
     extend: {
+      // gridTemplateRows: {
+      //   "3": "repeat(minmax(3, 60px))",
+      // },
       colors: {
         primaryColor: "#68B0AB",
         secondaryColor: "#8FC0A9",

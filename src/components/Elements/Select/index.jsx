@@ -7,9 +7,11 @@ const SelectForm = ({
   placeholder,
   required,
   className,
+  disabled,
   onChange,
   container,
   options,
+  value,
 }) => {
   return (
     <div className={`${container}`}>
@@ -17,6 +19,8 @@ const SelectForm = ({
       <Select
         options={options}
         name={name}
+        value={value}
+        disabled={disabled}
         placeholder={placeholder}
         required={required}
         className={className}

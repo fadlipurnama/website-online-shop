@@ -7,9 +7,12 @@ const InputForm = ({
   type,
   placeholder,
   required,
+  value,
+  maxLength,
   className,
   onChange,
   container,
+  disabled,
 }) => {
   return (
     <div className={`${container}`}>
@@ -17,10 +20,13 @@ const InputForm = ({
       <Input
         name={name}
         type={type}
+        disabled={disabled}
+        maxLength={maxLength}
         placeholder={placeholder}
         required={required}
         className={className}
         onChange={onChange}
+        value={value}
       />
     </div>
   );

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { asyncRegisterUser } from "../../redux/registerUser/action";
-import { useAuthForm } from "../../hooks/authForm";
+import { useAuthForm } from "../../hooks/useAuthForm";
 
 const FormRegister = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const FormRegister = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     dispatch(
-      asyncRegisterUser(firstName, lastName, phoneNumber, email, password),
+      asyncRegisterUser(firstName.toLowerCase(), lastName.toLowerCase(), phoneNumber, email, password),
     );
   };
 
@@ -69,7 +69,7 @@ const FormRegister = () => {
         container="col-span-2"
         onChange={handleChange}
       />
-      <p className="mb-3 col-span-2 text-center text-red-500">{message}</p>
+      <p className="col-span-2 mb-3 text-center text-red-500">{message}</p>
 
       <Button type="submit" variant="btn-1" className="col-span-2 py-3 text-lg">
         {loading ? "Sedang di proses..." : "DAFTAR"}

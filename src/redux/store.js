@@ -4,6 +4,7 @@ import authUserReducer from "./authUser/reducer";
 import productsReducer from "./products/reducer";
 import loginUserReducer from "./login/reducer";
 import categoriesReducer from "./categories/reducer";
+import detailProductReducer from "./detailProduct/reducer";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     auth: authUserReducer,
     products: productsReducer,
     categories: categoriesReducer,
+    detailProduct: detailProductReducer,
   },
 });
 

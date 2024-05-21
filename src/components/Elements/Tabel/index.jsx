@@ -1,13 +1,7 @@
 import { useState } from "react";
 import Pagination from "./Pagination";
 
-const Table = ({
-  data,
-  headers,
-  handleEdit,
-  handleDelete,
-  handleDetailProduct,
-}) => {
+const Table = ({ data, headers, handleDetailProduct }) => {
   // State untuk tracking halaman saat ini
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -38,13 +32,18 @@ const Table = ({
           {currentItems?.map((item, indexItem) => (
             <tr
               className="cursor-pointer hover:bg-secondaryColor"
-              onClick={handleDetailProduct}
+              onClick={(e) => {
+                e.stopPropagation;
+                handleDetailProduct(item._id);
+              }}
               key={`${item._id}-${indexItem}`}
             >
               {headers.map((header, indexHeader) => (
                 <td
                   key={`${header._id}-${indexHeader}`}
-                  className="whitespace-nowrap px-6 py-4"
+                  className={`whitespace-nowrap px-6 py-4 ${
+                    header === "Description" ? "min-w-96" : ""
+                  }`}
                 >
                   {header === "No" ? (
                     <span>{indexOfFirstItem + indexItem + 1}</span>
@@ -52,31 +51,26 @@ const Table = ({
                     <img
                       src={item.imageUrl}
                       alt={item.name}
-                      className="h-12 w-12"
+                      className="w-12 h-12"
                     />
+                  ) : header === "Best" ? (
+                    item.best ? (
+                      <span className="ml-2 rounded-full  bg-green-500 px-2 py-1 text-xs font-semibold text-white">
+                        Best
+                      </span>
+                    ) : (
+                      <span className="flex justify-center font-semibold">-</span>
+                    )
+                  ) : header === "Discount" ? (
+                    item.discount !== 0 ? (
+                      <span className="rounded-full bg-red-500 px-2 py-1 text-xs font-semibold text-white">
+                        Promo {item.discount}%
+                      </span>
+                    ) : (
+                      <span className="flex justify-center font-semibold">-</span>
+                    )
                   ) : header === "Description" ? (
-                    <span>{`${item.description.slice(0, 50)}...`}</span>
-                  ) : header === "Action" ? (
-                    <div className="flex gap-2">
-                      <button
-                        className="bg-primaryColor px-5  py-2 text-slate-200 hover:bg-secondaryColor"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleEdit(item.id);
-                        }}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="bg-red-600 p-2 text-slate-200 hover:bg-red-900"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDelete(item.id);
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
+                    <span className="text-wrap">{`${item.description.slice(0, 150)}...`}</span>
                   ) : (
                     item[header.toLowerCase()]
                   )}

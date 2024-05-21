@@ -33,7 +33,7 @@ const AuthLayout = ({ children, title, type }) => {
           </p>
         </div>
       </div>
-      <div className="relative hidden max-h-full w-full bg-gradient-to-r from-primaryColor to-secondaryColor py-32 xl:flex">
+      <div className="relative hidden max-h-full bg-white w-full bg-gradient-to-r py-32 xl:flex">
         <img
           src={logo}
           alt="logo-ahe"
@@ -45,10 +45,10 @@ const AuthLayout = ({ children, title, type }) => {
           className="absolute bottom-[30%] right-0 h-auto max-h-96"
         />
         <div className="lg absolute bottom-[30%] left-20 flex w-3/5 flex-col gap-3">
-          <p className="text-3xl font-semibold text-white/70">
+          <p className="text-3xl font-semibold text-black/70">
             Temukan Produk yang anda cari bersama kami
           </p>
-          <p className="text-lg font-semibold text-white/70">
+          <p className="text-lg font-semibold text-black/70">
             Memberikan pelayanan terbaik, Kualitas terbaik dan tentu dengan
             harga terbaik.
           </p>

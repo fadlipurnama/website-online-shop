@@ -19,7 +19,8 @@ const Pagination = ({ data, currentPage, itemsPerPage, setCurrentPage }) => {
   }, [data, currentPage, itemsPerPage, setCurrentPage]);
   return (
     <div className="mt-4 flex justify-center">
-      {data?.length ? (
+      {!data && <div>Sedang memuat...</div>}
+      {data && data.length ? (
         <>
           <button
             className={`mr-2 rounded-md ${currentPage === 1 ? "bg-slate-50 font-light" : "bg-gray-200"} px-4 py-2 text-gray-700`}
@@ -52,7 +53,7 @@ const Pagination = ({ data, currentPage, itemsPerPage, setCurrentPage }) => {
           </button>
         </>
       ) : (
-        <div>Data tidak ditemukan</div>
+        data && <div>Data tidak ditemukan</div>
       )}
     </div>
   );

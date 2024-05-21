@@ -3,8 +3,8 @@ import AuthButton from "../Fragments/Navbar/AuthButton";
 import SearchBarMenu from "../Fragments/Navbar/SearchBarMenu";
 import CartIcon from "../Elements/CartIcon";
 import HamburgerMenu from "../Fragments/Navbar/HamburgerMenu";
-import UserGreetings from "../Fragments/Navbar/UserGreetings";
 import MenuItem from "../Elements/MenuItem";
+import DropdownUser from "../Elements/DropdownUser";
 
 const NavbarLayout = () => {
   // const navigate = useNavigate();
@@ -12,15 +12,16 @@ const NavbarLayout = () => {
 
   return (
     <>
-      <div className="hidden lg:flex bg-gray-200 text-sm justify-end gap-4 py-2 px-5">
+      <nav className="hidden justify-end gap-4 bg-gray-200 px-5 py-2 text-sm lg:flex">
         <MenuItem text="Cek Resi" to="/cek-resi" />
         <MenuItem text="Hubungi Kami" to="/contact-us" />
         <MenuItem text="Download Aplikasi" to="download-aplikasi" />
         <MenuItem text="Tentang Kami" to="about-us" />
         <MenuItem text="FAQ" to="faq" />
-      </div>
-      <div className="flex w-full items-center justify-between bg-white px-4 py-4 shadow-sm lg:justify-around lg:gap-3 ">
+      </nav>
+      <header className="flex w-full items-center justify-between bg-white px-4 py-4 shadow-sm lg:justify-around lg:gap-3 ">
         {loading ? (
+          // Animated Loading
           <>
             <span className="animate-pulse bg-gray-200 text-xl font-semibold text-gray-200">
               Anugrah Hadi Electric
@@ -52,13 +53,16 @@ const NavbarLayout = () => {
               <HamburgerMenu authUser={authUser} />
             </div>
             {authUser ? (
-              <UserGreetings authUser={authUser} />
+              <DropdownUser
+                dropdownPosition="top-20"
+                authUser={authUser}
+              />
             ) : (
               <AuthButton className="hidden gap-2 lg:flex" />
             )}
           </>
         )}
-      </div>
+      </header>
     </>
   );
 };

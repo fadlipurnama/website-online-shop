@@ -5,12 +5,15 @@ const initialState = {
   loading: false,
   error: false,
   message: null,
+  success: false,
 };
 
 function productsReducer(state = initialState, action = {}) {
   switch (action.type) {
+    case ActionType.ADD_PRODUCT_REQUEST:
     case ActionType.SET_PRODUCTS_REQUEST:
       return { ...state, loading: true, error: false };
+    case ActionType.ADD_PRODUCT_FAILURE:
     case ActionType.SET_PRODUCTS_FAILURE:
       return {
         ...state,
@@ -26,11 +29,18 @@ function productsReducer(state = initialState, action = {}) {
         error: false,
         message: null,
       };
-    case ActionType.ADD_PRODUCTS:
+    case ActionType.ADD_PRODUCT_SUCCESS:
       return {
         ...state,
+        addSuccess: true,
         products: [...state.products, action.payload.product],
+        error: false,
       };
+      case ActionType.CLEAR_STATUS_ADD_PRODUCT:
+        return {
+          ...state,
+          addSuccess:false
+        }
     default:
       return state;
   }
