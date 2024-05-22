@@ -13,12 +13,12 @@ function detailProductReducer(state = initialState, action = {}) {
   switch (action.type) {
     case ActionType.DELETE_PRODUCT_REQUEST:
     case ActionType.UPDATE_PRODUCT_REQUEST:
-    case ActionType.RECEIVE_DETAIL_PRODUCT_REQUEST:
+    case ActionType.SET_DETAIL_PRODUCT_REQUEST:
       return { ...state, loading: true, error: false };
 
     case ActionType.DELETE_PRODUCT_FAILURE:
     case ActionType.UPDATE_PRODUCT_FAILURE:
-    case ActionType.RECEIVE_DETAIL_PRODUCT_FAILURE:
+    case ActionType.SET_DETAIL_PRODUCT_FAILURE:
       return {
         ...state,
         loading: false,

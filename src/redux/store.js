@@ -5,6 +5,7 @@ import productsReducer from "./products/reducer";
 import loginUserReducer from "./login/reducer";
 import categoriesReducer from "./categories/reducer";
 import detailProductReducer from "./detailProduct/reducer";
+import bannersReducer from "./banners/reducer";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     products: productsReducer,
     categories: categoriesReducer,
     detailProduct: detailProductReducer,
+    banners: bannersReducer,
   },
 });
 

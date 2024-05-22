@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   asyncDeleteProductById,
-  asyncReceiveDetailProduct,
+  asyncSetDetailProduct,
   clearDetailProductActionCreator,
 } from "../../../redux/detailProduct/action";
 import { MdArrowBack } from "react-icons/md";
@@ -22,7 +22,7 @@ const DetailProduct = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(asyncReceiveDetailProduct(productId));
+    dispatch(asyncSetDetailProduct(productId));
 
     if (pathname !== `/admin/tabel/products/${productId}`) {
       dispatch(clearDetailProductActionCreator());

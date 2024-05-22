@@ -1,4 +1,4 @@
-import Button from "../Elements/Buttons";
+import Button from "../Elements/Button";
 import InputForm from "../Elements/Input";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

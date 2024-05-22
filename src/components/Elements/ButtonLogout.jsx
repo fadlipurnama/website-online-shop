@@ -1,5 +1,5 @@
 import { IoMdLogOut } from "react-icons/io";
-import { asyncUnsetAuthUser } from "../../../redux/authUser/action";
+import { asyncUnsetAuthUser } from "../..//redux/authUser/action";
 import { useDispatch } from "react-redux";
 
 const ButtonLogout = ({ iconOn, bgHover, isMobile }) => {

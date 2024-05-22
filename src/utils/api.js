@@ -107,6 +107,23 @@ const api = (() => {
     return data;
   }
 
+  async function getAllBanners() {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/banner/getAllBanners`,
+    );
+
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
+    }
+
+    const { data } = responseJson;
+
+    return data;
+  }
+
   async function getAllProducts() {
     const response = await fetch(
       `${import.meta.env.VITE_APP_API_URL}/product/getAllProducts`,
@@ -224,6 +241,7 @@ const api = (() => {
     getAllProducts,
     createProduct,
     register,
+    getAllBanners,
     login,
   };
 })();

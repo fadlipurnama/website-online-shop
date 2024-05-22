@@ -3,7 +3,7 @@ import api from "../../utils/api";
 const ActionType = {
   SET_PRODUCTS_FAILURE: "SET_PRODUCTS_FAILURE",
   SET_PRODUCTS_REQUEST: "SET_PRODUCTS_REQUEST",
-  SET_PRODUCTS_SUCCESS: "SET_PRODUCTS_SUCCESS",
+  RECEIVE_PRODUCTS_SUCCESS: "RECEIVE_PRODUCTS_SUCCESS",
 
   ADD_PRODUCT_FAILURE: "ADD_PRODUCT_FAILURE",
   ADD_PRODUCT_REQUEST: "ADD_PRODUCT_REQUEST",
@@ -26,9 +26,9 @@ function toggleWhishlistActionCreator({ productId, userId }) {
   };
 }
 
-function setProductActionCreator(products) {
+function receiveProductActionCreator(products) {
   return {
-    type: ActionType.SET_PRODUCTS_SUCCESS,
+    type: ActionType.RECEIVE_PRODUCTS_SUCCESS,
     payload: {
       products,
     },
@@ -55,7 +55,7 @@ function asyncSetProducts() {
     dispatch({ type: ActionType.SET_PRODUCTS_REQUEST });
     try {
       const products = await api.getAllProducts();
-      dispatch(setProductActionCreator(products));
+      dispatch(receiveProductActionCreator(products));
     } catch (error) {
       dispatch({ type: ActionType.SET_PRODUCTS_FAILURE, payload: { error } });
     }

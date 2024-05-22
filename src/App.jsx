@@ -11,6 +11,7 @@ import AdminPage from "./pages/admin.jsx";
 import FormAddCategory from "./components/Fragments/FormAddCategory";
 import TabelProducts from "./components/Fragments/Admin/TabelProducts.jsx";
 import DetailProductAdmin from "./components/Fragments/Admin/DetailProduct.jsx";
+import PromotionPage from "./pages/promotion.jsx";
 
 const App = () => {
   const {
@@ -49,6 +50,10 @@ const App = () => {
     {
       path: "/register",
       element: <RegisterPage />,
+    },
+    {
+      path: "/promo/:promoName",
+      element: <PromotionPage />,
     },
   ];
 

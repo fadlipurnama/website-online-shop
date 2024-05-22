@@ -1,8 +1,8 @@
 import api from "../../utils/api";
 
 const ActionType = {
-  RECEIVE_DETAIL_PRODUCT_FAILURE: "RECEIVE_DETAIL_PRODUCT_FAILURE",
-  RECEIVE_DETAIL_PRODUCT_REQUEST: "RECEIVE_DETAIL_PRODUCT_REQUEST",
+  SET_DETAIL_PRODUCT_FAILURE: "SET_DETAIL_PRODUCT_FAILURE",
+  SET_DETAIL_PRODUCT_REQUEST: "SET_DETAIL_PRODUCT_REQUEST",
   RECEIVE_DETAIL_PRODUCT_SUCCESS: "RECEIVE_DETAIL_PRODUCT_SUCCESS",
 
   DELETE_PRODUCT_FAILURE: "DELETE_PRODUCT_FAILURE",
@@ -39,15 +39,15 @@ function clearDetailProductActionCreator() {
   };
 }
 
-function asyncReceiveDetailProduct(productId) {
+function asyncSetDetailProduct(productId) {
   return async (dispatch) => {
-    dispatch({ type: ActionType.RECEIVE_DETAIL_PRODUCT_REQUEST });
+    dispatch({ type: ActionType.SET_DETAIL_PRODUCT_REQUEST });
     try {
       const detailProduct = await api.getProductById(productId);
       dispatch(receiveDetailProductActionCreator(detailProduct));
     } catch (error) {
       dispatch({
-        type: ActionType.RECEIVE_DETAIL_PRODUCT_FAILURE,
+        type: ActionType.SET_DETAIL_PRODUCT_FAILURE,
         payload: { error },
       });
       console.error(error.message);
@@ -124,7 +124,7 @@ export {
   clearStatusUpdateProductActionCreator,
   asyncUpdateProductById,
   clearDetailProductActionCreator,
-  asyncReceiveDetailProduct,
+  asyncSetDetailProduct,
   // asyncAddThreadComment,
   // addThreadCommentActionCreator,
 };

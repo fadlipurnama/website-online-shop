@@ -7,7 +7,7 @@ import {
 import Table from "../../Elements/Tabel";
 import InputForm from "../../Elements/Input";
 import FormAddProduct from "./FormAddProduct";
-import Button from "../../Elements/Buttons";
+import Button from "../../Elements/Button";
 import { useNavigate } from "react-router-dom";
 
 const TabelProducts = () => {

@@ -21,7 +21,7 @@ function productsReducer(state = initialState, action = {}) {
         error: true,
         message: action.payload,
       };
-    case ActionType.SET_PRODUCTS_SUCCESS:
+    case ActionType.RECEIVE_PRODUCTS_SUCCESS:
       return {
         ...state,
         products: action.payload.products,
@@ -36,11 +36,11 @@ function productsReducer(state = initialState, action = {}) {
         products: [...state.products, action.payload.product],
         error: false,
       };
-      case ActionType.CLEAR_STATUS_ADD_PRODUCT:
-        return {
-          ...state,
-          addSuccess:false
-        }
+    case ActionType.CLEAR_STATUS_ADD_PRODUCT:
+      return {
+        ...state,
+        addSuccess: false,
+      };
     default:
       return state;
   }

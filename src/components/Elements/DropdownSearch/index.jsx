@@ -1,13 +1,14 @@
 import { CiSearch } from "react-icons/ci";
 import { useEffect, useState } from "react";
-import InputForm from "../../Elements/Input";
+// import Input from "../../Elements/Input/Input";
+import InputSearch from "../InputSearch";
 
-const SearchBarMenu = () => {
-  const [openSearch, setOpenSearch] = useState(false);
+const DropdwonSearch = () => {
+  const [openSearchBar, setOpenSearchBar] = useState(false);
 
   const toggleSearchBar = () => {
     if (window.innerWidth < 1024) {
-      setOpenSearch(!openSearch);
+      setOpenSearchBar(!openSearchBar);
       document.body.classList.toggle("overflow-hidden");
     }
   };
@@ -15,7 +16,7 @@ const SearchBarMenu = () => {
   useEffect(() => {
     const handleResize = () => {
       if (innerWidth > 1024) {
-        setOpenSearch(false);
+        setOpenSearchBar(false);
         document.body.classList.remove("overflow-hidden");
       }
     };
@@ -25,28 +26,23 @@ const SearchBarMenu = () => {
   }, []);
 
   return (
-    <div className="block cursor-pointer gap-0 rounded-lg lg:flex lg:w-full lg:cursor-default lg:items-center lg:gap-1 lg:border lg:px-2">
+    <div className="lg:hidden cursor-pointer gap-0 rounded-lg flex lg:w-full lg:cursor-default lg:items-center lg:gap-1 lg:border lg:px-2">
       <CiSearch onClick={toggleSearchBar} className="h-6 w-6" />
-      <InputForm
+      {/* <Input
         placeholder="Search..."
         className="text-md hidden border-none py-3 outline-none lg:block lg:text-base"
-      />
+      /> */}
+      {/* <InputSearch placeholder='Ssearch...' onClick={toggleSearchBar} /> */}
       <>
         {/* Search Bar Dropdown */}
-        {openSearch && (
+        {openSearchBar && (
           <>
             <div
               className="fixed right-0 top-0 z-10 h-full w-full bg-black/50 backdrop-blur-sm lg:hidden"
               onClick={toggleSearchBar}
             ></div>
             <div className="fixed left-0 top-0 z-20 flex h-full w-full max-w-sm flex-col gap-5 bg-white px-5 py-8 lg:hidden">
-              <div className="flex items-center gap-1 rounded-lg border px-2">
-                <CiSearch className="h-6 w-6" />
-                <InputForm
-                  placeholder="Search..."
-                  className="border-none py-3 text-base outline-none"
-                />
-              </div>
+              <InputSearch openSearchBar={openSearchBar} placeholder='Ssearch...'/>
             </div>
           </>
         )}
@@ -55,4 +51,4 @@ const SearchBarMenu = () => {
   );
 };
 
-export default SearchBarMenu;
+export default DropdwonSearch;

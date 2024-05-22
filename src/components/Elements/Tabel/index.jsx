@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Pagination from "./Pagination";
+import Pagination from "./pagination";
 
 const Table = ({ data, headers, handleDetailProduct }) => {
   // State untuk tracking halaman saat ini

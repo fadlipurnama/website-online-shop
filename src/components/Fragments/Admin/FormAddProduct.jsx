@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { asyncSetCategories } from "../../../redux/categories/action";
 import { useFormRoleAdmin } from "../../../hooks/useFormRoleAdmin";
 import { asyncAddProduct } from "../../../redux/products/action";
-import Button from "../../Elements/Buttons";
+import Button from "../../Elements/Button";
 import Checkbox from "../../Elements/Checkbox";
 
 const FormAddProduct = ({ error, message, loading }) => {
