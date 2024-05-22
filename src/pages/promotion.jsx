@@ -2,7 +2,7 @@
 const PromotionPage = () => {
   return (
     <div>
-      
+      Halooo
     </div>
   )
 }

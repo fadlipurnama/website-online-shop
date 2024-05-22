@@ -12,6 +12,7 @@ import FormAddCategory from "./components/Fragments/FormAddCategory";
 import TabelProducts from "./components/Fragments/Admin/TabelProducts.jsx";
 import DetailProductAdmin from "./components/Fragments/Admin/DetailProduct.jsx";
 import PromotionPage from "./pages/promotion.jsx";
+import ProductCategoriesPage from "./pages/productCategories.jsx";
 
 const App = () => {
   const {
@@ -54,6 +55,10 @@ const App = () => {
     {
       path: "/promo/:promoName",
       element: <PromotionPage />,
+    },
+    {
+      path: "/products/:categories",
+      element: <ProductCategoriesPage />,
     },
   ];
 

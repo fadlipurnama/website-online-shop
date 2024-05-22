@@ -204,31 +204,30 @@ const api = (() => {
 
     return data;
   }
-  async function updateProductById({ productData, productId }) {   
+  async function updateProductById({ productData, productId }) {
     const response = await fetch(
       `${import.meta.env.VITE_APP_API_URL}/product/updateProduct/${productId}`,
       {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${getAccessToken()}`,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(productData),
-      }
+      },
     );
-  
+
     const responseJson = await response.json();
     const { success, error } = responseJson;
-  
+
     if (!success) {
       throw new Error(error);
     }
-  
+
     const { data } = responseJson;
-  
+
     return data;
   }
-  
 
   return {
     updateProductById,

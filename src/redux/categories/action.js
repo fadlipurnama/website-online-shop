@@ -8,16 +8,22 @@ const ActionType = {
   ADD_CATEGORIES: "ADD_CATEGORIES",
 };
 
+function receiveCategoriesActionCreator(categories) {
+  return {
+    type: ActionType.RECEIVE_CATEGORIES_SUCCESS,
+    payload: {
+      categories,
+    },
+  };
+}
+
 
 function asyncSetCategories() {
   return async (dispatch) => {
     dispatch({ type: ActionType.SET_CATEGORIES_REQUEST });
     try {
       const categories = await api.getAllCategories();
-      dispatch({
-        type: ActionType.RECEIVE_CATEGORIES_SUCCESS,
-        payload: { categories },
-      });
+      dispatch(receiveCategoriesActionCreator(categories))
     } catch (error) {
       dispatch({ type: ActionType.SET_CATEGORIES_FAILURE, payload: { error } });
     }

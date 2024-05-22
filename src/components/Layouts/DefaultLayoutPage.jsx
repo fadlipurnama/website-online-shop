@@ -1,7 +1,7 @@
 import Footer from "../Fragments/Footer";
 import Navbar from "../Fragments/Navbar";
 
-const HomeLayout = ({ children }) => {
+const DefaultLayoutPage = ({ children }) => {
   return (
     <>
       <Navbar />
@@ -11,4 +11,4 @@ const HomeLayout = ({ children }) => {
   );
 };
 
-export default HomeLayout;
+export default DefaultLayoutPage;

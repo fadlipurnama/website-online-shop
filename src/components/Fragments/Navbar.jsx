@@ -14,7 +14,7 @@ import Button from "../Elements/Button";
 
 const Navbar = () => {
   // const navigate = useNavigate();
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const { authUser, loading } = useSelector((state) => state.auth);
 
   return (
