@@ -1,12 +1,12 @@
 import { useState } from "react";
 import PaginationProducts from "../components/Fragments/PaginationProducts";
 import ProductList from "../components/Fragments/ProductsList";
-import DefaultLayout from "../components/Layouts/DefaultLayout";
-import { useFilterProductCategories } from "../hooks/useFilterProductCategories";
 import FilterProduct from "../components/Fragments/FIlterProduct";
-import {  useParams } from "react-router-dom";
+import { useFilterProductPromotion } from "../hooks/useFilterProductPromotion";
+import DefaultLayout from "../components/Layouts/DefaultLayout";
 import { Helmet } from "react-helmet-async";
-const ProductCategoriesPage = () => {
+import { useParams } from "react-router-dom";
+const ProductPromotionPage = () => {
   const [
     filteredProducts,
     searchTerm,
@@ -17,12 +17,14 @@ const ProductCategoriesPage = () => {
     setSearchTerm,
     setPriceFilter,
     setBrandFilter,
-  ] = useFilterProductCategories();
+  ] = useFilterProductPromotion();
   const [currentPage, setCurrentPage] = useState(1);
   const startIndex = (currentPage - 1) * 8;
   const selectedProducts = filteredProducts?.slice(startIndex, startIndex + 8);
 
-  const { categories } = useParams();
+  const { promotionName } = useParams();
+
+  const { description } = JSON.parse(localStorage.getItem("promotionToken"));
 
   function capitalizeFirstLetter(string) {
     return string
@@ -37,16 +39,15 @@ const ProductCategoriesPage = () => {
     <>
       <Helmet>
         <title>
-          Anugrah Hadi Electric - Tersedia Berbagai Barang Elektrik |{" "}
-          {capitalizeFirstLetter(categories)}
+          Anugrah Hadi Electric - {capitalizeFirstLetter(promotionName)}
         </title>
         <meta
           name="description"
-          content={import.meta.env.VITE_APP_DEFAULT_DESCRIPTION}
+          content={`${description.substring(0, 152)}...`}
         />
         <link
           rel="canonical"
-          href={`${import.meta.env.VITE_APP_WEBSITE_URL}/products/${categories.replace(/ /g, "%20")}`}
+          href={`${import.meta.env.VITE_APP_WEBSITE_URL}/promo/${promotionName.replace(/ /g, "%20")}`}
         />
       </Helmet>
       <DefaultLayout>
@@ -60,10 +61,7 @@ const ProductCategoriesPage = () => {
           loading={loading}
           brands={brands}
         />
-        <ProductList
-          products={selectedProducts}
-          loading={loading}
-        />
+        <ProductList products={selectedProducts} loading={loading} />
         {filteredProducts?.length !== 0 && (
           <PaginationProducts
             data={filteredProducts}
@@ -77,4 +75,4 @@ const ProductCategoriesPage = () => {
   );
 };
 
-export default ProductCategoriesPage;
+export default ProductPromotionPage;

@@ -5,6 +5,8 @@ const ActionType = {
   SET_BANNER_REQUEST: "SET_BANNER_REQUEST",
   RECEIVE_BANNER_SUCCESS: "RECEIVE_BANNER_SUCCESS",
 
+  CLEAR_STATE: "CLEAR_STATE",
+
   ADD_BANNER: "ADD_BANNER",
 };
 
@@ -14,6 +16,11 @@ function receiveBannerActionCreator(banners) {
     payload: {
       banners,
     },
+  };
+}
+function clearStateBannerActionCreator() {
+  return {
+    type: ActionType.CLEAR_STATE,
   };
 }
 
@@ -29,4 +36,4 @@ function asyncSetBanners() {
   };
 }
 
-export { ActionType, asyncSetBanners };
+export { ActionType, asyncSetBanners, clearStateBannerActionCreator };

@@ -14,7 +14,7 @@ const SelectForm = ({
   value,
 }) => {
   return (
-    <div className={`${container}`}>
+    <div className={`${container} w-full`}>
       <Label htmlFor={name}>{label}</Label>
       <Select
         options={options}

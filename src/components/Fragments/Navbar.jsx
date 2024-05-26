@@ -1,90 +1,106 @@
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-// import SearchBarMenu from "./SearchBarMenu";
-
-// import HamburgerMenu from "./HamburgerMenu";
-
-import { useNavigate } from "react-router-dom";
 import MenuItem from "../Elements/MenuItem";
 import InputSearch from "../Elements/InputSearch";
 import CartIcon from "../Elements/CartIcon";
 import DropdownSearch from "../Elements/DropdownSearch";
 import DropdownUser from "../Elements/DropdownUser";
 import HamburgerMenu from "../Elements/HamburgerMenu";
-import Button from "../Elements/Button";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  // const navigate = useNavigate();
-  const navigate = useNavigate();
   const { authUser, loading } = useSelector((state) => state.auth);
+  const [isSticky, setIsSticky] = useState(false);
+  const navigate = useNavigate();
+
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setIsSticky(true);
+    } else {
+      setIsSticky(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
-      <nav className="hidden justify-end gap-4 bg-gray-200 px-5 py-2 text-sm lg:flex">
-        <MenuItem text="Cek Resi" to="/cek-resi" />
-        <MenuItem text="Hubungi Kami" to="/contact-us" />
-        <MenuItem text="Download Aplikasi" to="download-aplikasi" />
-        <MenuItem text="Tentang Kami" to="about-us" />
-        <MenuItem text="FAQ" to="faq" />
-      </nav>
-      <header className="flex w-full items-center justify-between bg-white px-4 py-4 shadow-sm lg:justify-around lg:gap-3 ">
-        {loading ? (
-          // Animated Loading
-          <>
-            <span className="animate-pulse bg-gray-200 text-xl font-semibold text-gray-200">
-              Anugrah Hadi Electric
-            </span>
-            <div className="hidden h-12 w-1/2 animate-pulse bg-gray-200 text-gray-200 lg:block">
-              search
+      <header
+        className={`z-50 w-full bg-white shadow-sm transition-all duration-300 ${isSticky && "sticky top-0  bg-white"}`}
+      >
+        <nav
+          className={`hidden items-center justify-between gap-4 bg-gray-100 px-6 py-2 text-sm lg:flex ${loading ? "animate-pulse" : ""}`}
+        >
+          <div className="flex gap-4">
+            {[
+              "Cek Resi",
+              "Hubungi Kami",
+              "Download Aplikasi",
+              "Tentang Kami",
+              "FAQ",
+            ].map((text, idx) => (
+              <MenuItem
+                key={idx}
+                text={text}
+                to={`/${text.toLowerCase().replace(/\s+/g, "-")}`}
+                className={loading ? "bg-gray-200 text-transparent" : ""}
+              />
+            ))}
+          </div>
+          {!authUser && (
+            <div className="flex gap-4 font-semibold">
+              <MenuItem
+                text="Masuk"
+                to="/login"
+                className={loading ? "bg-gray-200 text-transparent" : ""}
+              />
+              <MenuItem
+                text="Daftar"
+                to="/register"
+                className={loading ? "bg-gray-200 text-transparent" : ""}
+              />
             </div>
-            <div className="h-8 w-28 animate-pulse bg-gray-200 text-slate-200 lg:h-8 lg:w-8">
-              cart
-            </div>
-            <div className="hidden gap-2 lg:flex">
-              <div className="animate-pulse bg-gray-200 px-6 py-5 text-gray-200">
-                Button
-              </div>
-              <div className="animate-pulse bg-gray-200 px-6 py-5 text-gray-200">
-                Button
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <span className="text-xl font-semibold text-primaryColor">
-              Anugrah Hadi Electric
-            </span>
-            <InputSearch placeholder="Search..." />
-            <div className="flex items-center justify-between gap-5 lg:gap-10">
-              <DropdownSearch />
-              <CartIcon itemCount={1} />
-              <HamburgerMenu authUser={authUser} />
-            </div>
-            {authUser ? (
-              <DropdownUser dropdownPosition="top-20" authUser={authUser} />
+          )}
+        </nav>
+
+        <div
+          className={`top-0 flex flex-wrap items-center ${isSticky && "bgwhite/100 "} justify-between px-6 py-3 lg:gap-4 2xl:flex-nowrap ${loading ? "animate-pulse" : ""}`}
+        >
+          <span
+            onClick={() => navigate("/")}
+            className={`text-sm  cursor-pointer font-semibold md:text-lg lg:text-xl ${loading ? "bg-gray-200 text-transparent" : "text-primaryColor"}`}
+          >
+            Anugrah Hadi Electric
+          </span>
+          <div className="order-2 flex max-w-lg items-center justify-between gap-4 md:gap-5 lg:w-full">
+            {loading ? (
+              <>
+                <div className="hidden h-12 w-1/2 bg-gray-200 lg:block"></div>
+                <div className="hidden h-8 w-8 bg-gray-200 lg:block"></div>
+                <div className="hidden h-8 w-28 bg-gray-200 lg:block"></div>
+                <div className="h-8 w-8 bg-gray-200 lg:block"></div>
+              </>
             ) : (
-              <div className="hidden gap-2 lg:flex">
-                <Button
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                  className="px-6 py-5"
-                  variant="btn-1"
-                >
-                  MASUK
-                </Button>
-                <Button
-                  onClick={() => {
-                    navigate("/register");
-                  }}
-                  className="px-6 py-5"
-                  variant="btn-2"
-                >
-                  DAFTAR
-                </Button>
-              </div>
+              <>
+                <InputSearch placeholder="Search..." />
+                <DropdownSearch />
+                {authUser && (
+                  <DropdownUser
+                    authUser={authUser}
+                    dropdownPosition="right-0 top-10"
+                  />
+                )}
+                <CartIcon itemCount={1} />
+                <HamburgerMenu authUser={authUser} />
+              </>
             )}
-          </>
-        )}
+          </div>
+        </div>
       </header>
     </>
   );

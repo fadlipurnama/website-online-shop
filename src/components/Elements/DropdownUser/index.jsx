@@ -52,26 +52,27 @@ const DropdownUser = ({ authUser, dropdownPosition }) => {
 
   return (
     <div
-      className={`relative ${pathname.includes("/admin") ? "block" : "hidden lg:block"} w-full lg:w-auto`}
+      className={`relative ${pathname.includes("/admin") ? "block" : "hidden lg:block"}`}
     >
       <button
         ref={triggerRef}
         onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
-        className="flex cursor-pointer items-center gap-4 rounded-sm px-0 py-2 font-medium text-gray-600 outline-none transition duration-300 ease-in-out"
+        className="flex cursor-pointer items-center gap-4 rounded-sm px-0 font-medium text-gray-600 outline-none transition duration-300 ease-in-out"
       >
-        <span className="flex flex-col items-end">
+        {/* <span className="flex flex-col items-end">
           <span className="font-light">Selamat datang,</span>
           <span>
             {authUser && `${authUser.firstName} ${authUser.lastName}`}
           </span>
-        </span>
-        <LuUser2 className="h-10 w-10 rounded-full border-2 border-slate-600 text-slate-600" />
+        </span> */}
+        <LuUser2 className="h-8 w-8 text-slate-600" />
       </button>
       {dropdownIsOpen && (
         <DropdownUserList
           dropdownPosition={dropdownPosition}
-          userId={authUser._id}
-          dropdownIsOpen={dropdownIsOpen}
+          authUser={authUser}
+          // dropdownIsOpen={dropdownIsOpen}
+          setDropdownIsOpen={setDropdownIsOpen}
           dropdownRef={dropdownRef}
         />
       )}

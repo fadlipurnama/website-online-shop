@@ -123,6 +123,22 @@ const api = (() => {
 
     return data;
   }
+  async function getBannerById(bannerId) {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/banner/getBannerById/${bannerId}`,
+    );
+
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
+    }
+
+    const { data } = responseJson;
+
+    return data;
+  }
 
   async function getAllProducts() {
     const response = await fetch(
@@ -233,6 +249,7 @@ const api = (() => {
     updateProductById,
     getProductById,
     deleteProductById,
+    getBannerById,
     removeAccessToken,
     putAccessToken,
     getAllCategories,

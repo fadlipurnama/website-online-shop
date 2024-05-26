@@ -8,11 +8,14 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { asyncSetAuthUser, asyncUnsetAuthUser } from "./redux/authUser/action";
 import AdminPage from "./pages/admin.jsx";
-import FormAddCategory from "./components/Fragments/FormAddCategory";
+// import FormAddCategory from "./components/Fragments/FormAddCategory";
 import TabelProducts from "./components/Fragments/Admin/TabelProducts.jsx";
 import DetailProductAdmin from "./components/Fragments/Admin/DetailProduct.jsx";
-import PromotionPage from "./pages/promotion.jsx";
 import ProductCategoriesPage from "./pages/productCategories.jsx";
+import LoadingPage from "./pages/loading.jsx";
+import ProductPromotionPage from "./pages/productPromotion.jsx";
+import DetailProfilePage from "./pages/detailProfile.jsx";
+import DetailProductPage from "./pages/detailProduct.jsx";
 
 const App = () => {
   const {
@@ -44,6 +47,7 @@ const App = () => {
       element: <HomePage />,
       errorElement: <ErrorPage authUser={authUser} />,
     },
+
     {
       path: "/login",
       element: <LoginPage />,
@@ -53,12 +57,28 @@ const App = () => {
       element: <RegisterPage />,
     },
     {
-      path: "/promo/:promoName",
-      element: <PromotionPage />,
+      path: "/user-profile/:userId",
+      element: <DetailProfilePage />,
+    },
+    {
+      path: "/promo/:promotionName",
+      element: <ProductPromotionPage />,
     },
     {
       path: "/products/:categories",
       element: <ProductCategoriesPage />,
+    },
+    {
+      path: "/promo/:promotionName/:productId",
+      element: <DetailProductPage />,
+    },
+    {
+      path: "/products/:categories/:productId",
+      element: <DetailProductPage />,
+    },
+    {
+      path: "/detailProducts/:productId",
+      element: <DetailProductPage />,
     },
   ];
 
@@ -75,10 +95,6 @@ const App = () => {
           path: "tabel-products/:productId",
           element: <DetailProductAdmin />,
         },
-        {
-          path: "tabel-categories",
-          element: <FormAddCategory />,
-        },
       ],
     });
   }
@@ -86,7 +102,7 @@ const App = () => {
   const router = createBrowserRouter(routes);
 
   if (loading || !hasCheckedAuth) {
-    return null; // Bisa juga menggunakan spinner atau loading indicator di sini
+    return <LoadingPage />; // Bisa juga menggunakan spinner atau loading indicator di sini
   }
 
   return <RouterProvider router={router} />;

@@ -4,21 +4,23 @@ import ButtonLogout from "../ButtonLogout";
 
 const DropdownUserList = ({
   dropdownPosition,
-  userId,
+  authUser,
   setDropdownIsOpen,
   dropdownRef,
 }) => {
+
+  console.log(authUser)
   const navigate = useNavigate();
   return (
     <div
       ref={dropdownRef}
-      className={`absolute z-50 ${dropdownPosition} w-full max-w-60 flex-col rounded-sm border bg-white shadow-lg 
+      className={`absolute z-50 ${dropdownPosition} w-60 flex-col rounded-sm border bg-white shadow-lg 
         `}
     >
       <div
         onClick={() => {
           setDropdownIsOpen(false);
-          navigate(`/profile-user/${userId}`);
+          navigate(`/user-profile/${authUser._id}`);
         }}
         className="flex cursor-pointer items-center gap-2 p-4 hover:bg-slate-100 hover:font-medium"
       >

@@ -1,36 +1,40 @@
-import { useSelector } from "react-redux";
 import CardProduct from "../Elements/CardProduct";
 
-const ProductList = () => {
-  const { products } = useSelector((states) => states.products);
-
+const ProductList = ({ products, parentRoutes, loading }) => {
   return (
-    <div className="m-auto mb-10 max-w-[85%] rounded-lg bg-white p-2 shadow-lg lg:px-9 lg:py-4">
-      <h2 className="text-md mb-5 font-semibold md:text-2xl">Product</h2>
-      <div className="flex max-w-max flex-wrap items-center justify-center gap-2 lg:gap-6">
-        {products
-          ? products.slice(0, 8).map((product) => (
-              <CardProduct key={product._id} id={product._id}>
-                <CardProduct.Header
-                  image={product.imageUrl}
-                  title={product.name}
-                />
-                <CardProduct.Body category={product.category}>
-                  {product.description}
-                </CardProduct.Body>
-                <CardProduct.Footer price={product.price} />
-              </CardProduct>
-            ))
-          :
-          // Loading
+    <div
+      className={`mx-auto grid  items-center ${products?.length === 0 ? "grid-cols-1 justify-center" : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"} justify-center gap-2 lg:gap-6`}
+    >
+      {products
+        ? products?.slice(0, 8).map((product, index) => (
+            <CardProduct parentRoutes={parentRoutes} key={product._id || index} id={product._id}>
+              <CardProduct.Header
+                best={product?.best}
+                category={product?.category}
+                image={product.imageUrl}
+                title={product.name}
+              />
+              <CardProduct.Body>{product.description}</CardProduct.Body>
+              <CardProduct.Footer
+                discount={product.discount}
+                price={product.price}
+              />
+            </CardProduct>
+          ))
+        : loading &&
           Array.from({ length: 8 }, (_, index) => (
-              <CardProduct key={index}>
-                <CardProduct.Header />
-                <CardProduct.Body></CardProduct.Body>
-                <CardProduct.Footer />
-              </CardProduct>
-            ))}
-      </div>
+            <CardProduct key={index}>
+              <CardProduct.Header />
+              <CardProduct.Body></CardProduct.Body>
+              <CardProduct.Footer />
+            </CardProduct>
+          ))}
+
+      {products?.length === 0 && (
+        <div className="mx-auto flex h-[50vh] w-full items-center justify-center lg:h-[70vh]">
+          Data tidak ditemukan
+        </div>
+      )}
     </div>
   );
 };

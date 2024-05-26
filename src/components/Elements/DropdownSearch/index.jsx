@@ -1,6 +1,5 @@
 import { CiSearch } from "react-icons/ci";
 import { useEffect, useState } from "react";
-// import Input from "../../Elements/Input/Input";
 import InputSearch from "../InputSearch";
 
 const DropdwonSearch = () => {
@@ -28,11 +27,6 @@ const DropdwonSearch = () => {
   return (
     <div className="lg:hidden cursor-pointer gap-0 rounded-lg flex lg:w-full lg:cursor-default lg:items-center lg:gap-1 lg:border lg:px-2">
       <CiSearch onClick={toggleSearchBar} className="h-6 w-6" />
-      {/* <Input
-        placeholder="Search..."
-        className="text-md hidden border-none py-3 outline-none lg:block lg:text-base"
-      /> */}
-      {/* <InputSearch placeholder='Ssearch...' onClick={toggleSearchBar} /> */}
       <>
         {/* Search Bar Dropdown */}
         {openSearchBar && (

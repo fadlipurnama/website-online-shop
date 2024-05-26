@@ -26,6 +26,8 @@ function threadsReducer(state = initialState, action = {}) {
         error: false,
         message: null,
       };
+    case ActionType.CLEAR_STATE:
+      return initialState
     // case ActionType.ADD_THREAD:
     //   return [action.payload.categories, ...threads];
     default:
