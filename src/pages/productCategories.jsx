@@ -49,7 +49,7 @@ const ProductCategoriesPage = () => {
           href={`${import.meta.env.VITE_APP_WEBSITE_URL}/products/${categories.replace(/ /g, "%20")}`}
         />
       </Helmet>
-      <DefaultLayout>
+      <DefaultLayout firstTitle={categories}>
         <FilterProduct
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

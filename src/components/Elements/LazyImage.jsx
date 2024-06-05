@@ -5,6 +5,7 @@ const LazyImage = ({
   src,
   alt,
   className,
+  loading = false,
   style,
   placeholder,
 }) => {
@@ -47,7 +48,7 @@ const LazyImage = ({
       ref={imgRef}
       src={isIntersecting ? src : undefined}
       alt={alt}
-      className={className}
+      className={`${className} ${loading && "animate-pulse bg-gray-200"}`}
       data-src={src}
       style={style}
       loading="lazy" // Enable native lazy loading

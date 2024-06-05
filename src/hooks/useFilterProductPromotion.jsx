@@ -4,26 +4,28 @@ import { asyncSetProducts } from "../redux/products/action";
 import { useParams } from "react-router-dom";
 
 export const useFilterProductPromotion = () => {
-  const { key } = JSON.parse(localStorage.getItem("promotionToken"));
-  const dispatch = useDispatch();
   const { promotionName } = useParams();
   const { products = [], loading } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
 
-  const [priceFilter, setPriceFilter] = useState(
-    () => localStorage.getItem("priceFilter") || "",
-  );
-  const [brandFilter, setBrandFilter] = useState(
-    () => localStorage.getItem("brandFilter") || "",
-  );
+  const [priceFilter, setPriceFilter] = useState("");
+  const [brandFilter, setBrandFilter] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredProducts = useMemo(() => {
     if (products && !loading) {
-      const filtered = products
+      const filteredProductActive = products.filter((item) => {
+        return item.isActive === true;
+      });
+      const filtered = filteredProductActive
         .filter((item) => {
-          if (item.promotionId === key) {
-            return item.promotionId === key;
+          if (
+            item.labelPromo?.toLowerCase() === promotionName.toLowerCase()
+          ) {
+            return (
+              item.labelPromo?.toLowerCase() === promotionName.toLowerCase()
+            );
           } else {
             return false;
           }
@@ -42,7 +44,7 @@ export const useFilterProductPromotion = () => {
         });
       return filtered;
     }
-  }, [products, loading, key, searchTerm, priceFilter, brandFilter]);
+  }, [products, loading, promotionName, searchTerm, priceFilter, brandFilter]);
 
   const brands = useMemo(
     () => [...new Set(products?.map((product) => product.brand))],
@@ -54,20 +56,14 @@ export const useFilterProductPromotion = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    localStorage.setItem("priceFilter", priceFilter);
-    localStorage.setItem("brandFilter", brandFilter);
-  }, [priceFilter, brandFilter]);
-
-  useEffect(() => {
-    const promotionToken = JSON.parse(localStorage.getItem("promotionToken"));
-
-    if (promotionName !== promotionToken.name.toLowerCase()) {
+    const prevParams = localStorage.getItem("params");
+    const promotionData = JSON.parse(localStorage.getItem("promotionData"));
+    if (promotionName !== prevParams) {
+      localStorage.setItem("params", promotionName);
       localStorage.setItem(
-        "promotionToken",
-        JSON.stringify({ ...promotionToken, key: promotionName }),
+        "promotionData",
+        JSON.stringify({ ...promotionData, name: promotionName }),
       );
-      setBrandFilter("");
-      setPriceFilter("");
     }
   }, [promotionName]);
 

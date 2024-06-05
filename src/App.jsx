@@ -7,15 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { asyncSetAuthUser, asyncUnsetAuthUser } from "./redux/authUser/action";
-import AdminPage from "./pages/admin.jsx";
-// import FormAddCategory from "./components/Fragments/FormAddCategory";
-import TabelProducts from "./components/Fragments/Admin/TabelProducts.jsx";
-import DetailProductAdmin from "./components/Fragments/Admin/DetailProduct.jsx";
 import ProductCategoriesPage from "./pages/productCategories.jsx";
 import LoadingPage from "./pages/loading.jsx";
 import ProductPromotionPage from "./pages/productPromotion.jsx";
 import DetailProfilePage from "./pages/detailProfile.jsx";
 import DetailProductPage from "./pages/detailProduct.jsx";
+import UserInfo from "./components/Fragments/UserInfo.jsx";
+import UserCart from "./components/Fragments/UserCart.jsx";
+import AddAddress from "./components/Fragments/AddAddress.jsx";
+import CartPage from "./pages/cart.jsx";
 
 const App = () => {
   const {
@@ -57,8 +57,26 @@ const App = () => {
       element: <RegisterPage />,
     },
     {
+      path: "/cart/cart-list",
+      element: <CartPage />,
+    },
+    {
       path: "/user-profile/:userId",
       element: <DetailProfilePage />,
+      children: [
+        {
+          path: "",
+          element: <UserInfo />,
+        },
+        {
+          path: "keranjang-belanja",
+          element: <UserCart />,
+        },
+        {
+          path: "alamat",
+          element: <AddAddress />,
+        },
+      ],
     },
     {
       path: "/promo/:promotionName",
@@ -69,35 +87,16 @@ const App = () => {
       element: <ProductCategoriesPage />,
     },
     {
-      path: "/promo/:promotionName/:productId",
+      path: "/promo/:promotionName//:productId",
       element: <DetailProductPage />,
     },
     {
       path: "/products/:categories/:productId",
       element: <DetailProductPage />,
     },
-    {
-      path: "/detailProducts/:productId",
-      element: <DetailProductPage />,
-    },
   ];
 
-  if (authUser?.isAdmin) {
-    routes.push({
-      path: "/admin",
-      element: <AdminPage />,
-      children: [
-        {
-          path: "tabel-products",
-          element: <TabelProducts />,
-        },
-        {
-          path: "tabel-products/:productId",
-          element: <DetailProductAdmin />,
-        },
-      ],
-    });
-  }
+
 
   const router = createBrowserRouter(routes);
 

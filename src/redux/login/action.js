@@ -1,5 +1,4 @@
 import api from "../../utils/api";
-import { hideLoading, showLoading } from "react-redux-loading-bar";
 import { asyncSetAuthUser } from "../authUser/action";
 
 const ActionType = {
@@ -13,7 +12,6 @@ const ActionType = {
 
 const asyncLoginUser = (email, password) => {
   return async (dispatch) => {
-    dispatch(showLoading());
     dispatch({ type: ActionType.LOGIN_REQUEST });
     try {
       const { authToken } = await api.login({
@@ -23,9 +21,7 @@ const asyncLoginUser = (email, password) => {
       api.putAccessToken(authToken);
       dispatch(asyncSetAuthUser(authToken));
       dispatch({ type: ActionType.LOGIN_SUCCESS, payload: authToken });
-      dispatch(hideLoading());
     } catch (error) {
-      dispatch(hideLoading());
       dispatch({
         type: ActionType.LOGIN_FAILURE,
         payload: error.message,

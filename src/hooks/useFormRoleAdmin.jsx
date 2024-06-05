@@ -16,15 +16,18 @@ export const useFormRoleAdmin = () => {
     isActive: true,
     stock: "",
     description: "",
+    labelPromo: "",
+    netWeight: "",
+    ratedVoltage: "",
+    serialNumber: "",
   });
 
- 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
 
     if (name === "discount") {
       // Memastikan nilai tidak lebih dari 100
-      const newValue = Math.min(value, 100);
+      const newValue = value === "" ? "" : Math.min(value, 100);
       setFormData({ ...formData, [name]: newValue });
     } else if (type === "checkbox") {
       setFormData({
@@ -45,5 +48,9 @@ export const useFormRoleAdmin = () => {
     }
   };
 
-  return [formData, handleChange, setFormData];
+ 
+
+
+
+  return { formData, handleChange };
 };

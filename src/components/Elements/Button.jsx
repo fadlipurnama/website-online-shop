@@ -7,20 +7,36 @@ function Button({
   onClick = () => {},
   disabled = false,
   className,
+  hovered = true,
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
+    if (hovered) {
+      setIsHovered(true);
+    }
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
+    if (hovered) {
+      setIsHovered(false);
+    }
   };
 
   const getVariant = () => {
     if (isHovered) {
-      return variant === "btn-1" ? "btn-2" : "btn-1";
+      switch (variant) {
+        case "btn-1":
+          return "btn-2";
+        case "btn-2":
+          return "btn-1";
+        case "btn-3":
+          return "btn-4";
+        case "btn-4":
+          return "btn-2";
+        default:
+          return variant;
+      }
     } else {
       return variant;
     }
@@ -38,6 +54,16 @@ function Button({
       borderColor: "border border-primaryColor",
     },
     "btn-3": {
+      backgroundColor: "bg-secondaryColor",
+      textColor: "text-white",
+      borderColor: "border border-white",
+    },
+    "btn-4": {
+      backgroundColor: "bg-white",
+      textColor: "text-secondaryColor",
+      borderColor: "border border-secondaryColor",
+    },
+    "btn-5": {
       backgroundColor: "bg-fourthColor",
       textColor: "text-primaryColor",
       borderColor: "border border-primaryColor",

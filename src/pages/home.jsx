@@ -28,10 +28,10 @@ const HomePage = () => {
           <CategoriesList />
         </ContentWrap>
         <ContentWrap title={"Best Seller"} route={"products/best-seller"}>
-          <BestSellerList products={products} loading={loading} />
+          <BestSellerList products={products} route={"products/best-seller/"} loading={loading} />
         </ContentWrap>
         <ContentWrap title={"Product"} route={"products/all-products"}>
-          <ProductList products={products} loading={loading} />
+          <ProductList products={products} route={"products/all-products/"} loading={loading} />
         </ContentWrap>
       </HomeLayout>
     </>

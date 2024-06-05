@@ -90,6 +90,30 @@ const api = (() => {
     // return responseJson;
   }
 
+  async function updateUser(updateData) {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/auth/updateUser`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
+      },
+    );
+
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
+    }
+
+    const { data } = responseJson;
+    return data;
+  }
+
   async function getAllCategories() {
     const response = await fetch(
       `${import.meta.env.VITE_APP_API_URL}/category/getAllCategory`,
@@ -140,6 +164,7 @@ const api = (() => {
     return data;
   }
 
+  // API PRODUCT
   async function getAllProducts() {
     const response = await fetch(
       `${import.meta.env.VITE_APP_API_URL}/product/getAllProducts`,
@@ -220,6 +245,7 @@ const api = (() => {
 
     return data;
   }
+
   async function updateProductById({ productData, productId }) {
     const response = await fetch(
       `${import.meta.env.VITE_APP_API_URL}/product/updateProduct/${productId}`,
@@ -245,15 +271,108 @@ const api = (() => {
     return data;
   }
 
+  // API Cart
+  async function getDataCart() {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/cart/getDataCart`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      },
+    );
+
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
+    }
+
+    return responseJson;
+  }
+  async function addItemToCart({ productId, quantity }) {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/cart/addCart`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ product: productId, quantity }),
+      },
+    );
+
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
+    }
+
+    return responseJson;
+  }
+  async function deleteCartItem(cartItemId) {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/cart/deleteCart/${cartItemId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
+    }
+
+    return responseJson;
+  }
+
+  async function updateQuantity({ cartItemId, quantity }) {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/cart/updateQuantity/${cartItemId}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity }),
+      },
+    );
+
+    const responseJson = await response.json();
+    const { success, error } = responseJson;
+
+    if (!success) {
+      throw new Error(error);
+    }
+
+    return responseJson;
+  }
+
   return {
     updateProductById,
+    updateQuantity,
     getProductById,
+    getDataCart,
     deleteProductById,
     getBannerById,
     removeAccessToken,
+    deleteCartItem,
     putAccessToken,
     getAllCategories,
     getOwnProfile,
+    addItemToCart,
+    updateUser,
     getAllProducts,
     createProduct,
     register,

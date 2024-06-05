@@ -9,7 +9,6 @@ const DropdownUserList = ({
   dropdownRef,
 }) => {
 
-  console.log(authUser)
   const navigate = useNavigate();
   return (
     <div

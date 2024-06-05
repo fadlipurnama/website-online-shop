@@ -5,7 +5,6 @@ import FilterProduct from "../components/Fragments/FIlterProduct";
 import { useFilterProductPromotion } from "../hooks/useFilterProductPromotion";
 import DefaultLayout from "../components/Layouts/DefaultLayout";
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router-dom";
 const ProductPromotionPage = () => {
   const [
     filteredProducts,
@@ -22,9 +21,9 @@ const ProductPromotionPage = () => {
   const startIndex = (currentPage - 1) * 8;
   const selectedProducts = filteredProducts?.slice(startIndex, startIndex + 8);
 
-  const { promotionName } = useParams();
-
-  const { description } = JSON.parse(localStorage.getItem("promotionToken"));
+  const { description, name } = JSON.parse(
+    localStorage.getItem("promotionData"),
+  );
 
   function capitalizeFirstLetter(string) {
     return string
@@ -38,19 +37,17 @@ const ProductPromotionPage = () => {
   return (
     <>
       <Helmet>
-        <title>
-          Anugrah Hadi Electric - {capitalizeFirstLetter(promotionName)}
-        </title>
+        <title>Anugrah Hadi Electric - {capitalizeFirstLetter(name)}</title>
         <meta
           name="description"
           content={`${description.substring(0, 152)}...`}
         />
         <link
           rel="canonical"
-          href={`${import.meta.env.VITE_APP_WEBSITE_URL}/promo/${promotionName.replace(/ /g, "%20")}`}
+          href={`${import.meta.env.VITE_APP_WEBSITE_URL}/promo/${name.toLowerCase().replace(/ /g, "%20")}`}
         />
       </Helmet>
-      <DefaultLayout>
+      <DefaultLayout pathPartsSlice={4}>
         <FilterProduct
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

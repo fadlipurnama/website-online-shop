@@ -57,9 +57,9 @@ const BannerPromotion = () => {
               key={banner._id}
               onClick={() => {
                 localStorage.setItem(
-                  "promotionToken",
+                  "promotionData",
                   JSON.stringify({
-                    key: banners[currentIndex]._id,
+                    id: banners[currentIndex]._id,
                     name: banners[currentIndex].name,
                     description: banners[currentIndex].description,
                   }),

@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import LazyImage from "./LazyImage";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import Price from "./Price";
 
-const CardProduct = ({ children, id, minWidth }) => {
+const CardProduct = ({ children, route, id, minWidth }) => {
   const navigate = useNavigate();
   return (
     <div
       onClick={() => {
-        id && navigate(`${id}`);
+        id && navigate(`${route ? route : ""}${id}`);
       }}
       className={`
        flex min-h-full cursor-pointer flex-col border bg-white px-2 py-1 shadow sm:py-2 lg:px-5 lg:py-3 ${minWidth}
@@ -18,7 +19,7 @@ const CardProduct = ({ children, id, minWidth }) => {
   );
 };
 
-const Header = ({ title, category, best, image, loading }) => {
+const Header = ({ title, category, discount, image, loading }) => {
   const { width } = useWindowSize();
 
   let titleLength = 26; // Default title length
@@ -45,25 +46,30 @@ const Header = ({ title, category, best, image, loading }) => {
   }
   return (
     <div className="w-full">
-      <LazyImage
-        src={image}
-        alt={title}
-        className={`${(!image || loading) && "animate-pulse bg-gray-200"} h-32 min-w-full object-cover lg:h-40 xl:h-60`}
-      />
+      <div className={`${(!image || loading) && "animate-pulse bg-gray-200"} relative h-20 min-w-full lg:h-40 xl:h-60 sm:h-46`}>
+        <LazyImage
+          src={image}
+          alt={title}
+          loading={loading}
+          className={`h-full w-full object-cover`}
+        />
+        {discount !== 0 && (
+          <span
+            className={`absolute left-0 ${!discount && "hidden"} top-0 bg-red-400 p-1 text-xs text-white sm:text-base`}
+          >
+            {discount}%
+          </span>
+        )}
+      </div>
       <h3
-        className={`md:text-md mx-auto mt-2 min-w-full text-sm font-medium tracking-tight sm:text-base lg:text-lg ${(!title || loading) && "animate-pulse bg-gray-200 text-gray-200"}`}
+        className={`mx-auto mt-2 min-w-full text-sm font-medium tracking-tight sm:text-base lg:text-lg ${(!title || loading) && "animate-pulse bg-gray-200 text-gray-200"}`}
       >
         {displayTitle || "Default Title"}
       </h3>
       <div className="mb-2 flex items-center gap-2 text-wrap ">
-        <span className="text-sm text-slate-600 lg:text-base">
+        <span className="text-xs text-slate-600 sm:text-sm lg:text-base">
           {capitalizeFirstLetter(category)}
         </span>
-        {best && (
-          <span className=" rounded-full bg-primaryColor p-1 px-2 text-xs font-semibold text-white lg:text-xs">
-            {best && "Best Seller"}
-          </span>
-        )}
       </div>
     </div>
   );
@@ -89,7 +95,7 @@ const Body = ({ children, loading }) => {
   return (
     <div className="mb-2 min-w-full font-light ">
       <p
-        className={`${(!children || loading) && "animate-pulse bg-gray-200 text-gray-200"} md:text-md hidden min-h-10 text-sm sm:block sm:text-base lg:min-h-20`}
+        className={`${(!children || loading) && "animate-pulse bg-gray-200 text-gray-200"} hidden min-h-10 text-sm sm:block sm:text-base md:text-base lg:min-h-20`}
       >
         {`
           ${displayChildren}`}
@@ -99,38 +105,16 @@ const Body = ({ children, loading }) => {
 };
 
 const Footer = ({ price, loading, discount }) => {
-  const promoPrice = price - (price * discount) / 100;
   return (
     <div className="flex flex-col flex-wrap gap-2 sm:flex-row-reverse sm:justify-end">
-      <div className="flex gap-1">
-        <span
-          className={`${!price || loading ? "animate-pulse bg-gray-200 text-gray-200" : discount ? " text-xs text-gray-500 line-through sm:text-sm lg:text-base" : "text-base font-medium text-primaryColor md:text-lg lg:text-xl "} font-medium `}
-        >
-          {price
-            ?.toLocaleString("id-ID", {
-              style: "currency",
-              currency: "IDR",
-            })
-            .replace(/,00$/, "")}
-        </span>
-        {discount !== 0 && (
-          <span
-            className={`${discount ? "block" : "hidden"} text-xs font-semibold text-red-500 sm:text-sm lg:text-base`}
-          >
-            {`${discount}%`}
-          </span>
-        )}
-      </div>
-      <span
-        className={` ${!price || loading ? "animate-pulse bg-gray-200 text-gray-200" : "text-primaryColor"}  text-sm font-medium text-primaryColor sm:text-base md:text-lg lg:text-xl ${discount ? "block" : "hidden"}`}
-      >
-        {promoPrice
-          ?.toLocaleString("id-ID", {
-            style: "currency",
-            currency: "IDR",
-          })
-          .replace(/,00$/, "")}
-      </span>
+      <Price
+        hiddenTextDiscount={true}
+        price={price}
+        loading={loading}
+        discount={discount}
+        sizePrice="text-base md:text-lg lg:text-xl"
+        sizePriceDiscount="text-xs md:text-sm lg:text-base"
+      />
     </div>
   );
 };

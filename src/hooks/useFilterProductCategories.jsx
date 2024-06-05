@@ -8,17 +8,16 @@ export const useFilterProductCategories = () => {
   const dispatch = useDispatch();
   const { products = [], loading } = useSelector((state) => state.products);
 
-  const [priceFilter, setPriceFilter] = useState(
-    () => localStorage.getItem("priceFilter") || "",
-  );
-  const [brandFilter, setBrandFilter] = useState(
-    () => localStorage.getItem("brandFilter") || "",
-  );
+  const [priceFilter, setPriceFilter] = useState("");
+  const [brandFilter, setBrandFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredProducts = useMemo(() => {
     if (products && !loading) {
-      const filtered = products
+      const filteredProductActive = products.filter((item) => {
+        return item.isActive === true;
+      });
+      const filtered = filteredProductActive
         .filter((item) => {
           if (categories === "best-seller") {
             return item.best === true;
@@ -53,20 +52,15 @@ export const useFilterProductCategories = () => {
     dispatch(asyncSetProducts());
   }, [dispatch]);
 
-  useEffect(() => {
-    localStorage.setItem("priceFilter", priceFilter);
-    localStorage.setItem("brandFilter", brandFilter);
-  }, [priceFilter, brandFilter]);
+  // useEffect(() => {
+  //   const prevParams = localStorage.getItem("params");
 
-  useEffect(() => {
-    const prevParams = localStorage.getItem("params");
-
-    if (categories !== prevParams) {
-      localStorage.setItem("params", categories);
-      setBrandFilter("");
-      setPriceFilter("");
-    }
-  }, [categories]);
+  //   if (categories !== prevParams) {
+  //     localStorage.setItem("params", categories);
+  //     setBrandFilter("");
+  //     setPriceFilter("");
+  //   }
+  // }, [categories]);
 
   return [
     filteredProducts,

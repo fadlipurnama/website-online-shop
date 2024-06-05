@@ -7,6 +7,8 @@ const Input = ({
   value,
   onChange = () => {},
   maxLength,
+  variant,
+  error,
   disabled = false,
 }) => {
   return (
@@ -16,9 +18,8 @@ const Input = ({
       disabled={disabled}
       name={name}
       value={value}
-      placeholder={placeholder}
-      className={`w-full px-3 text-slate-700 placeholder:opacity-60 ${className} focus:shadow-outline rounded border
-       leading-tight focus:outline-none focus:ring-2 focus:ring-primaryColor
+      placeholder={error ? error : placeholder}
+      className={`w-full px-3 outline-none ${!variant && `${error ? "border border-red-500" : "focus:shadow-outline rounded border leading-tight focus:outline-none focus:ring-2 focus:ring-primaryColor"}`} text-slate-700 ${error ? "placeholder:text-red-500" : "placeholder:opacity-90 "} ${className}
       `}
       required={required}
       onChange={onChange}

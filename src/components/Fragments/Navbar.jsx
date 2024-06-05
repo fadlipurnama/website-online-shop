@@ -31,18 +31,18 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`z-50 w-full bg-white shadow-sm transition-all duration-300 ${isSticky && "sticky top-0  bg-white"}`}
+        className={`z-50 w-full shadow-sm transition-all duration-300 ${isSticky && "sticky top-0 bg-white"}`}
       >
         <nav
           className={`hidden items-center justify-between gap-4 bg-gray-100 px-6 py-2 text-sm lg:flex ${loading ? "animate-pulse" : ""}`}
         >
           <div className="flex gap-4">
             {[
-              "Cek Resi",
+             
               "Hubungi Kami",
-              "Download Aplikasi",
               "Tentang Kami",
-              "FAQ",
+              "Download Aplikasi",
+         
             ].map((text, idx) => (
               <MenuItem
                 key={idx}
@@ -69,15 +69,15 @@ const Navbar = () => {
         </nav>
 
         <div
-          className={`top-0 flex flex-wrap items-center ${isSticky && "bgwhite/100 "} justify-between px-6 py-3 lg:gap-4 2xl:flex-nowrap ${loading ? "animate-pulse" : ""}`}
+          className={`top-0 flex flex-wrap transition-all duration-300 items-center ${!isSticky && "bg-white"} justify-between px-2 lg:px-6 py-3 lg:gap-4 2xl:flex-nowrap ${loading ? "animate-pulse" : ""}`}
         >
           <span
             onClick={() => navigate("/")}
-            className={`text-sm  cursor-pointer font-semibold md:text-lg lg:text-xl ${loading ? "bg-gray-200 text-transparent" : "text-primaryColor"}`}
+            className={`cursor-pointer text-base font-semibold md:text-lg lg:text-xl ${loading ? "bg-gray-200 text-transparent" : "text-primaryColor"}`}
           >
             Anugrah Hadi Electric
           </span>
-          <div className="order-2 flex max-w-lg items-center justify-between gap-4 md:gap-5 lg:w-full">
+          <div className="order-2 flex max-w-lg items-center justify-between gap-2 sm:gap-4 md:gap-5 lg:w-full">
             {loading ? (
               <>
                 <div className="hidden h-12 w-1/2 bg-gray-200 lg:block"></div>
@@ -95,7 +95,7 @@ const Navbar = () => {
                     dropdownPosition="right-0 top-10"
                   />
                 )}
-                <CartIcon itemCount={1} />
+                <CartIcon authUser={authUser} />
                 <HamburgerMenu authUser={authUser} />
               </>
             )}

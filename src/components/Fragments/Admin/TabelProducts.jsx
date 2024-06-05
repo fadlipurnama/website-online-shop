@@ -8,10 +8,8 @@ import Table from "../../Elements/Tabel";
 import InputForm from "../../Elements/Input";
 import FormAddProduct from "./FormAddProduct";
 import Button from "../../Elements/Button";
-import { useNavigate } from "react-router-dom";
 
 const TabelProducts = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
   const [openForm, setOpenForm] = useState(false);
@@ -36,19 +34,17 @@ const TabelProducts = () => {
     }
   }, [dispatch, addSuccess]);
 
-  const handleDetailProduct = (productId) => {
-    navigate(`/admin/tabel-products/${productId}`);
-  };
+
 
   return (
     <>
       <h1 className="mb-4 text-2xl font-semibold text-primaryColor">
         Tabel Product
       </h1>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
         <Button
           onClick={() => setOpenForm(!openForm)}
-          className={"max-w-52 py-3"}
+          className={"md:max-w-52 py-3"}
         >
           Add Product
         </Button>
@@ -57,7 +53,8 @@ const TabelProducts = () => {
           placeholder="Search by name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="my-4 max-w-sm border-gray-300 p-2"
+          className="my-4 border-gray-300 p-2"
+          container="md:w-2/5"
         />
       </div>
       {openForm && (
@@ -65,7 +62,6 @@ const TabelProducts = () => {
       )}
       <div className="overflow-x-auto">
         <Table
-          handleDetailProduct={handleDetailProduct}
           data={search(products)}
           headers={[
             "No",

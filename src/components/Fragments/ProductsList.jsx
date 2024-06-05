@@ -1,26 +1,36 @@
 import CardProduct from "../Elements/CardProduct";
 
-const ProductList = ({ products, parentRoutes, loading }) => {
+const ProductList = ({ products, parentRoutes, route, loading }) => {
   return (
     <div
-      className={`mx-auto grid  items-center ${products?.length === 0 ? "grid-cols-1 justify-center" : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"} justify-center gap-2 lg:gap-6`}
+      className={`mx-auto grid items-center ${products?.length === 0 ? "grid-cols-1 justify-center" : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"} justify-center gap-2 lg:gap-6`}
     >
       {products
-        ? products?.slice(0, 8).map((product, index) => (
-            <CardProduct parentRoutes={parentRoutes} key={product._id || index} id={product._id}>
-              <CardProduct.Header
-                best={product?.best}
-                category={product?.category}
-                image={product.imageUrl}
-                title={product.name}
-              />
-              <CardProduct.Body>{product.description}</CardProduct.Body>
-              <CardProduct.Footer
-                discount={product.discount}
-                price={product.price}
-              />
-            </CardProduct>
-          ))
+        ? products
+            .filter((item) => item.isActive === true)
+            ?.slice(0, 8)
+            .map((product, index) => (
+              <CardProduct
+                route={route}
+                parentRoutes={parentRoutes}
+                key={product._id || index}
+                name={product.name}
+                id={product._id}
+              >
+                <CardProduct.Header
+                  discount={product.discount}
+                  best={product?.best}
+                  category={product?.category}
+                  image={product.imageUrl}
+                  title={product.name}
+                />
+                <CardProduct.Body>{product.description}</CardProduct.Body>
+                <CardProduct.Footer
+                  discount={product.discount}
+                  price={product.price}
+                />
+              </CardProduct>
+            ))
         : loading &&
           Array.from({ length: 8 }, (_, index) => (
             <CardProduct key={index}>

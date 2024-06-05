@@ -1,5 +1,5 @@
 import InputSearch from "../Elements/InputSearch";
-import SelectForm from "../Elements/Select";
+import SelectCustom from "../Elements/SelectCustom";
 
 const FilterProduct = ({
   brands,
@@ -12,19 +12,23 @@ const FilterProduct = ({
   brandFilter,
 }) => {
   const handleSearchChange = (e) => setSearchTerm(e.target.value.toLowerCase());
+
   const handlePriceFilterChange = (e) => setPriceFilter(e.target.value);
   const handleBrandFilterChange = (e) => setBrandFilter(e.target.value);
 
   return (
-    <div className="mb-4 flex-wrap flex w-full items-center justify-between gap-2">
+    <div className="flex w-full flex-col items-stretch justify-between gap-2 py-4 lg:mb-4 lg:flex-row lg:items-center lg:gap-10">
       <InputSearch
+        container="lg:max-w-sm"
         value={searchTerm}
         onChange={handleSearchChange}
         placeholder="Cari product berdasarkan nama ..."
         defaultElement={true}
+        className="py-4 text-sm md:text-base"
       />
-      <div className="flex w-full gap-2 md:w-1/2">
-        <SelectForm
+      <div className="flex w-full flex-col gap-2 lg:max-w-lg lg:flex-row">
+        <SelectCustom
+          label="Sortir merek"
           disabled={loading}
           options={brands?.map((brand) => ({
             // key: index,
@@ -32,18 +36,19 @@ const FilterProduct = ({
             value: brand,
           }))}
           value={brandFilter}
-          placeholder="Brand Product"
+          placeholder="Sortir merek"
           className="text-md rounded py-3"
           onChange={handleBrandFilterChange}
         />
-        <SelectForm
+        <SelectCustom
+          label="Sortir harga"
           disabled={loading}
           options={[
             { value: "low", label: "Harga Terendah" },
             { value: "high", label: "Harga Tertinggi" },
           ]}
           value={priceFilter}
-          placeholder="Harga Product"
+          placeholder="Sortir harga"
           className="text-md rounded py-3"
           onChange={handlePriceFilterChange}
         />

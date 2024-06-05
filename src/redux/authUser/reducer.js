@@ -11,15 +11,18 @@ const initialState = {
 function authUserReducer(state = initialState, action = {}) {
   switch (action.type) {
     case ActionType.SET_AUTH_USER_REQUEST:
+    // case ActionType.UPDATE_USER_REQUEST:
       return { ...state, loading: true, error: false };
 
     case ActionType.SET_AUTH_USER_FAILURE:
+    // case ActionType.UPDATE_USER_FAILURE:
       return {
         ...state,
         loading: false,
         error: true,
-        message: action.payload,
+        message: action.payload.error,
       };
+
     case ActionType.SET_AUTH_USER_SUCCESS:
       return {
         ...state,
@@ -27,8 +30,16 @@ function authUserReducer(state = initialState, action = {}) {
         token: null,
         loading: false,
         error: false,
-        message: action.payload,
       };
+    // case ActionType.UPDATE_USER_SUCCESS:
+    //   return {
+    //     ...state,
+    //     authUser: action.payload.updated,
+    //     token: null,
+    //     loading: false,
+    //     error: false,
+    //     updateSuccess: true,
+    //   };
     case ActionType.UNSET_AUTH_USER:
       return initialState;
     default:

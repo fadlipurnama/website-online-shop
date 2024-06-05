@@ -10,7 +10,8 @@ const TextAreaForm = ({
   onChange,
   maxLength,
   disabled,
-  value
+  error,
+  value,
 }) => {
   return (
     <div className={`${container}`}>
@@ -22,8 +23,9 @@ const TextAreaForm = ({
         value={value}
         placeholder={placeholder}
         maxLength={maxLength}
-        className={`focus:shadow-outline w-full resize-none appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none ${className}`}
+        className={className}
       />
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 };

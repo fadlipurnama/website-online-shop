@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import InputForm from "../../Elements/Input";
 import { useFormRoleAdmin } from "../../../hooks/useFormRoleAdmin";
 import TextAreaForm from "../../Elements/TextArea";
-import SelectForm from "../../Elements/Select";
+// import SelectForm from "../../Elements/Select";
 import { asyncSetCategories } from "../../../redux/categories/action";
 import Checkbox from "../../Elements/Checkbox";
 import {
@@ -122,7 +122,7 @@ const FormEditProduct = ({ data, setIsEditModalOpen, status, loading }) => {
           disabled={loading}
         />
 
-        <SelectForm
+        {/* <SelectForm
           name="category"
           label="Category"
           options={
@@ -138,7 +138,7 @@ const FormEditProduct = ({ data, setIsEditModalOpen, status, loading }) => {
           className="text-md rounded py-3"
           disabled={loading}
           onChange={handleChange}
-        />
+        /> */}
         <InputForm
           label="Jumlah Stock"
           type="text"

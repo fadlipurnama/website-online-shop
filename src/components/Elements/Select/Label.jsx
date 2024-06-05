@@ -1,8 +1,8 @@
-const Label = ({ htmlFor, children }) => {
+const Label = ({ htmlFor, children, variant, value }) => {
     return (
-      <label
+        <label
         htmlFor={htmlFor}
-        className={`md-2 mb-1 block font-bold text-slate-700`}
+        className={` ${!variant ? 'block md-2 mb-1 font-bold text-slate-700' : value?.length > 0 ? 'block px-3 font-light text-sm':'hidden' }`}
       >
         {children}
       </label>
@@ -10,4 +10,3 @@ const Label = ({ htmlFor, children }) => {
   };
   
   export default Label;
-  

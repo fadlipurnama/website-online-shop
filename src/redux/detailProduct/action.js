@@ -16,7 +16,6 @@ const ActionType = {
   CLEAR_STATUS_UPDATE_PRODUCT: "CLEAR_STATUS_UPDATE_PRODUCT",
   CLEAR_DETAIL_PRODUCT: "CLEAR_DETAIL_PRODUCT",
 
-  ADD_COMMENT: "ADD_COMMENT",
 };
 
 function receiveDetailProductActionCreator(detailProduct) {

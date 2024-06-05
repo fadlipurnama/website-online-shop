@@ -7,6 +7,8 @@ import categoriesReducer from "./categories/reducer";
 import detailProductReducer from "./detailProduct/reducer";
 import detailBannerReducer from "./detailBanner/reducer";
 import bannersReducer from "./banners/reducer";
+import updateUserDetailReducer from "./updateUserDetail/reducer";
+import cartsReducer from "./carts/reducer";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ const store = configureStore({
     detailProduct: detailProductReducer,
     banners: bannersReducer,
     detailBanner: detailBannerReducer,
+    updateUserDetail: updateUserDetailReducer,
+    carts: cartsReducer,
   },
 });
 
