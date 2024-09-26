@@ -52,8 +52,8 @@ const SelectCustom = ({
           charBuffer.current = charBuffer.current.slice(-3);
         }
 
-        const matchedOption = options.find(option =>
-          option.label.toLowerCase().startsWith(charBuffer.current)
+        const matchedOption = options.find((option) =>
+          option.label.toLowerCase().startsWith(charBuffer.current),
         );
 
         if (matchedOption) {

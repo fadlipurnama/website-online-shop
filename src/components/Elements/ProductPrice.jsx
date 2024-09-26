@@ -1,4 +1,4 @@
-const Price = ({
+const ProductPrice = ({
   price,
   discount,
   loading,
@@ -41,4 +41,4 @@ const Price = ({
   );
 };
 
-export default Price;
+export default ProductPrice;

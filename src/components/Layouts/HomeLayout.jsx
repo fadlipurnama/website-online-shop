@@ -11,7 +11,15 @@ const HomeLayout = ({ children }) => {
           name="description"
           content={import.meta.env.VITE_APP_DEFAULT_DESCRIPTION}
         />
-        <link rel="canonical" href={`${import.meta.env.VITE_APP_WEBSITE_URL}`} />
+        <meta name="robots" content="index, follow" />
+        <meta
+          name="keywords"
+          content="anugrah hadi electric, general supplier electrical, barang electric, berbagai barang electric, mcb, kontaktor, sensor, kabel, saklar, lampu, staker, power supply"
+        />
+        <link
+          rel="canonical"
+          href={`${import.meta.env.VITE_APP_WEBSITE_URL}`}
+        />
       </Helmet>
       <Navbar />
       <main>

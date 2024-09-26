@@ -8,7 +8,7 @@ import { RiLinkedinFill } from "react-icons/ri";
 const Footer = () => {
   return (
     <footer className="flex w-full flex-col gap-10 bg-primaryColor px-[55px] pt-[55px] text-slate-100">
-      <div className="grid gap-10 sm:grid-cols-3 lg:mx-auto xl:grid-cols-6">
+      <div className="grid gap-10 sm:grid-cols-3 lg:mx-auto xl:grid-cols-6 xl:flex xl:justify-between xl:w-[91%]">
         <div className=" md:grid-row-2 grid justify-center gap-10 sm:col-span-3 sm:grid-cols-2 sm:gap-0">
           <div className="col-span-1 flex flex-col text-center sm:text-start">
             <span className="text-xl font-bold sm:text-2xl">
@@ -30,7 +30,7 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-1 sm:items-start">
           <span className="text-lg font-bold">About Us</span>
           <Link to="/story">Story</Link>
-          <Link to="/team">Team</Link>
+          <Link to="/team">Customers</Link>
           <Link to="/product">Product</Link>
           <Link to="/customers">Customers</Link>
           <Link to="/contact">Contact</Link>
@@ -52,7 +52,7 @@ const Footer = () => {
             </span>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-3 sm:col-span-1">
+        {/* <div className="flex flex-col items-center gap-3 sm:col-span-1">
           <span className="text-center text-lg font-bold">
             Download Aplikasi
           </span>
@@ -66,7 +66,7 @@ const Footer = () => {
             alt="google-play-button"
             className="w-full max-w-36"
           />
-        </div>
+        </div> */}
       </div>
       <span className="border-t p-3 text-center md:mx-16">
         Copyright © Anugrah Hadi Electric {new Date().getFullYear()}, All Right

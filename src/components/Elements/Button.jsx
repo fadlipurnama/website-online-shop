@@ -75,7 +75,7 @@ function Button({
 
   return (
     <button
-      className={`w-full text-sm outline-none ${className} ${backgroundColor} ${textColor} ${borderColor}`}
+      className={`w-full outline-none ${className} ${backgroundColor} ${textColor} ${borderColor}`}
       type={type}
       disabled={disabled}
       onMouseEnter={handleMouseEnter}

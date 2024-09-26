@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import LazyImage from "./LazyImage";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import Price from "./Price";
+import ProductPrice from "./ProductPrice";
 
 const CardProduct = ({ children, route, id, minWidth }) => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const CardProduct = ({ children, route, id, minWidth }) => {
   );
 };
 
-const Header = ({ title, category, discount, image, loading }) => {
+const Header = ({ title, category, image, loading }) => {
   const { width } = useWindowSize();
 
   let titleLength = 26; // Default title length
@@ -51,15 +51,8 @@ const Header = ({ title, category, discount, image, loading }) => {
           src={image}
           alt={title}
           loading={loading}
-          className={`h-full w-full object-cover`}
+          className={`h-full w-full object-contain`}
         />
-        {discount !== 0 && (
-          <span
-            className={`absolute left-0 ${!discount && "hidden"} top-0 bg-red-400 p-1 text-xs text-white sm:text-base`}
-          >
-            {discount}%
-          </span>
-        )}
       </div>
       <h3
         className={`mx-auto mt-2 min-w-full text-sm font-medium tracking-tight sm:text-base lg:text-lg ${(!title || loading) && "animate-pulse bg-gray-200 text-gray-200"}`}
@@ -107,7 +100,7 @@ const Body = ({ children, loading }) => {
 const Footer = ({ price, loading, discount }) => {
   return (
     <div className="flex flex-col flex-wrap gap-2 sm:flex-row-reverse sm:justify-end">
-      <Price
+      <ProductPrice
         hiddenTextDiscount={true}
         price={price}
         loading={loading}

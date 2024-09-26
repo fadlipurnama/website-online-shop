@@ -16,6 +16,13 @@ import UserInfo from "./components/Fragments/UserInfo.jsx";
 import UserCart from "./components/Fragments/UserCart.jsx";
 import AddAddress from "./components/Fragments/AddAddress.jsx";
 import CartPage from "./pages/cart.jsx";
+import WishlistItemList from "./components/Fragments/WishlistItemList.jsx";
+import CheckoutPage from "./pages/checkout.jsx";
+import DetailTransactionPage from "./pages/detailTransaction.jsx";
+import TransactionList from "./components/Fragments/TransactionList.jsx";
+import ProtectedRoute from "./components/Fragments/ProtectedRoute.jsx";
+import OrderList from "./components/Fragments/OrderListFragment.jsx";
+import DetailOrderPage from "./pages/detailOrder.jsx";
 
 const App = () => {
   const {
@@ -23,15 +30,16 @@ const App = () => {
     loading = false,
     authUser,
   } = useSelector((states) => states.auth);
+
   const dispatch = useDispatch();
   const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
 
   useEffect(() => {
     const accessToken = Cookies.get("accessToken");
     if (accessToken) {
-      dispatch(asyncSetAuthUser()).finally(() => setHasCheckedAuth(true));
+      dispatch(asyncSetAuthUser()).finally(() => setHasCheckedAuth(true)); // Set checked to true after dispatch completes
     } else {
-      setHasCheckedAuth(true);
+      setHasCheckedAuth(true); // No token, just finish checking
     }
   }, [dispatch]);
 
@@ -47,14 +55,26 @@ const App = () => {
       element: <HomePage />,
       errorElement: <ErrorPage authUser={authUser} />,
     },
-
     {
       path: "/login",
       element: <LoginPage />,
     },
     {
+      path: "/transaction",
+      element: <ProtectedRoute element={<DetailTransactionPage />} />,
+    },
+    {
+      path: "/cart/checkout",
+      // Menggunakan ProtectedRoute
+      element: <ProtectedRoute element={<CheckoutPage />} />,
+    },
+    {
       path: "/register",
       element: <RegisterPage />,
+    },
+    {
+      path: "/order/:orderId",
+      element: <DetailOrderPage />,
     },
     {
       path: "/cart/cart-list",
@@ -62,7 +82,8 @@ const App = () => {
     },
     {
       path: "/user-profile/:userId",
-      element: <DetailProfilePage />,
+      element: <ProtectedRoute element={<DetailProfilePage />} />,
+
       children: [
         {
           path: "",
@@ -75,6 +96,18 @@ const App = () => {
         {
           path: "alamat",
           element: <AddAddress />,
+        },
+        {
+          path: "wishlist",
+          element: <WishlistItemList />,
+        },
+        {
+          path: "daftar-transaksi",
+          element: <TransactionList />,
+        },
+        {
+          path: "daftar-pesanan",
+          element: <OrderList />,
         },
       ],
     },
@@ -96,12 +129,11 @@ const App = () => {
     },
   ];
 
-
-
   const router = createBrowserRouter(routes);
 
+  // Return loading page if loading is true or auth check is not completed
   if (loading || !hasCheckedAuth) {
-    return <LoadingPage />; // Bisa juga menggunakan spinner atau loading indicator di sini
+    return <LoadingPage />; // Display loading indicator
   }
 
   return <RouterProvider router={router} />;

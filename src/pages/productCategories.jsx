@@ -5,7 +5,6 @@ import DefaultLayout from "../components/Layouts/DefaultLayout";
 import { useFilterProductCategories } from "../hooks/useFilterProductCategories";
 import FilterProduct from "../components/Fragments/FIlterProduct";
 import {  useParams } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 const ProductCategoriesPage = () => {
   const [
     filteredProducts,
@@ -24,32 +23,9 @@ const ProductCategoriesPage = () => {
 
   const { categories } = useParams();
 
-  function capitalizeFirstLetter(string) {
-    return string
-      .split(" ")
-      .map((word) => {
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-      })
-      .join(" ");
-  }
-
   return (
     <>
-      <Helmet>
-        <title>
-          Anugrah Hadi Electric - Tersedia Berbagai Barang Elektrik |{" "}
-          {capitalizeFirstLetter(categories)}
-        </title>
-        <meta
-          name="description"
-          content={import.meta.env.VITE_APP_DEFAULT_DESCRIPTION}
-        />
-        <link
-          rel="canonical"
-          href={`${import.meta.env.VITE_APP_WEBSITE_URL}/products/${categories.replace(/ /g, "%20")}`}
-        />
-      </Helmet>
-      <DefaultLayout firstTitle={categories}>
+      <DefaultLayout firstTitle={categories} title={`Tersedia Berbagai Barang Elektrik | ${categories}`}>
         <FilterProduct
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}

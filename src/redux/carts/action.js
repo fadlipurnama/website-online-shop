@@ -3,19 +3,16 @@ import api from "../../utils/api";
 const ActionType = {
   SET_CART_FAILURE: "SET_CART_FAILURE",
   SET_CART_REQUEST: "SET_CART_REQUEST",
+
   RECEIVE_CART_SUCCESS: "RECEIVE_CART_SUCCESS",
 
-  ADD_ITEM_TO_CART_FAILURE: "ADD_ITEM_TO_CART_FAILURE",
-  ADD_ITEM_TO_CART_REQUEST: "ADD_ITEM_TO_CART_REQUEST",
   ADD_ITEM_TO_CART_SUCCESS: "ADD_ITEM_TO_CART_SUCCESS",
 
-  UPDATE_QUANTITY_FAILURE: "UPDATE_QUANTITY_FAILURE",
-  UPDATE_QUANTITY_REQUEST: "UPDATE_QUANTITY_REQUEST",
   UPDATE_QUANTITY_SUCCESS: "UPDATE_QUANTITY_CART_ITEM_SUCCESS",
 
-  DELETE_CART_ITEM_FAILURE: "DELETE_CART_ITEM_FAILURE",
-  DELETE_CART_ITEM_REQUEST: "DELETE_CART_ITEM_REQUEST",
-  DELETE_CART_ITEM_SUCCESS: "DELETE_CART_ITEM_CART_ITEM_SUCCESS",
+  DELETE_CART_ITEM_SUCCESS: "DELETE_CART_ITEM_SUCCESS",
+
+  CLEAR_DATA_CARTS: "CLEAR_DATA_CARTS",
 };
 
 function receiveCartActionCreator({ carts, message, totalQuantity }) {
@@ -26,6 +23,11 @@ function receiveCartActionCreator({ carts, message, totalQuantity }) {
       message,
       totalQuantity,
     },
+  };
+}
+function clearDataCartsActionCreator() {
+  return {
+    type: ActionType.RECEIVE_CART_SUCCESS,
   };
 }
 
@@ -49,7 +51,7 @@ function asyncSetCarts() {
 
 function asyncAddItemToCart({ productId, quantity }) {
   return async (dispatch) => {
-    dispatch({ type: ActionType.ADD_ITEM_TO_CART_REQUEST });
+    dispatch({ type: ActionType.SET_CART_REQUEST });
     try {
       const response = await api.addItemToCart({ productId, quantity });
       dispatch({
@@ -62,7 +64,7 @@ function asyncAddItemToCart({ productId, quantity }) {
       });
     } catch (error) {
       dispatch({
-        type: ActionType.ADD_ITEM_TO_CART_FAILURE,
+        type: ActionType.SET_CART_FAILURE,
         payload: { error },
       });
     }
@@ -70,7 +72,7 @@ function asyncAddItemToCart({ productId, quantity }) {
 }
 function asyncUpdateQuantityCartItem({ cartItemId, quantity }) {
   return async (dispatch) => {
-    dispatch({ type: ActionType.UPDATE_QUANTITY_REQUEST });
+    dispatch({ type: ActionType.SET_CART_REQUEST });
     try {
       const response = await api.updateQuantity({ cartItemId, quantity });
       console.log(response);
@@ -84,7 +86,7 @@ function asyncUpdateQuantityCartItem({ cartItemId, quantity }) {
       });
     } catch (error) {
       dispatch({
-        type: ActionType.UPDATE_QUANTITY_FAILURE,
+        type: ActionType.SET_CART_FAILURE,
         payload: { error },
       });
     }
@@ -92,31 +94,32 @@ function asyncUpdateQuantityCartItem({ cartItemId, quantity }) {
 }
 function asyncDeleteCartItem(cartItemId) {
   return async (dispatch) => {
-    dispatch({ type: ActionType.DELETE_CART_ITEM_REQUEST });
+    dispatch({ type: ActionType.SET_CART_REQUEST });
     try {
       const response = await api.deleteCartItem(cartItemId);
-      console.log(response);
       dispatch({
         type: ActionType.DELETE_CART_ITEM_SUCCESS,
         payload: {
-          carts: response.data,
+          cartItemId,
           message: response.message,
           totalQuantity: response.totalQuantity,
         },
       });
     } catch (error) {
       dispatch({
-        type: ActionType.DELETE_CART_ITEM_FAILURE,
+        type: ActionType.SET_CART_FAILURE,
         payload: { error },
       });
     }
   };
 }
 
+
 export {
   ActionType,
   asyncSetCarts,
   asyncDeleteCartItem,
+  clearDataCartsActionCreator,
   asyncUpdateQuantityCartItem,
   asyncAddItemToCart,
 };

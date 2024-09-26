@@ -1,12 +1,12 @@
-import { LuPackageCheck, LuUser2 } from "react-icons/lu";
+import { LuUser2 } from "react-icons/lu";
 import MenuItem from "../MenuItem";
 import {
   FaCloudDownloadAlt,
-  FaQuestionCircle,
   FaWhatsapp,
 } from "react-icons/fa";
 import { RiMapPinUserFill } from "react-icons/ri";
 import ButtonLogout from "../ButtonLogout";
+import { CiViewList } from "react-icons/ci";
 import DropdownCategories from "../DropdownCategories/index.jsx";
 import Button from "../Button.jsx";
 import { useNavigate } from "react-router-dom";
@@ -49,12 +49,6 @@ const DropdownHamburgerList = ({ authUser }) => {
       )}
       <div className="flex w-full flex-col gap-4 px-5">
         <DropdownCategories />
-
-        <MenuItem
-          text="Cek Resi"
-          icon={<LuPackageCheck className="h-5 w-5" />}
-          to="/cek-resi"
-        />
         <MenuItem
           text="Hubungi Kami"
           icon={<FaWhatsapp className="h-5 w-5" />}
@@ -71,10 +65,21 @@ const DropdownHamburgerList = ({ authUser }) => {
           to="about-us"
         />
         <MenuItem
+          text="Wishlist"
+          icon={<CiViewList className="h-5 w-5" />}
+          to={`/user-profile/${authUser?._id}/wishlist`}
+        />
+
+        {/* <MenuItem
           text="FAQ"
           icon={<FaQuestionCircle className="h-5 w-5" />}
           to="faq"
         />
+              <MenuItem
+          text="Cek Resi"
+          icon={<LuPackageCheck className="h-5 w-5" />}
+          to="/cek-resi"
+        /> */}
         {authUser && <ButtonLogout iconOn={true} />}
       </div>
     </>

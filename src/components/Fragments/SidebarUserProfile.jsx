@@ -34,16 +34,16 @@ const SidebarUserProfile = () => {
   return (
     <aside
       ref={sidebar}
-      className={`shadowlg absolute inset-y-0 -left-20 z-30 w-72 transform rounded-xl border bg-white p-4 px-5 py-10 transition-transform duration-300 ease-in-out lg:static lg:left-0 lg:translate-x-0 ${
+      className={`shadowlg absolute shadow inset-y-0 -left-20 z-30 w-full max-w-xs transform rounded-xl border bg-white p-4 px-6 py-10 transition-transform duration-300 ease-in-out lg:static lg:left-0 lg:translate-x-0 ${
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       <nav className="">
-        <ul className="flex flex-col gap-6">
+        <ul className="flex text-lg flex-col gap-6">
           <NavLink
             to="/cart/cart-list"
             className={({ isActive }) =>
-              `group flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
+              `group flex items-center gap-2.5 rounded-lg border shadow px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
                 isActive ? "bg-gray-200" : ""
               }`
             }
@@ -51,19 +51,19 @@ const SidebarUserProfile = () => {
             Keranjang Belanja
           </NavLink>
           <NavLink
-            to="setting"
+            to="daftar-pesanan"
             className={({ isActive }) =>
-              `group flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
+              `group flex items-center gap-2.5 rounded-lg border shadow px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
                 isActive ? "bg-gray-200" : ""
               }`
             }
           >
-            Riwayat Pesanan
+            Daftar Pesanan
           </NavLink>
           <NavLink
             to="daftar-transaksi"
             className={({ isActive }) =>
-              `group flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
+              `group flex items-center gap-2.5 rounded-lg border shadow px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
                 isActive ? "bg-gray-200" : ""
               }`
             }
@@ -73,7 +73,7 @@ const SidebarUserProfile = () => {
           <NavLink
             to="wishlist"
             className={({ isActive }) =>
-              `group flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
+              `group flex items-center gap-2.5 rounded-lg border shadow px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
                 isActive ? "bg-gray-200" : ""
               }`
             }
@@ -83,7 +83,7 @@ const SidebarUserProfile = () => {
           <NavLink
             to="setting"
             className={({ isActive }) =>
-              `group flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
+              `group flex items-center gap-2.5 rounded-lg border shadow px-4 py-2 font-medium text-gray-600 transition duration-300 ease-in-out hover:bg-gray-200 ${
                 isActive ? "bg-gray-200" : ""
               }`
             }

@@ -1,27 +1,19 @@
 import CartItem from "../Elements/CartItem";
+import useSubTotal from "../../hooks/useCalculateSubTotal";
 
 const CartItemList = ({ carts, loading }) => {
-  const calculateSubTotal = (price, discount, quantity) => {
-    // Fungsi untuk menghitung harga setelah diskon
-    const calculateDiscountedPrice = (price, discount) => {
-      return price - (price * discount) / 100;
-    };
-
-    // Fungsi untuk menghitung sub-total dari sebuah item
-    const discountedPrice = calculateDiscountedPrice(price, discount);
-    return discountedPrice * quantity;
-  };
+  const { calculateSubTotal } = useSubTotal();
 
   return (
     <div className="flex max-h-screen w-full flex-col gap-4 overflow-y-auto bg-white p-4">
       <h2 className="text-base font-bold sm:text-lg md:text-xl lg:text-2xl">
-        List Keranjang Belanja
+        Keranjang Belanja
       </h2>
       <div
         className={`${(!carts || carts?.length === 0) && "m-auto"} flex w-full flex-col gap-2`}
       >
         {carts &&
-          (carts.length === 0 ? (
+          (carts?.length === 0 ? (
             <div className="m-auto">List Keranjang Belanja Kosong</div>
           ) : (
             carts?.map((item) => (

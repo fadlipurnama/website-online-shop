@@ -9,6 +9,10 @@ import detailBannerReducer from "./detailBanner/reducer";
 import bannersReducer from "./banners/reducer";
 import updateUserDetailReducer from "./updateUserDetail/reducer";
 import cartsReducer from "./carts/reducer";
+import wishlistReducer from "./wishlist/reducer";
+import transactionReducer from "./transaction/reducer";
+import shipmentReducer from "./shipment/reducer";
+import orderReducer from "./order/reducer";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +26,10 @@ const store = configureStore({
     detailBanner: detailBannerReducer,
     updateUserDetail: updateUserDetailReducer,
     carts: cartsReducer,
+    wishlist: wishlistReducer,
+    shipment: shipmentReducer,
+    order: orderReducer,
+    transaction: transactionReducer,
   },
 });
 

@@ -28,7 +28,7 @@ const FilterProduct = ({
       />
       <div className="flex w-full flex-col gap-2 lg:max-w-lg lg:flex-row">
         <SelectCustom
-          label="Sortir merek"
+          label="Sortir Merek"
           disabled={loading}
           options={brands?.map((brand) => ({
             // key: index,
@@ -41,7 +41,7 @@ const FilterProduct = ({
           onChange={handleBrandFilterChange}
         />
         <SelectCustom
-          label="Sortir harga"
+          label="Sortir Harga"
           disabled={loading}
           options={[
             { value: "low", label: "Harga Terendah" },

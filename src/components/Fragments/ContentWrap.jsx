@@ -15,7 +15,7 @@ const ContentWrap = ({ children, className, route, title }) => {
             onClick={() => navigate(`${route}`)}
             className="cursor-pointer text-sm md:text-base lg:text-lg text-primaryColor"
           >
-            See All
+            Lihat Semua
           </span>
         )}
       </div>

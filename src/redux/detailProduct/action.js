@@ -1,19 +1,18 @@
 import api from "../../utils/api";
+import { asyncAddItemToWishlist, asyncDeleteWishlistItem } from "../wishlist/action";
 
 const ActionType = {
   SET_DETAIL_PRODUCT_FAILURE: "SET_DETAIL_PRODUCT_FAILURE",
   SET_DETAIL_PRODUCT_REQUEST: "SET_DETAIL_PRODUCT_REQUEST",
+  
   RECEIVE_DETAIL_PRODUCT_SUCCESS: "RECEIVE_DETAIL_PRODUCT_SUCCESS",
 
-  DELETE_PRODUCT_FAILURE: "DELETE_PRODUCT_FAILURE",
-  DELETE_PRODUCT_REQUEST: "DELETE_PRODUCT_REQUEST",
   DELETE_PRODUCT_SUCCESS: "DELETE_PRODUCT_SUCCESS",
 
-  UPDATE_PRODUCT_FAILURE: "UPDATE_PRODUCT_FAILURE",
-  UPDATE_PRODUCT_REQUEST: "UPDATE_PRODUCT_REQUEST",
   UPDATE_PRODUCT_SUCCESS: "UPDATE_PRODUCT_SUCCESS",
 
   CLEAR_STATUS_UPDATE_PRODUCT: "CLEAR_STATUS_UPDATE_PRODUCT",
+
   CLEAR_DETAIL_PRODUCT: "CLEAR_DETAIL_PRODUCT",
 
 };
@@ -56,7 +55,7 @@ function asyncSetDetailProduct(productId) {
 
 function asyncDeleteProductById(productId) {
   return async (dispatch) => {
-    dispatch({ type: ActionType.DELETE_PRODUCT_REQUEST });
+    dispatch({ type: ActionType.SET_DETAIL_PRODUCT_REQUEST });
 
     try {
       await api.deleteProductById(productId);
@@ -65,7 +64,7 @@ function asyncDeleteProductById(productId) {
       });
     } catch (error) {
       dispatch({
-        type: ActionType.DELETE_PRODUCT_FAILURE,
+        type: ActionType.SET_DETAIL_PRODUCT_FAILURE,
         payload: { error },
       });
       console.error(error.message);
@@ -75,7 +74,7 @@ function asyncDeleteProductById(productId) {
 
 function asyncUpdateProductById({ productId, ...productData }) {
   return async (dispatch) => {
-    dispatch({ type: ActionType.UPDATE_PRODUCT_REQUEST });
+    dispatch({ type: ActionType.SET_DETAIL_PRODUCT_REQUEST });
     try {
       const detailProduct = await api.updateProductById({
         productId,
@@ -87,7 +86,7 @@ function asyncUpdateProductById({ productId, ...productData }) {
       });
     } catch (error) {
       dispatch({
-        type: ActionType.UPDATE_PRODUCT_FAILURE,
+        type: ActionType.SET_DETAIL_PRODUCT_FAILURE,
         payload: { error },
       });
     }
@@ -116,6 +115,16 @@ function asyncUpdateProductById({ productId, ...productData }) {
 //   };
 // }
 
+function toggleWishlistActionCreator({productId, isInWishlist}) {
+  return (dispatch) =>  {
+    if (isInWishlist) {
+      dispatch(asyncDeleteWishlistItem(productId));
+    } else {
+      dispatch(asyncAddItemToWishlist(productId));
+    }
+  };
+}
+
 export {
   ActionType,
   receiveDetailProductActionCreator,
@@ -123,6 +132,7 @@ export {
   clearStatusUpdateProductActionCreator,
   asyncUpdateProductById,
   clearDetailProductActionCreator,
+  toggleWishlistActionCreator,
   asyncSetDetailProduct,
   // asyncAddThreadComment,
   // addThreadCommentActionCreator,

@@ -1,15 +1,15 @@
 import { useDispatch } from "react-redux";
 import LazyImage from "./LazyImage";
-import Price from "./Price";
 import ProductQuantity from "./ProductQuantity";
 import { FaTrashAlt } from "react-icons/fa";
 import { asyncDeleteCartItem } from "../../redux/carts/action";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ProductPrice from "./ProductPrice";
 
 const CartItem = ({ children }) => {
   return (
-    <div className="flex flex-col bg-white shadow rounded gap-2 border p-2 md:p-4 lg:flex-row lg:gap-4">
+    <div className="flex flex-col gap-2 rounded border bg-white p-2 shadow md:p-4 lg:flex-row lg:gap-4">
       {children}
     </div>
   );
@@ -23,10 +23,15 @@ const Header = ({
   productBrand,
   productName,
 }) => {
+  const navigate = useNavigate();
   return (
-    <div className="flex gap-2 flex-1">
+    <div className="flex flex-1 gap-2">
       <div className="relative h-16 w-16 sm:h-32 sm:w-32 md:h-36 md:w-36 lg:h-40 lg:w-40">
-        <LazyImage src={productImage} className="w-full flex-1 object-cover" />
+        <LazyImage
+          src={productImage}
+          className="w-full flex-1 cursor-pointer object-cover"
+          onClick={() => navigate(`/products/all-products/${productId}`)}
+        />
         {productDiscount !== 0 && (
           <span
             className={`absolute left-0 ${!productDiscount && "hidden"} top-0 bg-red-400 p-0.5 text-[8px] text-white sm:text-base`}
@@ -37,7 +42,12 @@ const Header = ({
       </div>
 
       <div className="flex-1 text-sm sm:text-lg  md:text-xl">
-        <Link to={`/products/all-products/${productId}`} className="font-semibold">{productName}</Link>
+        <h3
+          onClick={() => navigate(`/products/all-products/${productId}`)}
+          className="cursor-pointer font-semibold"
+        >
+          {productName}
+        </h3>
         <p>{productBrand}</p>
         <p>Stok: {productStock}</p>
       </div>
@@ -54,8 +64,8 @@ const Body = ({
   cartItemQty,
 }) => {
   return (
-    <div className="flex justify-between lg:items-center gap-2 lg:flex-col">
-      <Price
+    <div className="flex justify-between gap-2 lg:flex-col lg:items-center">
+      <ProductPrice
         hiddenTextDiscount={true}
         price={productPrice}
         discount={productDiscount}
@@ -84,7 +94,7 @@ const Footer = ({
 }) => {
   const dispatch = useDispatch();
   return (
-    <div className="flex justify-between lg:gap-2 lg:flex-col">
+    <div className="flex justify-between lg:flex-col lg:gap-2">
       <div className={`flex flex-col text-xs md:text-sm lg:text-base`}>
         <h3 className="font-bold">Sub Total</h3>
         {calculateSubTotal(productPrice, productDiscount, cartItemQty)
@@ -96,7 +106,7 @@ const Footer = ({
       </div>
       <Button
         variant="btn-2"
-        className="flex max-w-max items-center lg:py-2 gap-2 px-1 text-xs md:px-2 md:text-sm lg:text-base"
+        className="flex max-w-max items-center gap-2 px-1 text-xs md:px-2 md:text-sm lg:py-2 lg:text-base"
         onClick={() => dispatch(asyncDeleteCartItem(cartItemId))}
       >
         <FaTrashAlt className="" />

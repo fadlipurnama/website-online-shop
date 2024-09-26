@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import MenuItem from "../Elements/MenuItem";
 import InputSearch from "../Elements/InputSearch";
 import CartIcon from "../Elements/CartIcon";
 import DropdownSearch from "../Elements/DropdownSearch";
 import DropdownUser from "../Elements/DropdownUser";
 import HamburgerMenu from "../Elements/HamburgerMenu";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { authUser, loading } = useSelector((state) => state.auth);
@@ -37,39 +36,60 @@ const Navbar = () => {
           className={`hidden items-center justify-between gap-4 bg-gray-100 px-6 py-2 text-sm lg:flex ${loading ? "animate-pulse" : ""}`}
         >
           <div className="flex gap-4">
-            {[
-             
-              "Hubungi Kami",
-              "Tentang Kami",
-              "Download Aplikasi",
-         
-            ].map((text, idx) => (
-              <MenuItem
-                key={idx}
-                text={text}
-                to={`/${text.toLowerCase().replace(/\s+/g, "-")}`}
-                className={loading ? "bg-gray-200 text-transparent" : ""}
-              />
-            ))}
+            {["Download Aplikasi", "Hubungi Kami", "Tentang Kami"].map(
+              (text, index) => (
+                <Link
+                  key={index}
+                  to={`/${text.toLowerCase().replace(/\s+/g, "-")}`}
+                  className={
+                    loading
+                      ? "bg-gray-200 text-transparent"
+                      : "hover:text-primaryColor"
+                  }
+                >
+                  {text}
+                </Link>
+              ),
+            )}
+            <Link
+              to={`/user-profile/${authUser?._id}/wishlist`}
+              className={
+                loading
+                  ? "bg-gray-200 text-transparent"
+                  : "hover:text-primaryColor"
+              }
+            >
+              Wishlist
+            </Link>
           </div>
           {!authUser && (
             <div className="flex gap-4 font-semibold">
-              <MenuItem
-                text="Masuk"
+              <Link
                 to="/login"
-                className={loading ? "bg-gray-200 text-transparent" : ""}
-              />
-              <MenuItem
-                text="Daftar"
+                className={
+                  loading
+                    ? "bg-gray-200 text-transparent"
+                    : "hover:text-primaryColor"
+                }
+              >
+                Masuk
+              </Link>
+              <Link
                 to="/register"
-                className={loading ? "bg-gray-200 text-transparent" : ""}
-              />
+                className={
+                  loading
+                    ? "bg-gray-200 text-transparent"
+                    : "hover:text-primaryColor"
+                }
+              >
+                Daftar
+              </Link>
             </div>
           )}
         </nav>
 
         <div
-          className={`top-0 flex flex-wrap transition-all duration-300 items-center ${!isSticky && "bg-white"} justify-between px-2 lg:px-6 py-3 lg:gap-4 2xl:flex-nowrap ${loading ? "animate-pulse" : ""}`}
+          className={`top-0 flex flex-wrap items-center transition-all duration-300 ${!isSticky && "bg-white"} justify-between px-2 py-3 lg:gap-4 lg:px-6 2xl:flex-nowrap ${loading ? "animate-pulse" : ""}`}
         >
           <span
             onClick={() => navigate("/")}

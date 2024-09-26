@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import InputForm from "../Elements/Input";
-import data_provinsi from "../../nama-provinsi.json";
 import SelectForm from "../Elements/Select";
 import Button from "../Elements/Button";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  asyncUpdateUser,
-  clearStatusUpdatedActionCreator,
-} from "../../redux/updateUserDetail/action";
+import { asyncUpdateUser, clearStatusUpdatedActionCreator } from "../../redux/updateUserDetail/action";
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
+import useProvinces from "../../hooks/useProvinces";
+import useCities from "../../hooks/useCities";
 
 const addressSchema = z.object({
   country: z.string().min(1, "*Masukkan Negara"),
   province: z.string().min(1, "*Masukkan provinsi"),
-  address: z.string().min(1, "*Masukkan alamat"),
+  address: z.string().min(1, "*Masukkan alamat lengkap"),
   city: z.string().min(1, "*Masukkan kota"),
   zipCode: z.string().min(1, "*Masukkan kode ZIP/Pos"),
 });
@@ -25,18 +24,21 @@ const AddAddress = () => {
   const [city, setCity] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [errors, setErrors] = useState({});
-  const dispatch = useDispatch();
 
-  const { updateSuccess, loading} = useSelector(
-    (states) => states.updateUserDetail,
-  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { updateSuccess, loading } = useSelector((states) => states.updateUserDetail);
+
+  // Menggunakan custom hooks untuk provinsi dan kota
+  const provinces = useProvinces();
+  const cities = useCities(province);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = { country, province, address, city, zipCode };
 
     try {
-      // Validate form data
       addressSchema.parse(formData);
       setErrors({});
       dispatch(asyncUpdateUser(formData));
@@ -59,8 +61,15 @@ const AddAddress = () => {
       setCity("");
       setAddress("");
       dispatch(clearStatusUpdatedActionCreator());
+      navigate(-1);
     }
-  }, [updateSuccess, dispatch]);
+  }, [updateSuccess, dispatch, navigate]);
+
+  const handleProvinceChange = (e) => {
+    const selectedProvince = e.target.value;
+    setProvince(selectedProvince); // Menyimpan nilai provinsi
+    setCity(""); // Reset nilai kota saat provinsi berubah
+  };
 
   return (
     <form
@@ -68,7 +77,7 @@ const AddAddress = () => {
       className="grid grid-cols-1 gap-x-4 gap-y-4 text-xs text-gray-800 sm:text-sm md:grid-cols-2 lg:gap-y-8 xl:text-base"
     >
       <h2 className="text-sm font-bold md:col-span-2 md:text-base lg:text-xl">
-        Tambahkan Alamat
+        Masukkan Alamat
       </h2>
       <SelectForm
         label="Negara/Wilayah"
@@ -80,54 +89,50 @@ const AddAddress = () => {
         value={country}
         error={errors.country}
         onChange={(e) => setCountry(e.target.value)}
-        options={[
-          {
-            value: "Indonesia",
-            label: "Indonesia",
-          },
-        ]}
+        options={[{ value: "Indonesia", label: "Indonesia" }]}
       />
       {errors.country && (
         <p className="text-xs text-red-500">{errors.country}</p>
       )}
       <InputForm
-        label="Alamat"
+        label="Alamat Lengkap"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
         variant={true}
         disabled={loading}
-        className=" placeholder-black"
+        className="placeholder-black"
         container="col-span-2"
-        placeholder="Alamat"
+        placeholder="Alamat Lengkap"
         error={errors.address}
       />
-      <InputForm
-        label="Kota"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        variant={true}
-        disabled={loading}
-        className=" placeholder-black"
-        container="col-span-2"
-        placeholder="Kota"
-        error={errors.city}
-      />
-
       <SelectForm
         variant={true}
         label="Provinsi"
         name="provinsi"
         disabled={loading}
-        classNameContainer="col-span-2"
+        container="col-span-2"
         placeholder="Provinsi"
         value={province}
-        onChange={(e) => setProvince(e.target.value)}
-        options={data_provinsi.map((item, index) => ({
-          key: index,
-          value: item.value,
-          label: item.label,
-        }))}
+        onChange={handleProvinceChange} // Mengganti onChange
+        options={provinces?.map((item) => ({
+          value: item.province_id,
+          label: item.province,
+        }))} // Menyesuaikan dengan data provinsi dari Raja Ongkir
         error={errors.province}
+      />
+      <SelectForm
+        variant={true}
+        label="Kota/Kabupaten"
+        name="city"
+        disabled={loading || !province} // Menonaktifkan jika provinsi tidak dipilih
+        placeholder="Kota/Kabupaten"
+        value={city}
+        onChange={(e) => setCity(e.target.value)} // Mengganti onChange
+        options={cities?.map((item) => ({
+          value: item.city_id,
+          label: item.city_name,
+        }))} // Menyesuaikan dengan data kota dari Raja Ongkir
+        error={errors.city}
       />
       <InputForm
         disabled={loading}
@@ -136,12 +141,11 @@ const AddAddress = () => {
         type="number"
         onChange={(e) => setZipCode(e.target.value)}
         variant={true}
-        className=" placeholder-black"
+        className="placeholder-black"
         container=""
         placeholder="Kode Pos"
         error={errors.zipCode}
       />
-
       <Button
         disabled={loading}
         type="submit"

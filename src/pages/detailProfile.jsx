@@ -15,10 +15,10 @@ const DetailProfilePage = () => {
   }, [authUser, navigate]);
 
   return (
-    <DefaultLayout label={`${authUser?.firstName} ${authUser?.lastName}`}>
-      <div className="flex min-h-[80vh] w-full gap-5">
+    <DefaultLayout title="Tersedia Berbagai Barang Elektrik | User Profile" label={`${authUser?.firstName} ${authUser?.lastName}`}>
+      <div className="flex min-h-[80vh] w-full">
         <SidebarUserProfile />
-        <div className="flex-1 bg-white p-6 sm:p-8 md:p-10">
+        <div className="flex-1 bg-white px-6">
           <Outlet />
         </div>
       </div>

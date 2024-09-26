@@ -9,13 +9,20 @@ const ActionType = {
   CLEARE_STATUS_UPDATED: "CLEARE_STATUS_UPDATED",
 };
 
-function asyncUpdateUser({ ...updateData }) {
+function asyncUpdateUser({ imageUrl, ...updateData }) {
   return async (dispatch) => {
     dispatch({ type: ActionType.UPDATE_USER_REQUEST });
-
     try {
-      const updated = await api.updateUser(updateData);
-      dispatch(setAuthUserActionCreator(updated));
+      const formUpdateUser = new FormData();
+      for (const key in updateData) {
+        if (Object.hasOwnProperty.call(updateData, key)) {
+          const value = String(updateData[key]);
+          formUpdateUser.append(key, value);
+        }
+      }
+      formUpdateUser.append("imageUrl", imageUrl);
+      const updateUser = await api.updateUser(formUpdateUser);
+      dispatch(setAuthUserActionCreator(updateUser));
       dispatch({ type: ActionType.UPDATE_USER_SUCCESS });
     } catch (error) {
       dispatch({
@@ -23,6 +30,16 @@ function asyncUpdateUser({ ...updateData }) {
         payload: { error: error.message },
       });
     }
+    // try {
+    //   const updated = await api.updateUser(imageUrl, updateData);
+    //   dispatch(setAuthUserActionCreator(updated));
+    //   dispatch({ type: ActionType.UPDATE_USER_SUCCESS });
+    // } catch (error) {
+    //   dispatch({
+    //     type: ActionType.UPDATE_USER_FAILURE,
+    //     payload: { error: error.message },
+    //   });
+    // }
   };
 }
 

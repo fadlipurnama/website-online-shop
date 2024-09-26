@@ -16,15 +16,7 @@ const ActionType = {
   TOGGLE_WHISHLIST_PRODUCT: "TOGGLE_WHISHLIST_PRODUCT",
 };
 
-function toggleWhishlistActionCreator({ productId, userId }) {
-  return {
-    type: ActionType.TOGGLE_WHISHLIST_PRODUCT,
-    payload: {
-      productId,
-      userId,
-    },
-  };
-}
+
 
 function receiveProductActionCreator(products) {
   return {
@@ -62,20 +54,20 @@ function asyncSetProducts() {
   };
 }
 
-function asyncToogleWhishlistProduct({ productId, userId }) {
-  return async (dispatch, getState) => {
-    const { authUser } = getState();
-    dispatch(toggleWhishlistActionCreator({ productId, userId: authUser.id }));
-    try {
-      await api.toggleLikeThread({ productId, userId });
-    } catch (error) {
-      alert(error.message);
-      dispatch(
-        toggleWhishlistActionCreator({ productId, userId: authUser.id }),
-      );
-    }
-  };
-}
+// function asyncToogleWhishlistProduct({ productId, userId }) {
+//   return async (dispatch, getState) => {
+//     const { authUser } = getState();
+//     dispatch(toggleWhishlistActionCreator({ productId, userId: authUser.id }));
+//     try {
+//       await api.toggleLikeThread({ productId, userId });
+//     } catch (error) {
+//       alert(error.message);
+//       dispatch(
+//         toggleWhishlistActionCreator({ productId, userId: authUser.id }),
+//       );
+//     }
+//   };
+// }
 
 function asyncAddProduct({ imageUrl, ...productData }) {
   return async (dispatch) => {
@@ -106,6 +98,5 @@ export {
   clearStatusAddProductActionCreator,
   addProductActionCreator,
   asyncAddProduct,
-  toggleWhishlistActionCreator,
-  asyncToogleWhishlistProduct,
+  // asyncToogleWhishlistProduct,
 };

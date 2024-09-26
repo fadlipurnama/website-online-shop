@@ -34,3 +34,40 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@keyframes wave {
+  0% {
+    transform: translateX(-100%) translateY(0);
+  }
+  50% {
+    transform: translateX(0) translateY(10%);
+  }
+  100% {
+    transform: translateX(100%) translateY(0);
+  }
+}
+
+.wave-animation {
+  background: linear-gradient(90deg, rgb(104, 176, 171), rgb(143, 192, 169), rgb(143, 192, 176));
+  height: 100%;
+  width: 200%;
+  animation: wave 2s infinite;
+  border-radius: 2px;
+}
