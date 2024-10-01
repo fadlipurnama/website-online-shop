@@ -18,7 +18,10 @@ const InputSearch = ({
 }) => {
   return (
     <div
-      className={`${openSearchBar ? "flex lg:hidden" : `${defaultElement ? "flex" : "hidden lg:flex"}`} w-full ${container} items-center gap-1 rounded-lg border  bg-white px-2 `}
+      // ${openSearchBar ? "flex lg:hidden" : `${defaultElement ? "flex" : "hidden lg:flex"}`}
+      className={`
+        flex
+         w-full ${container} items-center gap-1 rounded-lg border  bg-white px-2 `}
     >
       <CiSearch className="h-6 w-6" onClick={onClick} />
       <Input

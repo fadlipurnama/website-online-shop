@@ -3,7 +3,7 @@ import { LuUser2 } from "react-icons/lu";
 import { useLocation } from "react-router-dom";
 import DropdownUserList from "./DropdownUserList";
 
-const DropdownUser = ({ authUser, dropdownPosition }) => {
+const DropdownUser = ({ dropdownPosition }) => {
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
   const { pathname } = useLocation();
 
@@ -59,19 +59,11 @@ const DropdownUser = ({ authUser, dropdownPosition }) => {
         onClick={() => setDropdownIsOpen(!dropdownIsOpen)}
         className="flex cursor-pointer items-center gap-4 rounded-sm px-0 font-medium text-gray-600 outline-none transition duration-300 ease-in-out"
       >
-        {/* <span className="flex flex-col items-end">
-          <span className="font-light">Selamat datang,</span>
-          <span>
-            {authUser && `${authUser.firstName} ${authUser.lastName}`}
-          </span>
-        </span> */}
         <LuUser2 className="h-8 w-8 text-slate-600" />
       </button>
       {dropdownIsOpen && (
         <DropdownUserList
           dropdownPosition={dropdownPosition}
-          authUser={authUser}
-          // dropdownIsOpen={dropdownIsOpen}
           setDropdownIsOpen={setDropdownIsOpen}
           dropdownRef={dropdownRef}
         />

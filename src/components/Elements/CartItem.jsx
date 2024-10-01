@@ -26,10 +26,10 @@ const Header = ({
   const navigate = useNavigate();
   return (
     <div className="flex flex-1 gap-2">
-      <div className="relative h-16 w-16 sm:h-32 sm:w-32 md:h-36 md:w-36 lg:h-40 lg:w-40">
+      <div className="bg-white relative h-16 w-16 sm:h-32 sm:w-32 md:h-36 md:w-36 lg:h-40 lg:w-40">
         <LazyImage
           src={productImage}
-          className="w-full flex-1 cursor-pointer object-cover"
+          className="w-full bg-white flex-1 cursor-pointer object-cover"
           onClick={() => navigate(`/products/all-products/${productId}`)}
         />
         {productDiscount !== 0 && (

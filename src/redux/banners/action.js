@@ -5,7 +5,7 @@ const ActionType = {
   SET_BANNER_REQUEST: "SET_BANNER_REQUEST",
   RECEIVE_BANNER_SUCCESS: "RECEIVE_BANNER_SUCCESS",
 
-  CLEAR_STATE: "CLEAR_STATE",
+  RESET_BANNER_DATA: "RESET_BANNER_DATA",
 
   ADD_BANNER: "ADD_BANNER",
 };
@@ -18,9 +18,9 @@ function receiveBannerActionCreator(banners) {
     },
   };
 }
-function clearStateBannerActionCreator() {
+function resetBannerData() {
   return {
-    type: ActionType.CLEAR_STATE,
+    type: ActionType.RESET_BANNER_DATA,
   };
 }
 
@@ -36,4 +36,4 @@ function asyncSetBanners() {
   };
 }
 
-export { ActionType, asyncSetBanners, clearStateBannerActionCreator };
+export { ActionType, asyncSetBanners, resetBannerData };

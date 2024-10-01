@@ -1,6 +1,6 @@
 import { useRouteError } from "react-router-dom";
 
-const ErrorPage = ({ authUser }) => {
+const ErrorPage = () => {
   // const navigate = useNavigate();
   const error = useRouteError();
   // if (!authUser) {
@@ -8,9 +8,9 @@ const ErrorPage = ({ authUser }) => {
   // }
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className="text-3xl font-bold">Oops!</h1>
-      <p className="my-5 text-xl">Sorry, an unexpected error has occured</p>
-      <p className="text-lg">{error.statusText || error.nessage}</p>
+      <p className="my-5 text-xl"></p>
+      <h1 className="text-9xl font-bold">404</h1>
+      <p className="text-2xl">Page {error.statusText || error.nessage}</p>
     </div>
   );
 };

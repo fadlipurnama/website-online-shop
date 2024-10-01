@@ -8,6 +8,7 @@ const initialState = {
   cities: null,
   loading: false,
   error: false,
+  trackingData: null,
   message: null,
 };
 
@@ -58,6 +59,23 @@ function shipmentReducer(state = initialState, action = {}) {
       return {
         ...state,
         provinces: action.payload.provinces,
+        loading: false,
+        error: false,
+        message: null,
+      };
+    case ActionType.SET_TRACKING_REQUEST:
+      return { ...state, loading: true, error: false };
+    case ActionType.SET_TRACKING_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: true,
+        message: action.payload.error,
+      };
+    case ActionType.RECEIVE_TRACKING_SUCCESS:
+      return {
+        ...state,
+        trackingData: action.payload.trackingData,
         loading: false,
         error: false,
         message: null,

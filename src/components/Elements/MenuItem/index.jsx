@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 
-const MenuItem = ({ text, icon, to, bgHover }) => {
+const MenuItem = ({ text, icon, to, bgHover, onClick = () => {} }) => {
   return (
     <Link
-      className={`flex items-center ${bgHover ? "hover:bg-slate-200 p-4 hover:font-medium" : "hover:text-primaryColor"} gap-2 `}
+      onClick={onClick}
+      className={`flex items-center ${bgHover ? "p-4 hover:bg-slate-200 hover:font-medium" : "hover:text-primaryColor"} gap-2 `}
       to={to}
     >
       {icon}

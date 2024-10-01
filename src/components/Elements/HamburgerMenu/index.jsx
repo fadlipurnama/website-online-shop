@@ -39,7 +39,11 @@ const HamburgerMenu = ({ authUser }) => {
           {/* Dropdown Menu */}
           <div className="fixed right-0 top-0 z-20 flex h-full w-full max-w-sm flex-col gap-5 overflow-y-auto bg-white px-5 py-8 lg:hidden">
             {/* List */}
-            <DropdownHamburgerList authUser={authUser} />
+            <DropdownHamburgerList
+              setOpenMenu={setOpenMenu}
+              openMenu={openMenu}
+              authUser={authUser}
+            />
           </div>
         </>
       )}

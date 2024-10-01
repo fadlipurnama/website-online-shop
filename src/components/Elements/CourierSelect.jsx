@@ -6,7 +6,6 @@ const CourierSelect = ({ couriers, selectedCourier, setSelectedCourier }) => {
   const handleSelect = (courier) => {
     setSelectedCourier(courier);
     setIsOpen(false);
-    console.log('ikkeh')
   };
 
   return (

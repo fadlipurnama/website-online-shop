@@ -13,6 +13,7 @@ import wishlistReducer from "./wishlist/reducer";
 import transactionReducer from "./transaction/reducer";
 import shipmentReducer from "./shipment/reducer";
 import orderReducer from "./order/reducer";
+import searchTermReducer from "./searchTerm/reducer";
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     shipment: shipmentReducer,
     order: orderReducer,
     transaction: transactionReducer,
+    searchTerm: searchTermReducer,
   },
 });
 

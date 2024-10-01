@@ -23,6 +23,7 @@ function authUserReducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
+        message: action.payload.message,
         updateSuccess: true,
       };
     case ActionType.CLEARE_STATUS_UPDATED:

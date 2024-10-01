@@ -43,10 +43,67 @@ function asyncUpdateUser({ imageUrl, ...updateData }) {
   };
 }
 
+function asyncUpdateProfileUser({
+  email,
+  firstName,
+  lastName,
+  password,
+  phoneNumber,
+}) {
+  return async (dispatch) => {
+    dispatch({ type: ActionType.UPDATE_USER_REQUEST });
+    try {
+      const { data } = await api.updateProfileUser({
+        email,
+        firstName,
+        lastName,
+        password,
+        phoneNumber,
+      });
+      dispatch(setAuthUserActionCreator(data));
+      dispatch({
+        type: ActionType.UPDATE_USER_SUCCESS,
+        payload: { message: "Data profile berhasil di ubah" },
+      });
+    } catch (error) {
+      console.log(error.message);
+      dispatch({
+        type: ActionType.UPDATE_USER_FAILURE,
+        payload: { error: error.message },
+      });
+    }
+  };
+}
+function asyncChangePassword({ oldPassword, newPassword }) {
+  return async (dispatch) => {
+    dispatch({ type: ActionType.UPDATE_USER_REQUEST });
+    try {
+      const response = await api.changePassword({ oldPassword, newPassword });
+      console.log(response);
+      dispatch({
+        type: ActionType.UPDATE_USER_SUCCESS,
+        payload: { message: "Password berhasil di ubah" },
+      });
+    } catch (error) {
+      console.log(error.message);
+      dispatch({
+        type: ActionType.UPDATE_USER_FAILURE,
+        payload: { error: error.message },
+      });
+    }
+  };
+}
+
 function clearStatusUpdatedActionCreator() {
   return {
     type: ActionType.CLEARE_STATUS_UPDATED,
   };
 }
 
-export { ActionType, asyncUpdateUser, clearStatusUpdatedActionCreator };
+export {
+  ActionType,
+  asyncUpdateProfileUser,
+  asyncChangePassword,
+  asyncUpdateUser,
+  clearStatusUpdatedActionCreator,
+};

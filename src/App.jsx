@@ -13,7 +13,6 @@ import ProductPromotionPage from "./pages/productPromotion.jsx";
 import DetailProfilePage from "./pages/detailProfile.jsx";
 import DetailProductPage from "./pages/detailProduct.jsx";
 import UserInfo from "./components/Fragments/UserInfo.jsx";
-import UserCart from "./components/Fragments/UserCart.jsx";
 import AddAddress from "./components/Fragments/AddAddress.jsx";
 import CartPage from "./pages/cart.jsx";
 import WishlistItemList from "./components/Fragments/WishlistItemList.jsx";
@@ -23,6 +22,10 @@ import TransactionList from "./components/Fragments/TransactionList.jsx";
 import ProtectedRoute from "./components/Fragments/ProtectedRoute.jsx";
 import OrderList from "./components/Fragments/OrderListFragment.jsx";
 import DetailOrderPage from "./pages/detailOrder.jsx";
+import TrackingPage from "./pages/tracking.jsx";
+import SettingProfile from "./components/Fragments/SettingProfile.jsx";
+import AllProductPage from "./pages/allProduct.jsx";
+import ChangePassword from "./components/Fragments/ChangePassword..jsx";
 
 const App = () => {
   const {
@@ -44,7 +47,14 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (hasCheckedAuth && message === "Invalid token.") {
+    const tokenErrorMessages = [
+      "Invalid token.",
+      "Token has expired.",
+      "Other error message...",
+    ];
+
+    if (hasCheckedAuth && tokenErrorMessages.includes(message)) {
+      // Jika terdapat kesalahan token, panggil aksi untuk logout
       dispatch(asyncUnsetAuthUser());
     }
   }, [dispatch, message, hasCheckedAuth]);
@@ -64,8 +74,11 @@ const App = () => {
       element: <ProtectedRoute element={<DetailTransactionPage />} />,
     },
     {
+      path: "/tracking",
+      element: <ProtectedRoute element={<TrackingPage />} />,
+    },
+    {
       path: "/cart/checkout",
-      // Menggunakan ProtectedRoute
       element: <ProtectedRoute element={<CheckoutPage />} />,
     },
     {
@@ -73,7 +86,7 @@ const App = () => {
       element: <RegisterPage />,
     },
     {
-      path: "/order/:orderId",
+      path: "/order/:shippingNumber",
       element: <DetailOrderPage />,
     },
     {
@@ -81,7 +94,11 @@ const App = () => {
       element: <CartPage />,
     },
     {
-      path: "/user-profile/:userId",
+      path: "/products",
+      element: <AllProductPage />,
+    },
+    {
+      path: "/user-profile/",
       element: <ProtectedRoute element={<DetailProfilePage />} />,
 
       children: [
@@ -90,12 +107,16 @@ const App = () => {
           element: <UserInfo />,
         },
         {
-          path: "keranjang-belanja",
-          element: <UserCart />,
-        },
-        {
           path: "alamat",
           element: <AddAddress />,
+        },
+        {
+          path: "ubah-password",
+          element: <ChangePassword />,
+        },
+        {
+          path: "setting",
+          element: <SettingProfile />,
         },
         {
           path: "wishlist",
@@ -120,7 +141,7 @@ const App = () => {
       element: <ProductCategoriesPage />,
     },
     {
-      path: "/promo/:promotionName//:productId",
+      path: "/promo/:promotionName/:productId",
       element: <DetailProductPage />,
     },
     {
@@ -131,9 +152,8 @@ const App = () => {
 
   const router = createBrowserRouter(routes);
 
-  // Return loading page if loading is true or auth check is not completed
   if (loading || !hasCheckedAuth) {
-    return <LoadingPage />; // Display loading indicator
+    return <LoadingPage />;
   }
 
   return <RouterProvider router={router} />;

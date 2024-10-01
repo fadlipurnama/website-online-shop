@@ -12,8 +12,10 @@ const initialState = {
 function cartsReducer(state = initialState, action = {}) {
   switch (action.type) {
     case ActionType.SET_CART_REQUEST:
+    case ActionType.CLEAR_CART_USER_REQUEST:
       return { ...state, loading: true, error: false };
     case ActionType.SET_CART_FAILURE:
+    case ActionType.CLEAR_CART_USER_FAILURE:
       return {
         ...state,
         loading: false,
@@ -70,9 +72,10 @@ function cartsReducer(state = initialState, action = {}) {
         message: action.payload?.message,
         totalQuantity: action.payload.totalQuantity,
       };
-      
+    case ActionType.CLEAR_CART_USER_SUCCESS:
+      return state;
     case ActionType.CLEAR_DATA_CARTS:
-      return initialState;
+      return state;
     default:
       return state;
   }

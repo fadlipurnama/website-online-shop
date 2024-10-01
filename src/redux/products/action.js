@@ -10,13 +10,12 @@ const ActionType = {
   ADD_PRODUCT_SUCCESS: "ADD_PRODUCT_SUCCESS",
 
   CLEAR_STATUS_ADD_PRODUCT: "CLEAR_STATUS_ADD_PRODUCT",
+  CLEAR_PRODUCT_DATA: "CLEAR_PRODUCT_DATA",
 
   DELETE_PRODUCT: "DELETE_PRODUCT",
 
   TOGGLE_WHISHLIST_PRODUCT: "TOGGLE_WHISHLIST_PRODUCT",
 };
-
-
 
 function receiveProductActionCreator(products) {
   return {
@@ -53,21 +52,11 @@ function asyncSetProducts() {
     }
   };
 }
-
-// function asyncToogleWhishlistProduct({ productId, userId }) {
-//   return async (dispatch, getState) => {
-//     const { authUser } = getState();
-//     dispatch(toggleWhishlistActionCreator({ productId, userId: authUser.id }));
-//     try {
-//       await api.toggleLikeThread({ productId, userId });
-//     } catch (error) {
-//       alert(error.message);
-//       dispatch(
-//         toggleWhishlistActionCreator({ productId, userId: authUser.id }),
-//       );
-//     }
-//   };
-// }
+function clearProductData() {
+  return {
+    type: ActionType.CLEAR_PRODUCT_DATA,
+  };
+}
 
 function asyncAddProduct({ imageUrl, ...productData }) {
   return async (dispatch) => {
@@ -95,6 +84,8 @@ function asyncAddProduct({ imageUrl, ...productData }) {
 export {
   ActionType,
   asyncSetProducts,
+  receiveProductActionCreator,
+  clearProductData,
   clearStatusAddProductActionCreator,
   addProductActionCreator,
   asyncAddProduct,

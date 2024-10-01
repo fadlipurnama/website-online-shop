@@ -1,4 +1,5 @@
 import CardProduct from "../Elements/CardProduct";
+import DataNotFound from "./DataNotFound";
 
 const ProductList = ({ products, parentRoutes, route, loading }) => {
   return (
@@ -41,9 +42,10 @@ const ProductList = ({ products, parentRoutes, route, loading }) => {
           ))}
 
       {products?.length === 0 && (
-        <div className="mx-auto flex h-[50vh] w-full items-center justify-center lg:h-[70vh]">
-          Data tidak ditemukan
-        </div>
+        <DataNotFound
+          title={"Data tidak ditemukan"}
+          description={"Informasi produk yang kamu cari tidak ada."}
+        />
       )}
     </div>
   );

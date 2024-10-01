@@ -41,6 +41,8 @@ function productsReducer(state = initialState, action = {}) {
         ...state,
         addSuccess: false,
       };
+    case ActionType.CLEAR_PRODUCT_DATA:
+      return state;
     default:
       return state;
   }

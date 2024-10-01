@@ -21,8 +21,8 @@ const LazyImage = ({
         }
       },
       {
-        rootMargin: "50px", // Mulai memuat sebelum elemen benar-benar terlihat
-        threshold: 0.1, // Persentase elemen yang harus terlihat sebelum memuat
+        rootMargin: "50px", 
+        threshold: 0.1,
       },
     );
 
@@ -38,7 +38,6 @@ const LazyImage = ({
   }, []);
 
   const handleError = (event) => {
-    // Optional: set a default placeholder image if the image fails to load
     event.target.src = placeholder || "path/to/default-placeholder-image.png";
   };
 

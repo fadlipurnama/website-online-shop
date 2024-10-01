@@ -4,6 +4,7 @@ const ActionType = {
   SET_CATEGORIES_FAILURE: "SET_CATEGORIES_FAILURE",
   SET_CATEGORIES_REQUEST: "SET_CATEGORIES_REQUEST",
   RECEIVE_CATEGORIES_SUCCESS: "SET_CATEGORIES_SUCCESS",
+  RESET_CATEGORIES_DATA: "RESET_CATEGORIES_DATA",
 
   ADD_CATEGORIES: "ADD_CATEGORIES",
 };
@@ -29,9 +30,16 @@ function asyncSetCategories() {
     }
   };
 }
+function resetCategoriesData() {
+  return {
+    type: ActionType.RESET_CATEGORIES_DATA,
+   
+  };
+}
 
 
 export {
+  resetCategoriesData,
   ActionType,
   asyncSetCategories,
 };

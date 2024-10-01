@@ -4,7 +4,6 @@ const initialState = {
   loading: false,
   error: null,
   transactionData: null,
-  snapShowTrigger: false,
 };
 
 function transactionReducer(state = initialState, action = {}) {
@@ -12,7 +11,7 @@ function transactionReducer(state = initialState, action = {}) {
     case ActionType.SET_TRANSACTION_REQUEST:
       return { ...state, loading: true, error: null };
     case ActionType.SET_TRANSACTION_FAILURE:
-      return { ...state, loading: false, error: action.payload.error };
+      return { ...state, loading: false, error: action.payload?.error};
     case ActionType.SET_TRANSACTION_SUCCESS:
       return {
         ...state,
@@ -20,12 +19,12 @@ function transactionReducer(state = initialState, action = {}) {
         transactionData: action.payload,
         error: null,
       };
-      case ActionType.RESET_ORDER_DATA:
-        return {
-          ...state,
-          transactionData: null,
-          error: null,
-        };
+    case ActionType.RESET_ORDER_DATA:
+      return {
+        ...state,
+        transactionData: null,
+        error: null,
+      };
     case ActionType.SET_TRANSACTION_BY_ID_SUCCESS: // Tambahkan case ini
       return {
         ...state,
@@ -40,21 +39,20 @@ function transactionReducer(state = initialState, action = {}) {
         transactionData: action.payload,
         error: null,
       };
+    case ActionType.DELETE_TRANSACTION:
+      return {
+        state,
+      };
     case ActionType.RESET_TRANSACTION_DATA:
       return {
         ...state,
         transactionData: null,
         error: null,
       };
-    case ActionType.TOGGLE_SNAP_SHOW_TRIGGER:
-      return {
-        ...state,
-        snapShowTrigger: !state.snapShowTrigger,
-      };
+
     default:
       return state;
   }
 }
-
 
 export default transactionReducer;

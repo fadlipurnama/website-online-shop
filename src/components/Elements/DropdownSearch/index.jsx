@@ -1,48 +1,94 @@
 import { CiSearch } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import InputSearch from "../InputSearch";
+import SearchTermSuggestion from "../../Fragments/SearchTermSuggestion";
+import { useDispatch } from "react-redux";
+import {
+  asyncSearchProducts,
+  clearSearchTerm,
+} from "../../../redux/searchTerm/action";
+import Input from "../InputSearch/Input";
 
-const DropdwonSearch = () => {
+const DropdownSearch = () => {
   const [openSearchBar, setOpenSearchBar] = useState(false);
+  const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
 
   const toggleSearchBar = () => {
-    if (window.innerWidth < 1024) {
-      setOpenSearchBar(!openSearchBar);
-      document.body.classList.toggle("overflow-hidden");
+  
+    setOpenSearchBar(!openSearchBar);
+    document.body.classList.toggle("overflow-hidden");
+
+    setSearch("");
+    dispatch(clearSearchTerm());
+  };
+
+  const [debounceTimer, setDebounceTimer] = useState(null); 
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setSearch(value);
+
+    // Clear previous timer jika ada
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
     }
+
+    // Set timer baru
+    const timer = setTimeout(() => {
+      if (value) {
+        dispatch(asyncSearchProducts(value, 5)); 
+      }
+    }, 300); 
+
+    setDebounceTimer(timer);
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      if (innerWidth > 1024) {
-        setOpenSearchBar(false);
-        document.body.classList.remove("overflow-hidden");
+    return () => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
       }
     };
-    handleResize();
-    addEventListener("resize", handleResize);
-    return () => removeEventListener("resize", handleResize);
-  }, []);
+  }, [debounceTimer, dispatch]);
 
   return (
-    <div className="lg:hidden cursor-pointer gap-0 rounded-lg flex lg:w-full lg:cursor-default lg:items-center lg:gap-1 lg:border lg:px-2">
+    <div
+      className=" flex cursor-pointer gap-0 rounded-lg px-2 lg:w-full lg:cursor-default lg:items-center lg:gap-1 lg:border lg:bg-white lg:px-2
+    "
+    >
       <CiSearch onClick={toggleSearchBar} className="h-6 w-6" />
-      <>
-        {/* Search Bar Dropdown */}
-        {openSearchBar && (
-          <>
-            <div
-              className="fixed right-0 top-0 z-10 h-full w-full bg-black/50 backdrop-blur-sm lg:hidden"
-              onClick={toggleSearchBar}
-            ></div>
-            <div className="fixed left-0 top-0 z-20 flex h-full w-full max-w-sm flex-col gap-5 bg-white px-5 py-8 lg:hidden">
-              <InputSearch openSearchBar={openSearchBar} placeholder='Ssearch...'/>
-            </div>
-          </>
-        )}
-      </>
+      <Input
+        onClick={toggleSearchBar}
+        className={`hidden cursor-pointer border-none py-3 text-base outline-none lg:block`}
+        type={"text"}
+        value={search}
+        placeholder="Cari produk yang anda inginkan..."
+      />
+
+      {openSearchBar && (
+        <>
+          <div
+            className="fixed right-0 top-0 z-40 h-full w-full bg-black/50 backdrop-blur-sm "
+            onClick={toggleSearchBar}
+          ></div>
+          <div className="fixed left-0 top-0 z-50 flex h-full w-full max-w-sm flex-col gap-5 bg-white overflow-hidden px-5 py-8 lg:absolute lg:left-1/2 lg:top-1/2 lg:h-[65%] lg:max-w-2xl lg:-translate-x-1/2 lg:-translate-y-1/2 lg:transform lg:py-5">
+              <InputSearch
+                onChange={handleChange}
+                value={search}
+                type={"text"}
+                placeholder="Cari produk yang anda inginkan..."
+              />
+              <SearchTermSuggestion
+                value={search}
+                toggleSearchBar={toggleSearchBar}
+                className={"relative overflow-auto custom-scrollbar min-h-full"}
+              />
+          </div>
+        </>
+      )}
     </div>
   );
 };
 
-export default DropdwonSearch;
+export default DropdownSearch;

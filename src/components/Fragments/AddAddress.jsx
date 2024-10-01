@@ -61,7 +61,7 @@ const AddAddress = () => {
       setCity("");
       setAddress("");
       dispatch(clearStatusUpdatedActionCreator());
-      navigate(-1);
+      navigate('/user-profile');
     }
   }, [updateSuccess, dispatch, navigate]);
 

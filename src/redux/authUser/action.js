@@ -6,10 +6,6 @@ const ActionType = {
   SET_AUTH_USER_SUCCESS: "SET_AUTH_USER_SUCCESS",
   SET_AUTH_USER_FAILURE: "SET_AUTH_USER_FAILURE",
 
-  // UPDATE_USER_REQUEST: "UPDATE_USER_REQUEST",
-  // UPDATE_USER_SUCCESS: "UPDATE_USER_SUCCESS",
-  // UPDATE_USER_FAILURE: "UPDATE_USER_FAILURE",
-
   UNSET_AUTH_USER: "UNSET_AUTH_USER",
 };
 
@@ -31,12 +27,14 @@ function asyncSetAuthUser() {
   return async (dispatch) => {
     dispatch({ type: ActionType.SET_AUTH_USER_REQUEST });
     try {
-      const authUser = await api.getOwnProfile();
-      dispatch(setAuthUserActionCreator(authUser));
+      const  authUser = await api.getOwnProfile();
+      dispatch(
+        setAuthUserActionCreator(authUser),
+      );
     } catch (error) {
       dispatch({
         type: ActionType.SET_AUTH_USER_FAILURE,
-        payload: {error:error.message},
+        payload: { error: error.message },
       });
     }
   };

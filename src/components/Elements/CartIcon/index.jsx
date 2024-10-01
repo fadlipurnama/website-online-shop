@@ -27,7 +27,7 @@ const CartIcon = ({ authUser }) => {
     >
       {totalQuantity && totalQuantity !== 0 ? (
         <span
-          className={`absolute lg:text-sm ${totalQuantity > 99 ? "-right-1/2 -top-1/2 lg:h-7 lg:w-7" : "-right-1/3 -top-1/3 lg:h-6 lg:w-6 "} flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[9px] font-semibold text-white `}
+          className={`absolute lg:text-sm ${totalQuantity > 99 ? "-right-1/2 -top-1/2 lg:h-7 lg:w-7" : "-right-1/3 -top-1/3 lg:h-6 lg:w-6 "} flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[12px] md:text-[14px] font-semibold text-white `}
         >
           {totalQuantity > 99 ? "99+" : totalQuantity}
         </span>

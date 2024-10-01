@@ -5,44 +5,44 @@ import useSnap from "../../hooks/useSnap";
 import { toggleSnapShowTrigger } from "../../redux/transaction/action";
 
 const SnapShowTransaction = ({
-  setSnapShowOpen,
-  snapShowTrigger,
+  // setSnapShowOpen,
+  // snapShowTrigger,
   transactionData,
 }) => {
   const navigate = useNavigate();
-  const { snapEmbed } = useSnap();
+  const { snapPay } = useSnap();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (snapShowTrigger && transactionData) {
+    if (transactionData && transactionData.token) {
       dispatch(toggleSnapShowTrigger());
-      setSnapShowOpen(true);
+      // setSnapShowOpen(true);
 
-      snapEmbed(transactionData.token, "snap-container", {
+      snapPay(transactionData.token, "snap-container", {
         onSuccess: function (result) {
           console.log("success", result);
           navigate(`/transaction?transactionId=${transactionData.id}`);
-          setSnapShowOpen(false);
+          // setSnapShowOpen(false);
         },
         onPending: function (result) {
           console.log("pending", result);
           navigate(`/transaction?transactionId=${transactionData.id}`);
-          setSnapShowOpen(false);
+          // setSnapShowOpen(false);
         },
         onClose: function () {
           navigate(`/transaction?transactionId=${transactionData.id}`);
-          setSnapShowOpen(false);
+          // setSnapShowOpen(false);
         },
      
       });
     }
   }, [
-    snapShowTrigger,
+    // snapShowTrigger,
     transactionData,
-    setSnapShowOpen,
+    // setSnapShowOpen,
     dispatch,
     navigate,
-    snapEmbed,
+    snapPay,
   ]); // Add dependencies here
 
   return <div className="w-full mx-auto" id="snap-container"></div>;

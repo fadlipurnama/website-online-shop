@@ -4,22 +4,23 @@ import { asyncSetWishlist } from "../../redux/wishlist/action";
 import LazyImage from "../Elements/LazyImage";
 import { useNavigate } from "react-router-dom";
 import ProductPrice from "../Elements/ProductPrice";
+import DataNotFound from "./DataNotFound";
 
 const WishlistItemList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { wishlist } = useSelector((states) => states.wishlist);
+  const { wishlist = [] } = useSelector((states) => states.wishlist);
 
   useEffect(() => {
     dispatch(asyncSetWishlist());
   }, [dispatch]);
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white">
-      <h2 className="sm:col-span-2 text-sm font-bold md:text-base lg:text-xl">
+    <div className="grid grid-cols-1 gap-4 bg-white lg:grid-cols-2">
+      <h2 className="text-sm font-bold lag:col-span-2 md:text-base lg:text-xl">
         Wishlist
       </h2>
-      {wishlist &&
-        wishlist.map((item,index) => (
+      {wishlist.length > 0 ? (
+        wishlist.map((item, index) => (
           <div
             key={index}
             className="flex flex-col gap-2 rounded border bg-white p-2 shadow md:p-4 lg:flex-row lg:gap-4"
@@ -62,7 +63,10 @@ const WishlistItemList = () => {
               </div>
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <DataNotFound className={'lg:col-span-2'} description={"Kamu belum memiliki daftar wishlist!"}/>
+      )}
     </div>
   );
 };

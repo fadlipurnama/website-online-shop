@@ -1,9 +1,11 @@
 import logo from "../../assets/logo-ahe.png";
-import googlePlay from "../../assets/google-play.png";
+// import googlePlay from "../../assets/google-play.png";
 import { Link } from "react-router-dom";
 import { FiInstagram } from "react-icons/fi";
 import { FaTwitter, FaTiktok } from "react-icons/fa";
 import { RiLinkedinFill } from "react-icons/ri";
+import aheQrShoping from "../../assets/ahe-qr.png"
+import LazyImage from "../Elements/LazyImage";
 
 const Footer = () => {
   return (
@@ -31,7 +33,7 @@ const Footer = () => {
           <span className="text-lg font-bold">About Us</span>
           <Link to="/story">Story</Link>
           <Link to="/team">Customers</Link>
-          <Link to="/product">Product</Link>
+          <Link to="/products/all-products">Product</Link>
           <Link to="/customers">Customers</Link>
           <Link to="/contact">Contact</Link>
         </div>
@@ -52,21 +54,22 @@ const Footer = () => {
             </span>
           </div>
         </div>
-        {/* <div className="flex flex-col items-center gap-3 sm:col-span-1">
+        <div className="flex flex-col items-center gap-3 sm:col-span-1">
           <span className="text-center text-lg font-bold">
             Download Aplikasi
           </span>
-          <img
-            src="barcode"
+          <LazyImage
+            src={aheQrShoping}
             alt="barcode"
             className="h-36 w-full max-w-36 bg-slate-100"
           />
-          <img
+          {/* <img
             src={googlePlay}
+            onClick={}
             alt="google-play-button"
             className="w-full max-w-36"
-          />
-        </div> */}
+          /> */}
+        </div>
       </div>
       <span className="border-t p-3 text-center md:mx-16">
         Copyright © Anugrah Hadi Electric {new Date().getFullYear()}, All Right

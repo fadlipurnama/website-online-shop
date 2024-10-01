@@ -5,7 +5,7 @@ const CategoriesList = () => {
   const { categories } = useSelector((states) => states.categories);
 
   return (
-    <div className="mx-auto flex max-w-min items-center gap-6">
+    <div className="mx-auto flex w-full justify-between items-center gap-6">
       {categories &&
         categories.map((category) => (
           <CardCategories

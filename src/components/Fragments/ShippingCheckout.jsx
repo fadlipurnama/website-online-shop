@@ -14,9 +14,7 @@ const ShippingCheckout = ({
   selectedShippingOption,
   setSelectedShippingOption,
 }) => {
-  // const { authUser } = useSelector((states) => states.auth);
   const dispatch = useDispatch();
-  // const [selectedShippingOption, setSelectedShippingOption] = useState();
   const origin = "456";
 
   // State untuk menyimpan kurir yang dipilih
@@ -35,7 +33,7 @@ const ShippingCheckout = ({
   const { shippingOptions, loading } = useSelector((state) => state.shipment);
 
   useEffect(() => {
-    if (authUser && selectedCourier && !weightOrder == 0) {
+    if (authUser && selectedCourier && weightOrder !== 0) {
       dispatch(
         asyncSetShippingOptions({
           origin,

@@ -18,27 +18,29 @@ const useSnap = () => {
     };
   }, []);
 
-  const snapEmbed = (snap_token, embedId, action) => {
+  const snapPay = (snap_token, actions) => {
     if (snap) {
-      snap.embed(snap_token, {
-        embedId,
+      snap?.pay(snap_token, {
         onSuccess: function (result) {
-          console.log("success", result);
-          action.onSuccess(result);
+          console.log("Success", result);
+          actions.onSuccess(result);
         },
         onPending: function (result) {
-          console.log("pending", result);
-          action.onPending(result);
+          console.log("Pending", result);
+          actions.onPending(result);
+        },
+        onError: function (error) {
+          console.error("Error", error);
+          actions.onError(error);
         },
         onClose: function () {
-          action.onClose();
-        },
-       
+          actions.onClose();
+        }
       });
     }
   };
 
-  return { snapEmbed };
+  return { snapPay };
 };
 
 export default useSnap;

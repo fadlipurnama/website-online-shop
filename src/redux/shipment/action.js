@@ -20,6 +20,10 @@ const ActionType = {
   SET_CITIES_FAILURE: "SET_CITIES_FAILURE",
   SET_CITIES_REQUEST: "SET_CITIES_REQUEST",
   RECEIVE_CITIES_SUCCESS: "RECEIVE_CITIES_SUCCESS",
+
+  SET_TRACKING_REQUEST: "SET_TRACKING_REQUEST",
+  SET_TRACKING_FAILURE: "SET_TRACKING_FAILURE",
+  RECEIVE_TRACKING_SUCCESS: "RECEIVE_TRACKING_SUCCESS",
 };
 
 function receiveShippingOptionsActionCreator(shippingOptions) {
@@ -66,6 +70,30 @@ function receiveCitiesActionCreator(cities) {
     },
   };
 }
+
+
+function receiveTrackingActionCreator(trackingData) {
+  return {
+    type: ActionType.RECEIVE_TRACKING_SUCCESS,
+    payload: {
+      trackingData,
+    },
+  };
+}
+
+// Async action untuk mengambil data tracking berdasarkan waybill number
+function asyncSetTracking(waybillNumber) {
+  return async (dispatch) => {
+    dispatch({ type: ActionType.SET_TRACKING_REQUEST });
+    try {
+      const trackingData = await api.getTracking(waybillNumber);
+      dispatch(receiveTrackingActionCreator(trackingData));
+    } catch (error) {
+      dispatch({ type: ActionType.SET_TRACKING_FAILURE, payload: { error: error.message } });
+    }
+  };
+}
+
 
 function asyncSetShippingOptions({ origin, destination, weight, courier, destinationType, originType }) {
   return async (dispatch) => {
@@ -131,6 +159,7 @@ export {
   ActionType,
   asyncSetShippingOptions,
   asyncSetCouriers,
+  asyncSetTracking,
   asyncCheckRates,
   asyncSetProvinces,
   asyncSetCities,

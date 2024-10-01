@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { asyncRegisterUser } from "../../redux/registerUser/action";
 import { useAuthForm } from "../../hooks/useAuthForm";
+import Swal from 'sweetalert2'
 
 const FormRegister = () => {
   const navigate = useNavigate();
@@ -22,10 +23,18 @@ const FormRegister = () => {
 
   useEffect(() => {
     if (message === "Registrasi berhasil") {
-      navigate("/login");
+      Swal.fire({
+        icon: "success",
+        title: "Pendaftaran berhasil",
+        showConfirmButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");  // Pindah ke halaman /login setelah tombol OK ditekan
+        }
+      });
     }
-  }, [navigate, dispatch, message]);
-
+  }, [navigate, message]);
+  
   return (
     <form onSubmit={handleRegister} className="grid grid-cols-2 gap-4">
       <InputForm
@@ -34,6 +43,7 @@ const FormRegister = () => {
         name="firstName"
         placeholder="Masukan nama depan"
         className="text-md rounded py-3"
+        
         onChange={handleChange}
       />
       <InputForm

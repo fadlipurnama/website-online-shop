@@ -3,6 +3,8 @@ import InputForm from "../Elements/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { asyncLoginUser } from "../../redux/login/action";
 import { useAuthForm } from "../../hooks/useAuthForm";
+import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 const FormLogin = () => {
   const dispatch = useDispatch();
@@ -15,6 +17,17 @@ const FormLogin = () => {
     dispatch(asyncLoginUser(email, password));
   };
 
+  useEffect(() => {
+    if (message === "Login berhasil") {
+      Swal.fire({
+        icon: "success",
+        title: "Login Berhasil",
+        text: "Selamat datang!",
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+  }, [message]);
   return (
     <form onSubmit={handleLogin} className="flex flex-col gap-4">
       <InputForm

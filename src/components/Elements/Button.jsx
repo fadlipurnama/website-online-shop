@@ -34,6 +34,8 @@ function Button({
           return "btn-4";
         case "btn-4":
           return "btn-2";
+        case "btn-cancel":
+          return "btn-cancel-hover";
         default:
           return variant;
       }
@@ -67,6 +69,16 @@ function Button({
       backgroundColor: "bg-fourthColor",
       textColor: "text-primaryColor",
       borderColor: "border border-primaryColor",
+    },
+    "btn-cancel": {
+      backgroundColor: "bg-red-600",
+      textColor: "text-white",
+      borderColor: "border border-red-600",
+    },
+    "btn-cancel-hover": {
+      backgroundColor: "bg-white",
+      textColor: "text-red-600",
+      borderColor: "border border-red-600",
     },
   };
 

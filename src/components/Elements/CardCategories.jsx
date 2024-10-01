@@ -11,7 +11,7 @@ const CardCategories = ({ imageUrl, title, alt }) => {
       <LazyImage
         src={imageUrl}
         alt={alt}
-        className="h-28 w-full rounded-lg bg-black"
+        className="h-28 w-full rounded-lg"
       />
       <h3 className="text-center font-medium group-hover:font-bold">{title}</h3>
     </div>

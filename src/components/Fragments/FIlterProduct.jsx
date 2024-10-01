@@ -36,7 +36,7 @@ const FilterProduct = ({
             value: brand,
           }))}
           value={brandFilter}
-          placeholder="Sortir merek"
+          placeholder="Sortir Merek"
           className="text-md rounded py-3"
           onChange={handleBrandFilterChange}
         />
@@ -48,7 +48,7 @@ const FilterProduct = ({
             { value: "high", label: "Harga Tertinggi" },
           ]}
           value={priceFilter}
-          placeholder="Sortir harga"
+          placeholder="Sortir Harga"
           className="text-md rounded py-3"
           onChange={handlePriceFilterChange}
         />

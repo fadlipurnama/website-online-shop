@@ -3,6 +3,10 @@ import api from "../../utils/api";
 const ActionType = {
   SET_CART_FAILURE: "SET_CART_FAILURE",
   SET_CART_REQUEST: "SET_CART_REQUEST",
+  CLEAR_CART_USER_FAILURE: "CLEAR_CART_USER_FAILURE",
+  CLEAR_CART_USER_REQUEST: "CLEAR_CART_USER_REQUEST",
+
+  CLEAR_CART_USER_SUCCESS: "CLEAR_CART_USER_SUCCESS",
 
   RECEIVE_CART_SUCCESS: "RECEIVE_CART_SUCCESS",
 
@@ -114,10 +118,25 @@ function asyncDeleteCartItem(cartItemId) {
   };
 }
 
+function asyncClearCartUser() {
+  return async (dispatch) => {
+    dispatch({ type: ActionType.CLEAR_CART_USER_REQUEST });
+    try {
+      const response = await api.clearCartUser();
+      dispatch({ type: ActionType.CLEAR_CART_USER_SUCCESS, payload: response });
+    } catch (error) {
+      dispatch({
+        type: ActionType.CLEAR_CART_USER_FAILURE,
+        payload: { error },
+      });
+    }
+  };
+}
 
 export {
   ActionType,
   asyncSetCarts,
+  asyncClearCartUser,
   asyncDeleteCartItem,
   clearDataCartsActionCreator,
   asyncUpdateQuantityCartItem,

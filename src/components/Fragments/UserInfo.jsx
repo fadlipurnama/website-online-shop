@@ -12,15 +12,16 @@ import {
 } from "../../redux/updateUserDetail/action";
 import useProvinces from "../../hooks/useProvinces"; // Pastikan untuk mengimpor hook
 import useCities from "../../hooks/useCities"; // Jika kamu punya custom hook untuk kota
+import LoadingPage from "../../pages/loading";
 
 const UserInfo = () => {
   const [openModal, setOpenModal] = useState();
-  const { authUser } = useSelector((states) => states.auth);
+  const { authUser, loading } = useSelector((states) => states.auth);
   const [imageFile, setImageFile] = useState("");
   const [changeProfile, setChangeProfile] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { updateSuccess, loading } = useSelector(
+  const { updateSuccess, loading: updateDataLoading } = useSelector(
     (states) => states.updateUserDetail,
   );
 
@@ -47,19 +48,19 @@ const UserInfo = () => {
 
   const getCityName = (cityId) => {
     const city = cities?.find((c) => c.city_id === cityId);
-    console.log("cityId", cityId);
-    console.log("city", city);
     return city ? city.city_name : "";
   };
 
+  if (loading) {
+    return <LoadingPage />;
+  }
+
   return (
     <div className="flex min-h-full flex-col rounded-lg border bg-white p-6 text-xs text-gray-800 sm:text-sm lg:gap-y-4 xl:text-base">
-      <h2 className="font-bold text-lg lg:text-xl">
-        Informasi Akun
-      </h2>
+      <h2 className="text-lg font-bold lg:text-xl">Informasi Akun</h2>
 
-      <div className="flex h-full mt-3 md:mt-0 justify-between md:justify-normal w-full gap-5 md:gap-10 lg:gap-20">
-        <div className="flex w-1/3 flex-1 md:flex-none flex-col items-center">
+      <div className="mt-3 flex h-full w-full justify-between gap-5 md:mt-0 md:justify-normal md:gap-10 lg:gap-20">
+        <div className="flex w-1/3 h-full flex-1 flex-col items-center md:flex-none">
           <LazyImage
             src={
               authUser?.imageUrl === ""
@@ -67,7 +68,7 @@ const UserInfo = () => {
                 : authUser?.imageUrl
             }
             alt={`userProfile.png`}
-            className="max-h-96 min-w-full object-cover"
+            className={`max-h-96 min-w-80 object-cover`}
           />
           {!changeProfile ? (
             <Button
@@ -86,7 +87,7 @@ const UserInfo = () => {
               />
               <div className="flex gap-2">
                 <button
-                  disabled={loading}
+                  disabled={updateDataLoading}
                   type="submit"
                   className="w-full bg-primaryColor py-2 text-white hover:bg-secondaryColor"
                 >
@@ -112,7 +113,7 @@ const UserInfo = () => {
           </Button>
         </div>
 
-        <div className="flex flex-col w-1/2 md:grid min-h-max md:flex-1 md:grid-cols-2 gap-x-6 gap-y-10 py-2">
+        <div className="flex min-h-max w-1/2 flex-col gap-x-6 gap-y-10 py-2 md:grid md:flex-1 md:grid-cols-2">
           <div className="flex w-full flex-col gap-1">
             <span className="font-bold">Nama Lengkap</span>
             <p>{`${authUser?.firstName} ${authUser?.lastName}`}</p>
@@ -149,14 +150,12 @@ const UserInfo = () => {
                 {authUser?.address &&
                   `${authUser.address}, ${authUser.zipCode}, ${getCityName(authUser.city)}, ${getProvinceName(authUser.province)}, ${authUser.country}`}
               </p>
-              {authUser?.address && (
-                <Link
-                  to="alamat"
-                  className="text-secondaryColor hover:font-medium"
-                >
-                  {authUser.address ? "Ubah Alamat" : "Tambahkan"}
-                </Link>
-              )}
+              <Link
+                to="alamat"
+                className="text-primaryColor hover:font-semibold"
+              >
+                {authUser.address ? "Ubah Alamat" : "Tambahkan Alamat"}
+              </Link>
             </div>
           </div>
         </div>

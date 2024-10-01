@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import InputSearch from "../Elements/InputSearch";
 import CartIcon from "../Elements/CartIcon";
 import DropdownSearch from "../Elements/DropdownSearch";
 import DropdownUser from "../Elements/DropdownUser";
@@ -36,23 +35,32 @@ const Navbar = () => {
           className={`hidden items-center justify-between gap-4 bg-gray-100 px-6 py-2 text-sm lg:flex ${loading ? "animate-pulse" : ""}`}
         >
           <div className="flex gap-4">
-            {["Download Aplikasi", "Hubungi Kami", "Tentang Kami"].map(
-              (text, index) => (
-                <Link
-                  key={index}
-                  to={`/${text.toLowerCase().replace(/\s+/g, "-")}`}
-                  className={
-                    loading
-                      ? "bg-gray-200 text-transparent"
-                      : "hover:text-primaryColor"
-                  }
-                >
-                  {text}
-                </Link>
-              ),
-            )}
             <Link
-              to={`/user-profile/${authUser?._id}/wishlist`}
+              target="_blank"
+              className={
+                loading
+                  ? "bg-gray-200 text-transparent"
+                  : "hover:text-primaryColor"
+              }
+              to="https://drive.google.com/drive/u/0/mobile/folders/1vLYrYPmBR11saJxqrWYFTII-jD9HR9SW?usp=sharing"
+            >
+              Download Aplikasi
+            </Link>
+            {["Hubungi Kami", "Tentang Kami"].map((text, index) => (
+              <Link
+                key={index}
+                to={`/${text.toLowerCase().replace(/\s+/g, "-")}`}
+                className={
+                  loading
+                    ? "bg-gray-200 text-transparent"
+                    : "hover:text-primaryColor"
+                }
+              >
+                {text}
+              </Link>
+            ))}
+            <Link
+              to={`/user-profile/wishlist`}
               className={
                 loading
                   ? "bg-gray-200 text-transparent"
@@ -107,14 +115,9 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <InputSearch placeholder="Search..." />
+                {/* <InputSearch placeholder="Search..." /> */}
                 <DropdownSearch />
-                {authUser && (
-                  <DropdownUser
-                    authUser={authUser}
-                    dropdownPosition="right-0 top-10"
-                  />
-                )}
+                {authUser && <DropdownUser dropdownPosition="right-0 top-10" />}
                 <CartIcon authUser={authUser} />
                 <HamburgerMenu authUser={authUser} />
               </>

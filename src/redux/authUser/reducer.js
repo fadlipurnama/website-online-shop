@@ -31,15 +31,6 @@ function authUserReducer(state = initialState, action = {}) {
         loading: false,
         error: false,
       };
-    // case ActionType.UPDATE_USER_SUCCESS:
-    //   return {
-    //     ...state,
-    //     authUser: action.payload.updated,
-    //     token: null,
-    //     loading: false,
-    //     error: false,
-    //     updateSuccess: true,
-    //   };
     case ActionType.UNSET_AUTH_USER:
       return initialState;
     default:

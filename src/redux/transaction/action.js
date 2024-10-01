@@ -7,9 +7,9 @@ const ActionType = {
   SET_TRANSACTION_SUCCESS: "SET_TRANSACTION_SUCCESS",
 
   RESET_TRANSACTION_DATA: "RESET_TRANSACTION_DATA",
-  TOGGLE_SNAP_SHOW_TRIGGER: "TOGGLE_SNAP_SHOW_TRIGGER",
   SET_TRANSACTION_BY_ID_SUCCESS: "SET_TRANSACTION_BY_ID_SUCCESS", // Tambahkan ini
   SET_TRANSACTION_BY_USER_ID_SUCCESS: "SET_TRANSACTION_BY_USER_ID_SUCCESS", // Tambahkan ini
+  DELETE_TRANSACTION: "DELETE_TRANSACTION", // Tambahkan ini
 };
 
 function resetTransactionData() {
@@ -40,15 +40,10 @@ function setTransactionSuccess(response) {
   };
 }
 
-function toggleSnapShowTrigger() {
-  return {
-    type: ActionType.TOGGLE_SNAP_SHOW_TRIGGER,
-  };
-}
-
 function asyncCreateTransaction({
   carts,
-  totalShopping,
+  // totalShopping,
+  grossAmount,
   tax,
   shippingCost,
   authUser,
@@ -62,7 +57,7 @@ function asyncCreateTransaction({
     dispatch(setTransactionRequest());
     try {
       const response = await api.createTransaction({
-        grossAmount: customRound(totalShopping),
+        grossAmount,
         firstName: authUser.firstName,
         lastName: authUser.lastName,
         shippingCourier,
@@ -97,9 +92,8 @@ function asyncCreateTransaction({
         ],
       });
       dispatch(setTransactionSuccess(response));
-      dispatch(toggleSnapShowTrigger());
     } catch (error) {
-      dispatch(setTransactionFailure(error));
+      dispatch(setTransactionFailure(error.message));
     }
   };
 }
@@ -116,6 +110,20 @@ function asyncGetTransactionById(transactionId) {
       });
     } catch (error) {
       dispatch(setTransactionFailure(error));
+    }
+  };
+}
+function asyncDeleteTransaction(transactionId) {
+  return async (dispatch) => {
+    dispatch(setTransactionRequest());
+    try {
+      const response = await api.deleteTransaction(transactionId);
+      dispatch({
+        type: ActionType.DELETE_TRANSACTION,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch(setTransactionFailure(error.message));
     }
   };
 }
@@ -140,9 +148,9 @@ function asyncGetTransactionsByUserId(userId) {
 
 export {
   ActionType,
+  asyncDeleteTransaction,
   asyncGetTransactionsByUserId,
   asyncGetTransactionById,
-  toggleSnapShowTrigger,
   asyncCreateTransaction,
   setTransactionRequest,
   setTransactionFailure,

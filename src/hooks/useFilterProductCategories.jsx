@@ -1,12 +1,8 @@
-import { useEffect, useState, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { asyncSetProducts } from "../redux/products/action";
 
-export const useFilterProductCategories = () => {
+export const useFilterProductCategories = (products=[], loading, ) => {
   const { categories } = useParams();
-  const dispatch = useDispatch();
-  const { products = [], loading } = useSelector((state) => state.products);
 
   const [priceFilter, setPriceFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState("");
@@ -48,24 +44,12 @@ export const useFilterProductCategories = () => {
     [products],
   );
 
-  useEffect(() => {
-    dispatch(asyncSetProducts());
-  }, [dispatch]);
 
-  // useEffect(() => {
-  //   const prevParams = localStorage.getItem("params");
-
-  //   if (categories !== prevParams) {
-  //     localStorage.setItem("params", categories);
-  //     setBrandFilter("");
-  //     setPriceFilter("");
-  //   }
-  // }, [categories]);
 
   return [
     filteredProducts,
     searchTerm,
-    loading,
+    // loading,
     priceFilter,
     brands,
     brandFilter,

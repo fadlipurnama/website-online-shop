@@ -1,7 +1,8 @@
-import { Link} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import Footer from "../Fragments/Footer";
 import Navbar from "../Fragments/Navbar";
 import { Helmet } from "react-helmet-async";
+import { IoIosArrowBack } from "react-icons/io";
 
 const DetailOrderLayout = ({
   children,
@@ -9,7 +10,7 @@ const DetailOrderLayout = ({
   pathLocation,
   description,
 }) => {
-  //   const navigate = useNavigate();
+    const navigate = useNavigate();
   return (
     <>
       <Helmet>
@@ -25,28 +26,20 @@ const DetailOrderLayout = ({
         />
         <link
           rel="canonical"
-          //   href={`${import.meta.env.VITE_APP_WEBSITE_URL}${pathname}`}
+            href={`${import.meta.env.VITE_APP_WEBSITE_URL}${pathLocation}`}
         />
       </Helmet>
       <Navbar />
       <main className="lg:pb-20 lg:pt-10">
         <h1 className="invisible absolute">Dertail Pesanan</h1>
-        <div className="mx-auto rounded bg-white px-4 pb-3 shadow md:px-4 lg:max-w-[90%] lg:px-8">
-          <nav className="flex flex-wrap items-center gap-2 py-6 text-lg">
-            <Link
-              className="cursor-pointer text-sm hover:text-primaryColor sm:text-base md:text-lg"
-              to={"/"}
-            >
-              Home
-              {" > "}
-            </Link>
-            <Link
-              to={pathLocation}
-              className="cursor-pointer text-sm hover:text-primaryColor sm:text-base md:text-lg"
-            >
-              Pesanan - {orderId ? orderId?.toUpperCase() : ''}
-            </Link>
-          </nav>
+        <div className="mx-auto rounded bg-white py-4 px-4 pb-3 shadow md:px-4 lg:max-w-[90%]">
+        <button
+            onClick={() => navigate(-1)}
+            className="flex mb-2 text-xm md:text-base lg:text-lg items-center gap-2 xl:text-xl font-semibold"
+          >
+            <IoIosArrowBack className="h-7 w-7" />
+            Detail Pesanan - {orderId?.toUpperCase()}
+          </button>
           {children}
         </div>
       </main>

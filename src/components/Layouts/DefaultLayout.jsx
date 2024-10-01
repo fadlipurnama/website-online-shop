@@ -3,7 +3,14 @@ import Footer from "../Fragments/Footer";
 import Navbar from "../Fragments/Navbar";
 import { Helmet } from "react-helmet-async";
 
-const DefaultLayout = ({ children, label, lastLabel, title, description }) => {
+const DefaultLayout = ({
+  children,
+  noneLink = false,
+  label,
+  lastLabel,
+  title,
+  description,
+}) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   function capitalizeFirstLetter(string) {
@@ -26,7 +33,10 @@ const DefaultLayout = ({ children, label, lastLabel, title, description }) => {
           content={`${description?.substring(0, 152) || import.meta.env.VITE_APP_DEFAULT_DESCRIPTION}...`}
         />
         <meta name="robots" content="index, follow" />
-        <meta name="keywords" content="anugrah hadi electric, general supplier electrical, barang electric, berbagai barang electric, mcb, kontaktor, sensor, kabel, saklar, lampu, staker, power supply" />
+        <meta
+          name="keywords"
+          content="anugrah hadi electric, general supplier electrical, barang electric, berbagai barang electric, mcb, kontaktor, sensor, kabel, saklar, lampu, staker, power supply"
+        />
         <link
           rel="canonical"
           href={`${import.meta.env.VITE_APP_WEBSITE_URL}${pathname}`}
@@ -50,35 +60,46 @@ const DefaultLayout = ({ children, label, lastLabel, title, description }) => {
               Home
               {" > "}
             </Link>
-            <Link
-              to={`/${pathParts[1]}/${pathParts[2]}`}
-              className="cursor-pointer text-sm hover:text-primaryColor sm:text-base md:text-lg"
-            >
-              {capitalizeFirstLetter(
-                `${pathParts[1]?.replace(/[^a-zA-Z0-9\s/]/g, " ")} - ${
-                  label
-                    ? label.replace(/[^a-zA-Z0-9\s/]/g, " ")
-                    : pathParts[2]?.replace(/%20|-/g, " ")
-                }`,
-              )}
-              {pathParts.length > 3 && " >"}
-            </Link>
-            {remainingPaths.map((path, index) => {
-              return (
+            {!noneLink ? (
+              <>
                 <Link
-                  key={index}
+                  to={`/${pathParts[1]}/${pathParts[2]}`}
                   className="cursor-pointer text-sm hover:text-primaryColor sm:text-base md:text-lg"
-                  to={`${remainingPaths[index - 1] ? `${remainingPaths[index - 1]}/${path}` : `${pathname}`}`}
                 >
                   {capitalizeFirstLetter(
-                    lastLabel
-                      ? lastLabel
-                      : path.replace(/[^a-zA-Z0-9\s]/g, " "),
+                    `${pathParts[1]?.replace(/[^a-zA-Z0-9\s/]/g, " ")} - ${
+                      label
+                        ? label.replace(/[^a-zA-Z0-9\s/]/g, " ")
+                        : pathParts[2]?.replace(/%20|-/g, " ")
+                    }`,
                   )}
-                  {index !== remainingPaths.length - 1 && " >"}
+                  {pathParts.length > 3 && " >"}
                 </Link>
-              );
-            })}
+                {remainingPaths.map((path, index) => {
+                  return (
+                    <Link
+                      key={index}
+                      className="cursor-pointer text-sm hover:text-primaryColor sm:text-base md:text-lg"
+                      to={`${remainingPaths[index - 1] ? `${remainingPaths[index - 1]}/${path}` : `${pathname}`}`}
+                    >
+                      {capitalizeFirstLetter(
+                        lastLabel
+                          ? lastLabel
+                          : path.replace(/[^a-zA-Z0-9\s]/g, " "),
+                      )}
+                      {index !== remainingPaths.length - 1 && " >"}
+                    </Link>
+                  );
+                })}
+              </>
+            ) : (
+              <>
+                <div className="cursor-pointer text-sm hover:text-primaryColor sm:text-base md:text-lg">
+                  {capitalizeFirstLetter(label)} -{" "}
+                  {capitalizeFirstLetter(lastLabel)}
+                </div>
+              </>
+            )}
           </nav>
           {children}
         </div>
